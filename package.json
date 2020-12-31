@@ -6,6 +6,9 @@
     "node": ">=13.0.0 <15.0.0"
   },
   "main": "index.js",
+  "files": [
+      "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lipemat/eslint-config.git"
