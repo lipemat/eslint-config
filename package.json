@@ -16,11 +16,11 @@
   "author": "lipemat <mat@matlipe.com>",
   "license": "MIT",
   "dependencies": {
-    "@wordpress/eslint-plugin": "^3.4.1",
+    "@wordpress/eslint-plugin": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
     "@typescript-eslint/parser": "^4.11.1",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0"
+    "eslint": "^7.17.0"
   },
   "publishConfig": {
     "access": "public"
