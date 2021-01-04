@@ -12,11 +12,13 @@ module.exports = {
 		//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
 		//@link https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
 		'rules': {
-			'@typescript-eslint/no-unused-vars': 'error',
 			'jsdoc/no-undefined-types': [ 0 ],
 			'no-magic-numbers': [ 0 ],
+			"no-redeclare": [ 0 ],
 			'no-undef': [ 0 ],
 			'semi': [ 0 ],
+			"@typescript-eslint/no-redeclare": [ "error" ],
+			'@typescript-eslint/no-unused-vars': 'error',
 			'@typescript-eslint/type-annotation-spacing': [ 'warn', {
 				before: false,
 				after: true,
