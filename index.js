@@ -40,6 +40,7 @@ module.exports = {
 		'camelcase': [ 2, {'properties': 'never'} ],
 		'indent': [ 1, 'tab', {'SwitchCase': 1} ],
 		'lines-around-comment': [ 0 ],
+		'jsdoc/require-param': [ 0 ],
 		'jsdoc/require-param-type': [ 0 ],
 		'jsdoc/require-returns-description': [ 0 ],
 		'jsdoc/check-tag-names': [ 1, {'definedTags': [ 'notice', 'link' ]} ],
