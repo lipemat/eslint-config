@@ -15,8 +15,10 @@ module.exports = {
 			'jsdoc/no-undefined-types': [ 0 ],
 			'no-magic-numbers': [ 0 ],
 			"no-redeclare": [ 0 ],
+			"no-shadow": [ 0 ],
 			'no-undef': [ 0 ],
 			'semi': [ 0 ],
+			"@typescript-eslint/no-shadow": [ "error" ],
 			"@typescript-eslint/no-redeclare": [ "error" ],
 			'@typescript-eslint/no-unused-vars': 'error',
 			'@typescript-eslint/type-annotation-spacing': [ 'warn', {
