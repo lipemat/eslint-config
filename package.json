@@ -5,6 +5,9 @@
   "engines": {
     "node": ">=13.0.0"
   },
+  "env": {
+    "browser": true
+  },
   "main": "index.js",
   "files": [
     "index.js"
