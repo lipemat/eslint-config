@@ -55,6 +55,14 @@ module.exports = {
 		'jsdoc/require-param-type': [ 0 ],
 		'jsdoc/require-returns-description': [ 0 ],
 		'jsdoc/check-tag-names': [ 1, {'definedTags': [ 'notice', 'link' ]} ],
+
+		/**
+		 * Disable rule until the bug is resolved.
+		 *
+		 * @link https://github.com/import-js/eslint-plugin-import/issues/2267
+		 */
+		"import/no-unresolved": [ 0 ],
+
 		'no-console': [ 0 ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
 		'object-curly-spacing': [ 1, 'never' ],
