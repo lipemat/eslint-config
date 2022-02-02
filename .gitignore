@@ -1,19 +1,20 @@
 # system/hidden files
+*.bak
+*.sublime-project
+*.sublime-workspace
+*.swp
 *~
 .DS_Store
 .DS_Store?
-.svn
-.cvs
-*.bak
-*.swp
-.sass-cache
-.project
-*.sublime-project
-*.sublime-workspace
-*.map
 .Trashes
-ehthumbs.db
+.cvs
+.phpunit.result.cache
+.project
+.ready
+.sass-cache
+.svn
 Thumbs.db
+ehthumbs.db
 
 # log files
 *.log
