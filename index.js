@@ -40,6 +40,7 @@ module.exports = {
 	'parserOptions': {
 		'ecmaVersion': 7,
 		'sourceType': 'module',
+		'warnOnUnsupportedTypeScriptVersion': false,
 	},
 	'rules': {
 		'arrow-parens': [ 1, 'as-needed' ],
