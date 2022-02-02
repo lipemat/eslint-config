@@ -2,7 +2,10 @@ module.exports = {
 	"env": {
 		"browser": true
 	},
-	'extends': [ 'plugin:@wordpress/eslint-plugin/recommended-with-formatting' ],
+	'extends': [
+		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
+		'plugin:import/typescript'
+	],
 	'globals': {
 		'$': 'readonly',
 		'jQuery': 'readonly',
