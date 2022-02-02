@@ -1,6 +1,6 @@
 {
   "name": "@lipemat/eslint-config",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0",
   "description": "Eslint configuration for all @lipemat packages",
   "engines": {
     "node": ">=13.0.0"
