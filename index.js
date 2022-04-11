@@ -54,7 +54,7 @@ module.exports = {
 		'jsdoc/require-param': [ 0 ],
 		'jsdoc/require-param-type': [ 0 ],
 		'jsdoc/require-returns-description': [ 0 ],
-		'jsdoc/check-tag-names': [ 1, {'definedTags': [ 'notice', 'link' ]} ],
+		'jsdoc/check-tag-names': [ 1, {'definedTags': [ 'notice', 'link', 'task', 'ticket', 'note' ]} ],
 
 		/**
 		 * Disable rule until the bug is resolved.
