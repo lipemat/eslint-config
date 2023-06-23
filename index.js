@@ -31,8 +31,7 @@ module.exports = {
 				"warn",
 				{
 					"allowString": false,
-					"allowNumber": false,
-					"allowNullableObject": false
+					"allowNumber": false
 				}
 			],
 			'@typescript-eslint/type-annotation-spacing': [ 'warn', {
