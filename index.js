@@ -27,6 +27,14 @@ module.exports = {
 			"@typescript-eslint/no-shadow": [ "error" ],
 			"@typescript-eslint/no-redeclare": [ "error" ],
 			'@typescript-eslint/no-unused-vars': 'error',
+			"@typescript-eslint/strict-boolean-expressions": [
+				"warn",
+				{
+					"allowString": false,
+					"allowNumber": false,
+					"allowNullableObject": false
+				}
+			],
 			'@typescript-eslint/type-annotation-spacing': [ 'warn', {
 				before: false,
 				after: true,
@@ -42,6 +50,7 @@ module.exports = {
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
 		'ecmaVersion': 7,
+		'project': './tsconfig.json',
 		'sourceType': 'module',
 		'warnOnUnsupportedTypeScriptVersion': false,
 	},
