@@ -1,26 +1,30 @@
 # system/hidden files
-*.bak
-*.sublime-project
-*.sublime-workspace
-*.swp
 *~
 .DS_Store
 .DS_Store?
-.Trashes
+.svn
 .cvs
-.phpunit.result.cache
-.project
+*.bak
+*.swp
 .ready
 .sass-cache
-.svn
-Thumbs.db
+.project
+*.sublime-project
+*.sublime-workspace
+*.map
+.Trashes
 ehthumbs.db
+Thumbs.db
 
 # log files
 *.log
 
-node_modules
-yarn.lock
+# Yarn berry files
+install-state.gz
+/node_modules
+
+# Dist files
+dist
 
 # PHPStorm files
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
@@ -30,6 +34,7 @@ yarn.lock
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/csv-plugin.xml
 .idea/php.xml
 .idea/sshConfigs.xml
 # Generated files

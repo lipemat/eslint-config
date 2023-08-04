@@ -1,4 +1,5 @@
-module.exports = {
+const {getConfig} = require( './helpers/config' );
+let mergedConfig  =  {
 	"env": {
 		"browser": true
 	},
@@ -96,3 +97,14 @@ module.exports = {
 		},
 	},
 };
+
+/**
+ * Merge in any extensions' config.
+ */
+try {
+	mergedConfig = getConfig( mergedConfig );
+} catch( e ) {
+	// JS Boilerplate is not installed.
+}
+
+module.exports = mergedConfig;

@@ -1,25 +1,41 @@
 {
   "name": "@lipemat/eslint-config",
   "version": "3.0.2",
+  "license": "MIT",
   "description": "Eslint configuration for all @lipemat packages",
   "engines": {
-    "node": ">=13.0.0"
+    "node": ">=16.14.2"
   },
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "helpers/"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lipemat/eslint-config.git"
   },
-  "author": "lipemat <mat@matlipe.com>",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lipemat/eslint-config/issues"
+  },
+  "homepage": "https://github.com/lipemat/eslint-config#readme",
+  "scripts": {
+    "test": "lipemat-js-boilerplate test"
+  },
   "dependencies": {
     "@wordpress/eslint-plugin": "^12.2.0",
-    "eslint": "^8.8.0"
+    "eslint": "^8"
   },
-  "publishConfig": {
-    "access": "public"
-  }
+  "devDependencies": {
+    "@lipemat/js-boilerplate": "^10.3.1",
+    "@lipemat/js-boilerplate-svelte": "^0.0.3",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^16",
+    "jest": "^29",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "@lipemat/js-boilerplate": "^10.3.1"
+  },
+  "packageManager": "yarn@3.6.1"
 }
