@@ -1,0 +1,435 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index.js Original Config: original config 1`] = `
+{
+  "env": {
+    "browser": true,
+  },
+  "extends": [
+    "plugin:@wordpress/eslint-plugin/recommended-with-formatting",
+    "plugin:import/typescript",
+  ],
+  "globals": {
+    "$": "readonly",
+    "jQuery": "readonly",
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx",
+      ],
+      "plugins": [
+        "@typescript-eslint",
+      ],
+      "rules": {
+        "@typescript-eslint/no-redeclare": [
+          "error",
+        ],
+        "@typescript-eslint/no-shadow": [
+          "error",
+        ],
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/strict-boolean-expressions": [
+          "warn",
+          {
+            "allowNumber": false,
+            "allowString": false,
+          },
+        ],
+        "@typescript-eslint/type-annotation-spacing": [
+          "warn",
+          {
+            "after": true,
+            "before": false,
+            "overrides": {
+              "arrow": {
+                "after": true,
+                "before": true,
+              },
+            },
+          },
+        ],
+        "jsdoc/no-undefined-types": [
+          0,
+        ],
+        "no-magic-numbers": [
+          0,
+        ],
+        "no-redeclare": [
+          0,
+        ],
+        "no-shadow": [
+          0,
+        ],
+        "no-undef": [
+          0,
+        ],
+        "semi": [
+          0,
+        ],
+      },
+    },
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "project": "./tsconfig.json",
+    "sourceType": "module",
+    "warnOnUnsupportedTypeScriptVersion": false,
+  },
+  "rules": {
+    "arrow-parens": [
+      1,
+      "as-needed",
+    ],
+    "arrow-spacing": [
+      1,
+      {
+        "after": true,
+        "before": true,
+      },
+    ],
+    "camelcase": [
+      2,
+      {
+        "properties": "never",
+      },
+    ],
+    "import/no-unresolved": [
+      0,
+    ],
+    "indent": [
+      1,
+      "tab",
+      {
+        "SwitchCase": 1,
+      },
+    ],
+    "jsdoc/check-tag-names": [
+      1,
+      {
+        "definedTags": [
+          "notice",
+          "link",
+          "task",
+          "ticket",
+          "note",
+        ],
+      },
+    ],
+    "jsdoc/require-param": [
+      0,
+    ],
+    "jsdoc/require-param-type": [
+      0,
+    ],
+    "jsdoc/require-returns-description": [
+      0,
+    ],
+    "lines-around-comment": [
+      0,
+    ],
+    "no-console": [
+      0,
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+      },
+    ],
+    "object-curly-spacing": [
+      1,
+      "never",
+    ],
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react/display-name": [
+      0,
+    ],
+    "react/jsx-curly-spacing": [
+      1,
+      {
+        "allowMultiline": false,
+        "children": true,
+        "when": "never",
+      },
+    ],
+    "react/no-unescaped-entities": [
+      2,
+      {
+        "forbid": [
+          ">",
+          "}",
+        ],
+      },
+    ],
+    "react/prop-types": [
+      2,
+      {
+        "skipUndeclared": true,
+      },
+    ],
+    "space-before-blocks": [
+      1,
+      "always",
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "asyncArrow": "ignore",
+        "named": "never",
+      },
+    ],
+    "space-in-parens": [
+      2,
+      "always",
+    ],
+    "template-curly-spacing": [
+      1,
+      "never",
+    ],
+    "yoda": [
+      2,
+      "always",
+      {
+        "onlyEquality": true,
+      },
+    ],
+  },
+  "settings": {
+    "react": {
+      "version": "18.0",
+    },
+  },
+}
+`;
+
+exports[`index.js Snapshot 1`] = `
+{
+  "env": {
+    "browser": true,
+  },
+  "extends": [
+    "plugin:@wordpress/eslint-plugin/recommended-with-formatting",
+    "plugin:import/typescript",
+  ],
+  "globals": {
+    "$": "readonly",
+    "jQuery": "readonly",
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx",
+      ],
+      "plugins": [
+        "@typescript-eslint",
+      ],
+      "rules": {
+        "@typescript-eslint/no-redeclare": [
+          "error",
+        ],
+        "@typescript-eslint/no-shadow": [
+          "error",
+        ],
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/strict-boolean-expressions": [
+          "warn",
+          {
+            "allowNumber": false,
+            "allowString": false,
+          },
+        ],
+        "@typescript-eslint/type-annotation-spacing": [
+          "warn",
+          {
+            "after": true,
+            "before": false,
+            "overrides": {
+              "arrow": {
+                "after": true,
+                "before": true,
+              },
+            },
+          },
+        ],
+        "jsdoc/no-undefined-types": [
+          0,
+        ],
+        "no-magic-numbers": [
+          0,
+        ],
+        "no-redeclare": [
+          0,
+        ],
+        "no-shadow": [
+          0,
+        ],
+        "no-undef": [
+          0,
+        ],
+        "semi": [
+          0,
+        ],
+      },
+    },
+    {
+      "extends": [
+        "plugin:svelte/recommended",
+      ],
+      "files": [
+        "*.svelte",
+      ],
+      "parser": "svelte-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+      },
+      "rules": {
+        "prefer-const": [
+          0,
+        ],
+      },
+    },
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "extraFileExtensions": [
+      ".svelte",
+    ],
+    "project": "./tsconfig.json",
+    "sourceType": "module",
+    "warnOnUnsupportedTypeScriptVersion": false,
+  },
+  "rules": {
+    "arrow-parens": [
+      1,
+      "as-needed",
+    ],
+    "arrow-spacing": [
+      1,
+      {
+        "after": true,
+        "before": true,
+      },
+    ],
+    "camelcase": [
+      2,
+      {
+        "properties": "never",
+      },
+    ],
+    "import/no-unresolved": [
+      0,
+    ],
+    "indent": [
+      1,
+      "tab",
+      {
+        "SwitchCase": 1,
+      },
+    ],
+    "jsdoc/check-tag-names": [
+      1,
+      {
+        "definedTags": [
+          "notice",
+          "link",
+          "task",
+          "ticket",
+          "note",
+        ],
+      },
+    ],
+    "jsdoc/require-param": [
+      0,
+    ],
+    "jsdoc/require-param-type": [
+      0,
+    ],
+    "jsdoc/require-returns-description": [
+      0,
+    ],
+    "lines-around-comment": [
+      0,
+    ],
+    "no-console": [
+      0,
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+      },
+    ],
+    "object-curly-spacing": [
+      1,
+      "never",
+    ],
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react/display-name": [
+      0,
+    ],
+    "react/jsx-curly-spacing": [
+      1,
+      {
+        "allowMultiline": false,
+        "children": true,
+        "when": "never",
+      },
+    ],
+    "react/no-unescaped-entities": [
+      2,
+      {
+        "forbid": [
+          ">",
+          "}",
+        ],
+      },
+    ],
+    "react/prop-types": [
+      2,
+      {
+        "skipUndeclared": true,
+      },
+    ],
+    "space-before-blocks": [
+      1,
+      "always",
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "asyncArrow": "ignore",
+        "named": "never",
+      },
+    ],
+    "space-in-parens": [
+      2,
+      "always",
+    ],
+    "template-curly-spacing": [
+      1,
+      "never",
+    ],
+    "yoda": [
+      2,
+      "always",
+      {
+        "onlyEquality": true,
+      },
+    ],
+  },
+  "settings": {
+    "react": {
+      "version": "18.0",
+    },
+  },
+}
+`;
