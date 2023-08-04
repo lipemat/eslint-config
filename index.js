@@ -1,4 +1,9 @@
 const {getConfig} = require( './helpers/config' );
+
+/**
+ * Default config if no extensions override it.
+ *
+ */
 let mergedConfig  =  {
 	"env": {
 		"browser": true
