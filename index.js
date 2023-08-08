@@ -1,5 +1,3 @@
-const {getConfig} = require( './helpers/config' );
-
 /**
  * Default config if no extensions override it.
  *
@@ -108,6 +106,7 @@ let mergedConfig  =  {
  * Merge in any extensions' config.
  */
 try {
+	const {getConfig} = require( './helpers/config' );
 	mergedConfig = getConfig( mergedConfig );
 } catch( e ) {
 	// JS Boilerplate is not installed.
