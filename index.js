@@ -96,6 +96,7 @@ let mergedConfig  =  {
 		'template-curly-spacing': [ 1, 'never' ],
 		'yoda': [ 2, 'always', {'onlyEquality': true} ],
 	},
+	'root': true,
 	'settings': {
 		'react': {
 			'version': '18.0',
