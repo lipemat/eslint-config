@@ -3,19 +3,19 @@ let mockIncludeExtensions = true;
 // Change the result of the getConfig function, so we can change the result during the test.
 jest.mock( '../helpers/config.js', () => ( {
 	...jest.requireActual( '../helpers/config.js' ),
-	getConfig:  originalConfig => {
+	getConfig: originalConfig => {
 		if ( mockIncludeExtensions ) {
 			return jest.requireActual( '../helpers/config.js' ).getConfig( originalConfig );
 		}
 		return originalConfig;
-	}
+	},
 } ) );
 
 
 afterEach( () => {
 	jest.resetModules();
 	mockIncludeExtensions = true;
-});
+} );
 
 
 describe( 'index.js', () => {
@@ -30,7 +30,7 @@ describe( 'index.js', () => {
 			extraFileExtensions: [
 				'.svelte',
 			],
-			project: "./tsconfig.json",
+			project: './tsconfig.json',
 			sourceType: 'module',
 			warnOnUnsupportedTypeScriptVersion: false,
 		} );
@@ -64,7 +64,7 @@ describe( 'index.js', () => {
 
 		expect( require( '../index.js' ).parserOptions ).toEqual( {
 			ecmaVersion: 7,
-			project: "./tsconfig.json",
+			project: './tsconfig.json',
 			sourceType: 'module',
 			warnOnUnsupportedTypeScriptVersion: false,
 		} );

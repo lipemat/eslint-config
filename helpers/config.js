@@ -47,4 +47,4 @@ function getConfig( mergedConfig ) {
 
 module.exports = {
 	getConfig,
-}
+};
