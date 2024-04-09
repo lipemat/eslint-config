@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@wordpress/eslint-plugin": "^12.2.0",
-    "eslint": "^8"
+    "eslint": "^8",
+    "eslint-plugin-deprecation": "^2.0.0"
   },
   "devDependencies": {
     "@lipemat/js-boilerplate": "^10.3.1",

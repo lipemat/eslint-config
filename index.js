@@ -9,6 +9,7 @@ let mergedConfig = {
 	extends: [
 		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
 		'plugin:import/typescript',
+		'plugin:deprecation/recommended',
 	],
 	globals: {
 		$: 'readonly',
