@@ -8,6 +8,7 @@ exports[`index.js Original Config: original config 1`] = `
   "extends": [
     "plugin:@wordpress/eslint-plugin/recommended-with-formatting",
     "plugin:import/typescript",
+    "plugin:deprecation/recommended",
   ],
   "globals": {
     "$": "readonly",
@@ -216,6 +217,7 @@ exports[`index.js Snapshot 1`] = `
   "extends": [
     "plugin:@wordpress/eslint-plugin/recommended-with-formatting",
     "plugin:import/typescript",
+    "plugin:deprecation/recommended",
   ],
   "globals": {
     "$": "readonly",
