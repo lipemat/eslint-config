@@ -20,7 +20,7 @@ let mergedConfig = {
 			'@typescript-eslint',
 		],
 		//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
-		//@link https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
+		//@link https://typescript-eslint.io/rules/
 		rules: {
 			'jsdoc/no-undefined-types': [ 0 ],
 			'no-magic-numbers': [ 0 ],
