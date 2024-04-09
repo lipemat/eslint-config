@@ -14,11 +14,14 @@ jobs:
     name: Publish on NPM.js
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{env.NODE_VERSION}}
           registry-url: 'https://registry.npmjs.org'
+      - name: Install yarn
+        shell: bash
+        run: corepack enable
       - run: yarn install
       - run: npm publish --access public
         env:
