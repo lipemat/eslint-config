@@ -2125,6 +2125,7 @@ __metadata:
     "@wordpress/eslint-plugin": "npm:^12.2.0"
     eslint: "npm:^8"
     eslint-plugin-deprecation: "npm:^2.0.0"
+    eslint-plugin-jsx-a11y: "npm:6.7.1"
     jest: "npm:^29"
     typescript: "npm:^5.1.6"
   peerDependencies:
@@ -5572,7 +5573,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-a11y@npm:^6.5.1":
+"eslint-plugin-jsx-a11y@npm:6.7.1, eslint-plugin-jsx-a11y@npm:^6.5.1":
   version: 6.7.1
   resolution: "eslint-plugin-jsx-a11y@npm:6.7.1"
   dependencies:
