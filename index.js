@@ -29,6 +29,15 @@ let mergedConfig = {
 			'no-shadow': [ 0 ],
 			'no-undef': [ 0 ],
 			semi: [ 0 ],
+			'@typescript-eslint/ban-types': [
+				'error',
+				{
+					types: {
+						unknown: 'Use a specific type.',
+					},
+				},
+			],
+			'@typescript-eslint/no-explicit-any': 'error',
 			'@typescript-eslint/no-shadow': [ 'error' ],
 			'@typescript-eslint/no-redeclare': [ 'error' ],
 			'@typescript-eslint/no-unused-vars': 'error',
