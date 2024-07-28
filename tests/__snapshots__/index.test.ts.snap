@@ -144,6 +144,9 @@ exports[`index.js Original Config: original config 1`] = `
     "no-console": [
       0,
     ],
+    "no-constant-binary-expression": [
+      "warn",
+    ],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -381,6 +384,9 @@ exports[`index.js Snapshot 1`] = `
     ],
     "no-console": [
       0,
+    ],
+    "no-constant-binary-expression": [
+      "warn",
     ],
     "no-multiple-empty-lines": [
       "error",

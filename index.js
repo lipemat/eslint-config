@@ -86,6 +86,7 @@ let mergedConfig = {
 		'import/no-unresolved': [ 0 ],
 
 		'no-console': [ 0 ],
+		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
 		'object-curly-spacing': [ 1, 'never' ],
 		'react/no-unescaped-entities': [ 2, {forbid: [ '>', '}' ]} ],
