@@ -60,24 +60,12 @@ exports[`index.js Original Config: original config 1`] = `
             },
           },
         ],
-        "jsdoc/no-undefined-types": [
-          0,
-        ],
-        "no-magic-numbers": [
-          0,
-        ],
-        "no-redeclare": [
-          0,
-        ],
-        "no-shadow": [
-          0,
-        ],
-        "no-undef": [
-          0,
-        ],
-        "semi": [
-          0,
-        ],
+        "jsdoc/no-undefined-types": "off",
+        "no-magic-numbers": "off",
+        "no-redeclare": "off",
+        "no-shadow": "off",
+        "no-undef": "off",
+        "semi": "off",
       },
     },
   ],
@@ -107,9 +95,7 @@ exports[`index.js Original Config: original config 1`] = `
         "properties": "never",
       },
     ],
-    "import/no-unresolved": [
-      0,
-    ],
+    "import/no-unresolved": "off",
     "indent": [
       1,
       "tab",
@@ -129,18 +115,10 @@ exports[`index.js Original Config: original config 1`] = `
         ],
       },
     ],
-    "jsdoc/require-param": [
-      0,
-    ],
-    "jsdoc/require-param-type": [
-      0,
-    ],
-    "jsdoc/require-returns-description": [
-      0,
-    ],
-    "lines-around-comment": [
-      0,
-    ],
+    "jsdoc/require-param": "off",
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-returns-description": "off",
+    "lines-around-comment": "off",
     "no-console": [
       "warn",
       {
@@ -166,9 +144,7 @@ exports[`index.js Original Config: original config 1`] = `
     ],
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
-    "react/display-name": [
-      0,
-    ],
+    "react/display-name": "off",
     "react/jsx-curly-spacing": [
       1,
       {
@@ -288,24 +264,12 @@ exports[`index.js Snapshot 1`] = `
             },
           },
         ],
-        "jsdoc/no-undefined-types": [
-          0,
-        ],
-        "no-magic-numbers": [
-          0,
-        ],
-        "no-redeclare": [
-          0,
-        ],
-        "no-shadow": [
-          0,
-        ],
-        "no-undef": [
-          0,
-        ],
-        "semi": [
-          0,
-        ],
+        "jsdoc/no-undefined-types": "off",
+        "no-magic-numbers": "off",
+        "no-redeclare": "off",
+        "no-shadow": "off",
+        "no-undef": "off",
+        "semi": "off",
       },
     },
     {
@@ -355,9 +319,7 @@ exports[`index.js Snapshot 1`] = `
         "properties": "never",
       },
     ],
-    "import/no-unresolved": [
-      0,
-    ],
+    "import/no-unresolved": "off",
     "indent": [
       1,
       "tab",
@@ -377,18 +339,10 @@ exports[`index.js Snapshot 1`] = `
         ],
       },
     ],
-    "jsdoc/require-param": [
-      0,
-    ],
-    "jsdoc/require-param-type": [
-      0,
-    ],
-    "jsdoc/require-returns-description": [
-      0,
-    ],
-    "lines-around-comment": [
-      0,
-    ],
+    "jsdoc/require-param": "off",
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-returns-description": "off",
+    "lines-around-comment": "off",
     "no-console": [
       "warn",
       {
@@ -414,9 +368,7 @@ exports[`index.js Snapshot 1`] = `
     ],
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
-    "react/display-name": [
-      0,
-    ],
+    "react/display-name": "off",
     "react/jsx-curly-spacing": [
       1,
       {

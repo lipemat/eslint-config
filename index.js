@@ -23,12 +23,12 @@ let mergedConfig = {
 		//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
 		//@link https://typescript-eslint.io/rules/
 		rules: {
-			'jsdoc/no-undefined-types': [ 0 ],
-			'no-magic-numbers': [ 0 ],
-			'no-redeclare': [ 0 ],
-			'no-shadow': [ 0 ],
-			'no-undef': [ 0 ],
-			semi: [ 0 ],
+			'jsdoc/no-undefined-types': 'off',
+			'no-magic-numbers': 'off',
+			'no-redeclare': 'off',
+			'no-shadow': 'off',
+			'no-undef': 'off',
+			semi: 'off',
 			'@typescript-eslint/ban-types': [
 				'error',
 				{
@@ -72,10 +72,10 @@ let mergedConfig = {
 		'arrow-spacing': [ 1, {before: true, after: true} ],
 		camelcase: [ 2, {properties: 'never'} ],
 		indent: [ 1, 'tab', {SwitchCase: 1} ],
-		'lines-around-comment': [ 0 ],
-		'jsdoc/require-param': [ 0 ],
-		'jsdoc/require-param-type': [ 0 ],
-		'jsdoc/require-returns-description': [ 0 ],
+		'lines-around-comment': 'off',
+		'jsdoc/require-param': 'off',
+		'jsdoc/require-param-type': 'off',
+		'jsdoc/require-returns-description': 'off',
 		'jsdoc/check-tag-names': [ 1, {definedTags: [ 'notice', 'link', 'task', 'ticket', 'note' ]} ],
 
 		/**
@@ -83,14 +83,14 @@ let mergedConfig = {
 		 *
 		 * @link https://github.com/import-js/eslint-plugin-import/issues/2267
 		 */
-		'import/no-unresolved': [ 0 ],
+		'import/no-unresolved': 'off',
 
 		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug' ]} ],
 		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
 		'object-curly-spacing': [ 1, 'never' ],
 		'react/no-unescaped-entities': [ 2, {forbid: [ '>', '}' ]} ],
-		'react/display-name': [ 0 ],
+		'react/display-name': 'off',
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
 		'react/jsx-curly-spacing': [ 1, {when: 'never', allowMultiline: false, children: true} ],
