@@ -85,7 +85,7 @@ let mergedConfig = {
 		 */
 		'import/no-unresolved': [ 0 ],
 
-		'no-console': [ 0 ],
+		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug' ]} ],
 		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
 		'object-curly-spacing': [ 1, 'never' ],
