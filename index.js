@@ -8,7 +8,6 @@ let mergedConfig = {
 	},
 	extends: [
 		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
-		'plugin:import/typescript',
 		'plugin:deprecation/recommended',
 	],
 	globals: {
@@ -77,14 +76,7 @@ let mergedConfig = {
 		'jsdoc/require-param-type': 'off',
 		'jsdoc/require-returns-description': 'off',
 		'jsdoc/check-tag-names': [ 1, {definedTags: [ 'notice', 'link', 'task', 'ticket', 'note' ]} ],
-
-		/**
-		 * Disable rule until the bug is resolved.
-		 *
-		 * @link https://github.com/import-js/eslint-plugin-import/issues/2267
-		 */
 		'import/no-unresolved': 'off',
-
 		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug' ]} ],
 		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
