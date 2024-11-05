@@ -1,7 +1,12 @@
+##########################################################
+# Publish Beta version on npm.js
+#
+# @version 4.0.0
+#
+###########################################################
+
 name: Publish Beta
-env:
-  VERSION: 3.0.1
-  NODE_VERSION: '18.18.2'
+run-name: Publish beta version ${{ github.ref_name }}.
 
 on:
   push:
@@ -10,18 +15,10 @@ on:
 
 jobs:
   publish:
-    name: Publish beta on NPM.js
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{env.NODE_VERSION}}
-          registry-url: 'https://registry.npmjs.org'
-      - name: Install yarn
-        shell: bash
-        run: corepack enable
-      - run: yarn install
-      - run: npm publish --tag beta
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+    name: Publish Beta on npm.js
+    uses: lipemat/public-actions/.github/workflows/publish-package.yml@version/1
+    with:
+      beta: true
+      nodeVersion: '20.11.0'
+      withInstall: true
+    secrets: inherit
