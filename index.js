@@ -1,3 +1,8 @@
+import {fixupConfigRules} from '@eslint/compat';
+import {FlatCompat} from '@eslint/eslintrc';
+
+const flatCompat = new FlatCompat();
+
 /**
  * Default config if no extensions override it.
  *
@@ -5,21 +10,11 @@
 let mergedConfig = {
 	env: {
 		browser: true,
-	},
-	extends: [
-		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
-		'plugin:deprecation/recommended',
-	],
-	globals: {
-		$: 'readonly',
-		jQuery: 'readonly',
-	},
-	overrides: [ {
+	}, globals: {
+		$: 'readonly', jQuery: 'readonly',
+	}, overrides: [ {
 		files: [ '**/*.ts', '**/*.tsx' ],
-		plugins: [
-			'@typescript-eslint',
-		],
-		//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
+		plugins: [ '@typescript-eslint', ], //Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
 		//@link https://typescript-eslint.io/rules/
 		rules: {
 			'jsdoc/no-undefined-types': 'off',
@@ -27,46 +22,34 @@ let mergedConfig = {
 			'no-redeclare': 'off',
 			'no-shadow': 'off',
 			'no-undef': 'off',
+			'no-unused-vars': 'off',
 			semi: 'off',
-			'@typescript-eslint/ban-types': [
-				'error',
-				{
-					types: {
-						unknown: 'Use a specific type.',
-					},
+			'@typescript-eslint/ban-types': [ 'error', {
+				types: {
+					unknown: 'Use a specific type.',
 				},
-			],
+			}, ],
 			'@typescript-eslint/no-explicit-any': 'error',
 			'@typescript-eslint/no-shadow': [ 'error' ],
 			'@typescript-eslint/no-redeclare': [ 'error' ],
 			'@typescript-eslint/no-unused-vars': 'error',
-			'@typescript-eslint/strict-boolean-expressions': [
-				'warn',
-				{
-					allowString: false,
-					allowNumber: false,
-				},
-			],
+			'@typescript-eslint/strict-boolean-expressions': [ 'warn', {
+				allowString: false, allowNumber: false,
+			}, ],
 			'@typescript-eslint/type-annotation-spacing': [ 'warn', {
-				before: false,
-				after: true,
-				overrides: {
+				before: false, after: true, overrides: {
 					arrow: {
-						before: true,
-						after: true,
+						before: true, after: true,
 					},
 				},
 			} ],
 		},
-	} ],
-	parser: '@typescript-eslint/parser',
-	parserOptions: {
+	} ], parser: '@typescript-eslint/parser', parserOptions: {
 		ecmaVersion: 7,
 		project: './tsconfig.json',
 		sourceType: 'module',
 		warnOnUnsupportedTypeScriptVersion: false,
-	},
-	rules: {
+	}, rules: {
 		'arrow-parens': [ 1, 'as-needed' ],
 		'arrow-spacing': [ 1, {before: true, after: true} ],
 		camelcase: [ 2, {properties: 'never'} ],
@@ -85,20 +68,18 @@ let mergedConfig = {
 		'react/display-name': 'off',
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
-		'react/jsx-curly-spacing': [ 1, {when: 'never', allowMultiline: false, children: true} ],
+		'react/jsx-curly-spacing': [ 1, {
+			when: 'never', allowMultiline: false, children: true
+		} ],
 		'react/prop-types': [ 2, {skipUndeclared: true} ],
 		'space-before-blocks': [ 1, 'always' ],
 		'space-before-function-paren': [ 'error', {
-			anonymous: 'never',
-			named: 'never',
-			asyncArrow: 'ignore',
+			anonymous: 'never', named: 'never', asyncArrow: 'ignore',
 		} ],
 		'space-in-parens': [ 2, 'always' ],
 		'template-curly-spacing': [ 1, 'never' ],
 		yoda: [ 2, 'always', {onlyEquality: true} ],
-	},
-	root: true,
-	settings: {
+	}, root: true, settings: {
 		react: {
 			version: '18.0',
 		},
@@ -115,4 +96,8 @@ try {
 	// JS Boilerplate is not installed.
 }
 
-module.exports = mergedConfig;
+export default [
+	...fixupConfigRules( flatCompat.extends( 'plugin:@wordpress/eslint-plugin/recommended-with-formatting' ) ),
+	...fixupConfigRules( flatCompat.extends( 'plugin:deprecation/recommended' ) ),
+	...fixupConfigRules( flatCompat.config( mergedConfig ) )
+];

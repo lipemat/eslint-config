@@ -4,6 +4,6 @@
  * May adjust configuration here or with a config override via `config/jest.config.js`.
  *
  */
-const config = require( '@lipemat/js-boilerplate/config/jest.config' );
+import config from '@lipemat/js-boilerplate/config/jest.config.js';
 
-module.exports = config;
+export default config;
