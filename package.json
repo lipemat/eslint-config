@@ -26,11 +26,13 @@
   "dependencies": {
     "@eslint/compat": "^1.2.4",
     "@eslint/eslintrc": "^3.2.0",
+    "@stylistic/eslint-plugin-ts": "^2.12.1",
     "@types/eslint": "^9",
     "@wordpress/eslint-plugin": "^22.0.0",
     "eslint": "^9",
     "eslint-plugin-deprecation": "^3",
     "eslint-plugin-jsx-a11y": "6.7.1",
+    "globals": "^15.13.0",
     "typescript-eslint": "^8.18.0"
   },
   "devDependencies": {
