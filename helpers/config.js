@@ -1,6 +1,8 @@
 const {getExtensionsConfig} = require( '@lipemat/js-boilerplate/helpers/config' );
 const {getPackageConfig} = require( '@lipemat/js-boilerplate/helpers/package-config' );
 const path = require( 'path' );
+const {fixupConfigRules} = require( '@eslint/compat' );
+const {FlatCompat} = require( '@eslint/eslintrc' );
 
 
 /**
@@ -32,13 +34,15 @@ const path = require( 'path' );
  * @return {Object}
  */
 function getConfig( mergedConfig ) {
-	mergedConfig = {...mergedConfig, ...getExtensionsConfig( 'eslint.config', mergedConfig )};
+	const extConfig = getExtensionsConfig( 'eslint.config', mergedConfig );
+	mergedConfig.push( extConfig );
+
 	try {
 		const localConfig = require( path.resolve( getPackageConfig().packageDirectory + '/config', 'eslint.config' ) );
 		if ( 'function' === typeof localConfig ) {
-			mergedConfig = {...mergedConfig, ...localConfig( mergedConfig )};
+			mergedConfig.push( localConfig( mergedConfig ) );
 		} else {
-			mergedConfig = {...mergedConfig, ...localConfig};
+			mergedConfig.push( localConfig );
 		}
 	} catch ( e ) {
 	}

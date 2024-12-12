@@ -19,25 +19,34 @@ afterEach( () => {
 
 
 describe( 'index.js', () => {
-	test( 'Snapshot', () => {
-		expect( require( '../index.js' ) ).toMatchSnapshot();
-	} );
-
 
 	test( 'Parser Options', () => {
-		expect( require( '../index.js' ).parserOptions ).toEqual( {
-			ecmaVersion: 7,
+		const config = require( '../index.js' );
+		const original = config.default[ config.default.length - 3 ];
+		const override = config.default[ config.default.length - 2 ]
+
+		expect( original.languageOptions.sourceType ).toEqual( 'module' );
+		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
+		expect( original.languageOptions.parserOptions ).toEqual( {
+			project: './tsconfig.json',
+			warnOnUnsupportedTypeScriptVersion: false,
+		} );
+
+		expect( override.languageOptions.sourceType ).not.toBeDefined();
+		expect( override.languageOptions.ecmaVersion ).not.toBeDefined();
+		expect( override.languageOptions.parserOptions ).toEqual( {
 			extraFileExtensions: [
 				'.svelte',
 			],
-			project: './tsconfig.json',
-			sourceType: 'module',
-			warnOnUnsupportedTypeScriptVersion: false,
 		} );
 	} );
 
+
 	test( 'Overrides', () => {
-		expect( require( '../index.js' ).overrides[ 1 ] ).toEqual( {
+		const config = require( '../index.js' );
+		const override = config.default[ config.default.length - 1 ];
+
+		expect( override ).toEqual( {
 			files: [
 				'*.svelte',
 			],
@@ -59,13 +68,13 @@ describe( 'index.js', () => {
 
 	test( 'Original Config', () => {
 		mockIncludeExtensions = false;
-		expect( require( '../index.js' ) ).toMatchSnapshot( 'original config' );
-		expect( require( '../index.js' ).overrides[ 1 ] ).not.toBeDefined();
+		const config = require( '../index.js' );
+		const original = config.default[ config.default.length - 2 ]
 
-		expect( require( '../index.js' ).parserOptions ).toEqual( {
-			ecmaVersion: 7,
+		expect( original.languageOptions.sourceType ).toEqual( 'module' );
+		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
+		expect( original.languageOptions.parserOptions ).toEqual( {
 			project: './tsconfig.json',
-			sourceType: 'module',
 			warnOnUnsupportedTypeScriptVersion: false,
 		} );
 	} );
