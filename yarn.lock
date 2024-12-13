@@ -2294,9 +2294,11 @@ __metadata:
     "@types/eslint": "npm:^9"
     "@types/jest": "npm:^29.5.3"
     "@types/node": "npm:^20"
+    "@typescript-eslint/parser": "npm:^8.18.0"
     "@wordpress/eslint-plugin": "npm:^22.0.0"
     eslint: "npm:^9"
     eslint-plugin-deprecation: "npm:^3"
+    eslint-plugin-import: "npm:^2.31.0"
     eslint-plugin-jsx-a11y: "npm:6.7.1"
     globals: "npm:^15.13.0"
     jest: "npm:^29"
@@ -3319,7 +3321,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.18.0":
+"@typescript-eslint/parser@npm:8.18.0, @typescript-eslint/parser@npm:^8.18.0":
   version: 8.18.0
   resolution: "@typescript-eslint/parser@npm:8.18.0"
   dependencies:
@@ -6020,7 +6022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.25.2":
+"eslint-plugin-import@npm:^2.25.2, eslint-plugin-import@npm:^2.31.0":
   version: 2.31.0
   resolution: "eslint-plugin-import@npm:2.31.0"
   dependencies:

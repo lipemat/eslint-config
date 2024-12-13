@@ -1,6 +1,7 @@
 import {fixupConfigRules} from '@eslint/compat';
 import {FlatCompat} from '@eslint/eslintrc';
 import tslint from 'typescript-eslint';
+import tsParser from '@typescript-eslint/parser';
 import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 import {getConfig} from './helpers/config.js';
@@ -20,10 +21,13 @@ let BASE_CONFIG = {
 			$: 'readonly',
 			jQuery: 'readonly',
 		},
-		parser: tslint.parser,
+		parser: tsParser,
 		parserOptions: {
 			project: './tsconfig.json',
 			warnOnUnsupportedTypeScriptVersion: false,
+			extraFileExtensions: [
+				'.svelte',
+			],
 		},
 		sourceType: 'module',
 	},
