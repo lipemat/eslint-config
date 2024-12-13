@@ -25,9 +25,6 @@ let BASE_CONFIG = {
 		parserOptions: {
 			project: './tsconfig.json',
 			warnOnUnsupportedTypeScriptVersion: false,
-			extraFileExtensions: [
-				'.svelte',
-			],
 		},
 		sourceType: 'module',
 	},

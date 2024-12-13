@@ -17,37 +17,26 @@ import path from 'path';
  * @see @lipemat/js-boilerplate/helpers/config
  *
  * @example ```ts
- * // standard
- * module.export = {
- *     externals: {extra: 'Extra'}
- * }
  * // function
- * module.exports = function( config ) {
- *     return {
- *         externals: {...config.externals, extra: 'Extra'}
- *     }
+ * module.exports = function( config: { configs: Linter.Config[] } ) {
+ *     config.configs[0].push({extra: 'Extra'});
+ *     return config
  * }
  * ```
  *
- * @return {Object}
+ * @return Linter.Config[]
  */
 export function getConfig( mergedConfig ) {
-	const extConfig = getExtensionsConfig( 'eslint.config', mergedConfig );
-	// Support ES6 modules.
-	if ( extConfig.hasOwnProperty( 'default' ) ) {
-		mergedConfig.push( ...extConfig.default );
-	} else {
-		mergedConfig.push( ...extConfig );
-	}
+	mergedConfig = getExtensionsConfig( 'eslint.config', {configs: mergedConfig} );
 
 	try {
 		const localConfig = require( path.resolve( getPackageConfig().packageDirectory + '/config', 'eslint.config' ) );
 		if ( 'function' === typeof localConfig ) {
-			mergedConfig.push( localConfig( mergedConfig ) );
+			mergedConfig = {...mergedConfig, ...localConfig( mergedConfig )};
 		} else {
-			mergedConfig.push( localConfig );
+			mergedConfig = {...mergedConfig, ...localConfig};
 		}
 	} catch ( e ) {
 	}
-	return mergedConfig;
+	return mergedConfig.configs;
 }
