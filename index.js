@@ -3,6 +3,7 @@ import {FlatCompat} from '@eslint/eslintrc';
 import tslint from 'typescript-eslint';
 import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
+import {getConfig} from './helpers/config.js';
 
 
 const flatCompat = new FlatCompat();
@@ -118,7 +119,6 @@ const TS_CONFIG = {
  */
 let mergedConfig = [ BASE_CONFIG, TS_CONFIG ];
 try {
-	const {getConfig} = require( './helpers/config' );
 	mergedConfig = getConfig( mergedConfig );
 } catch ( e ) {
 	// JS Boilerplate is not installed.

@@ -1,8 +1,6 @@
-const {getExtensionsConfig} = require( '@lipemat/js-boilerplate/helpers/config' );
-const {getPackageConfig} = require( '@lipemat/js-boilerplate/helpers/package-config' );
-const path = require( 'path' );
-const {fixupConfigRules} = require( '@eslint/compat' );
-const {FlatCompat} = require( '@eslint/eslintrc' );
+import {getExtensionsConfig} from '@lipemat/js-boilerplate/helpers/config.js';
+import {getPackageConfig} from '@lipemat/js-boilerplate/helpers/package-config.js';
+import path from 'path';
 
 
 /**
@@ -33,9 +31,14 @@ const {FlatCompat} = require( '@eslint/eslintrc' );
  *
  * @return {Object}
  */
-function getConfig( mergedConfig ) {
+export function getConfig( mergedConfig ) {
 	const extConfig = getExtensionsConfig( 'eslint.config', mergedConfig );
-	mergedConfig.push( extConfig );
+	// Support ES6 modules.
+	if ( extConfig.hasOwnProperty( 'default' ) ) {
+		mergedConfig.push( ...extConfig.default );
+	} else {
+		mergedConfig.push( ...extConfig );
+	}
 
 	try {
 		const localConfig = require( path.resolve( getPackageConfig().packageDirectory + '/config', 'eslint.config' ) );
@@ -48,7 +51,3 @@ function getConfig( mergedConfig ) {
 	}
 	return mergedConfig;
 }
-
-module.exports = {
-	getConfig,
-};
