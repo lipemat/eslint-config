@@ -1,6 +1,6 @@
 import {fixupConfigRules} from '@eslint/compat';
 import {FlatCompat} from '@eslint/eslintrc';
-import tslint from 'typescript-eslint';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
@@ -74,7 +74,7 @@ let BASE_CONFIG = {
 const TS_CONFIG = {
 	files: [ '**/*.ts', '**/*.tsx' ],
 	plugins: {
-		'@typescript-eslint': tslint.plugin,
+		'@typescript-eslint': tsPlugin,
 		'@stylistic/ts': stylisticTs
 	},
 	//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
