@@ -76,6 +76,8 @@ let mergedConfig = {
 		'jsdoc/require-param-type': 'off',
 		'jsdoc/require-returns-description': 'off',
 		'jsdoc/check-tag-names': [ 1, {definedTags: [ 'notice', 'link', 'task', 'ticket', 'note' ]} ],
+		// Parse error with Svelte v4 due to `as` operator.
+		'import/named': 'off',
 		'import/no-unresolved': 'off',
 		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug' ]} ],
 		'no-constant-binary-expression': [ 'warn' ],

@@ -94,6 +94,7 @@ exports[`index.js Original Config: original config 1`] = `
         "properties": "never",
       },
     ],
+    "import/named": "off",
     "import/no-unresolved": "off",
     "indent": [
       1,
@@ -317,6 +318,7 @@ exports[`index.js Snapshot 1`] = `
         "properties": "never",
       },
     ],
+    "import/named": "off",
     "import/no-unresolved": "off",
     "indent": [
       1,
