@@ -18,9 +18,9 @@ jest.mock( '../../helpers/config.js', () => ( {
 
 jest.mock( '@lipemat/js-boilerplate/helpers/config.js', () => ( {
 	...jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ),
-	getExtensionsConfig: originalConfig => {
+	getExtensionsConfig: ( fileName, originalConfig ) => {
 		if ( mockIncludeExtensions ) {
-			return jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ).getExtensionsConfig( originalConfig );
+			return jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ).getExtensionsConfig( fileName, originalConfig );
 		}
 		// Default result if no extensions are included.
 		return {};

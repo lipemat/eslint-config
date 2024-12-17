@@ -22,6 +22,11 @@ exports[`index.js Enabled Rules 1`] = `
   ],
   "@wordpress/i18n-text-domain": [
     2,
+    {
+      "allowedTextDomain": [
+        "lipe",
+      ],
+    },
   ],
   "@wordpress/i18n-translator-comments": [
     2,
