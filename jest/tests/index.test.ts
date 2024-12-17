@@ -1,11 +1,11 @@
 let mockIncludeExtensions = true;
 
 // Change the result of the getConfig function, so we can change the result during the test.
-jest.mock( '../helpers/config.js', () => ( {
-	...jest.requireActual( '../helpers/config.js' ),
+jest.mock( '../../helpers/config.js', () => ( {
+	...jest.requireActual( '../../helpers/config.js' ),
 	getConfig: originalConfig => {
 		if ( mockIncludeExtensions ) {
-			return jest.requireActual( '../helpers/config.js' ).getConfig( originalConfig );
+			return jest.requireActual( '../../helpers/config.js' ).getConfig( originalConfig );
 		}
 		return originalConfig;
 	},
@@ -19,9 +19,8 @@ afterEach( () => {
 
 
 describe( 'index.js', () => {
-
 	test( 'Parser Options', () => {
-		const config = require( '../index.js' );
+		const config = require( '../../index.js' );
 		const original = config.default[ config.default.length - 3 ];
 		const override = config.default[ config.default.length - 2 ]
 
@@ -43,7 +42,7 @@ describe( 'index.js', () => {
 
 
 	test( 'Overrides', () => {
-		const config = require( '../index.js' );
+		const config = require( '../../index.js' );
 		const override = config.default[ config.default.length - 1 ];
 
 		expect( override ).toEqual( {
@@ -68,7 +67,7 @@ describe( 'index.js', () => {
 
 	test( 'Original Config', () => {
 		mockIncludeExtensions = false;
-		const config = require( '../index.js' );
+		const config = require( '../../index.js' );
 		const original = config.default[ config.default.length - 2 ]
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );

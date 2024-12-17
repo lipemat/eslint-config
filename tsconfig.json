@@ -2,6 +2,8 @@
   "extends": "@lipemat/js-boilerplate/config/tsconfig.json",
   "include": [
     "./index.js",
+    "jest/**/*.js",
+    "jest/**/*.ts",
     "tests/**/*.ts"
   ]
 }

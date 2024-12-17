@@ -26,6 +26,7 @@
   "dependencies": {
     "@eslint/compat": "^1.2.4",
     "@eslint/eslintrc": "^3.2.0",
+    "@humanfs/node": "^0.16.6",
     "@stylistic/eslint-plugin-ts": "^2.12.1",
     "@types/eslint": "^9",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
@@ -42,11 +43,16 @@
     "@lipemat/js-boilerplate-svelte": "^1.1.2",
     "@types/jest": "^29.5.3",
     "@types/node": "^20",
+    "execa": "^5.1.1",
     "jest": "^29",
+    "jest-runner-eslint": "^2.2.1",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
     "@lipemat/js-boilerplate": "^10.3.1"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.5.3",
+  "resolutions": {
+    "@lipemat/js-boilerplate-svelte": "portal:/E:/SVN/the-boilerplate/packages/js-boilerplate-svelte"
+  }
 }

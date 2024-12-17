@@ -13,7 +13,7 @@ const flatCompat = new FlatCompat();
  * Default config if no extensions override it.
  *
  */
-let BASE_CONFIG = {
+const BASE_CONFIG = {
 	languageOptions: {
 		ecmaVersion: 7,
 		globals: {
@@ -52,7 +52,7 @@ let BASE_CONFIG = {
 		'react/jsx-curly-spacing': [ 1, {
 			when: 'never',
 			allowMultiline: false,
-			children: true
+			children: true,
 		} ],
 		'react/prop-types': [ 2, {skipUndeclared: true} ],
 		'space-before-blocks': [ 1, 'always' ],
@@ -77,7 +77,7 @@ const TS_CONFIG = {
 	files: [ '**/*.ts', '**/*.tsx' ],
 	plugins: {
 		'@typescript-eslint': tsPlugin,
-		'@stylistic/ts': stylisticTs
+		'@stylistic/ts': stylisticTs,
 	},
 	//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
 	//@link https://typescript-eslint.io/rules/
@@ -96,14 +96,14 @@ const TS_CONFIG = {
 			types: {
 				unknown: 'Use a specific type.',
 			},
-		}, ],
+		} ],
 		'@typescript-eslint/no-shadow': [ 'error' ],
 		'@typescript-eslint/no-unsafe-function-type': 'error',
 		'@typescript-eslint/no-unused-vars': 'error',
 		'@typescript-eslint/no-wrapper-object-types': 'error',
 		'@typescript-eslint/strict-boolean-expressions': [ 'warn', {
 			allowString: false, allowNumber: false,
-		}, ],
+		} ],
 		'@stylistic/ts/type-annotation-spacing': [ 'warn', {
 			before: false,
 			after: true,
@@ -114,7 +114,7 @@ const TS_CONFIG = {
 				},
 			},
 		} ],
-	}
+	},
 };
 
 /**
@@ -124,6 +124,7 @@ let mergedConfig = [ BASE_CONFIG, TS_CONFIG ];
 try {
 	mergedConfig = getConfig( mergedConfig );
 } catch ( e ) {
+	console.debug( e );
 	// JS Boilerplate is not installed.
 }
 
