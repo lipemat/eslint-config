@@ -1,4 +1,7 @@
+import * as tsParser from '@typescript-eslint/parser';
+
 let mockIncludeExtensions = true;
+
 
 // Change the result of the getConfig function, so we can change the result during the test.
 jest.mock( '../../helpers/config.js', () => ( {
@@ -21,46 +24,44 @@ afterEach( () => {
 describe( 'index.js', () => {
 	test( 'Parser Options', () => {
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 3 ];
-		const override = config.default[ config.default.length - 2 ]
+		const original = config.default[ config.default.length - 6 ];
+		const svelte = config.default[ config.default.length - 1 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
 		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
 		expect( original.languageOptions.parserOptions ).toEqual( {
+			extraFileExtensions: [
+				'.svelte',
+			],
 			project: './tsconfig.json',
 			warnOnUnsupportedTypeScriptVersion: false,
 		} );
 
-		expect( override.languageOptions.sourceType ).not.toBeDefined();
-		expect( override.languageOptions.ecmaVersion ).not.toBeDefined();
-		expect( override.languageOptions.parserOptions ).toEqual( {
-			extraFileExtensions: [
-				'.svelte',
-			],
-		} );
+		expect( svelte.languageOptions.sourceType ).not.toBeDefined();
+		expect( svelte.languageOptions.ecmaVersion ).not.toBeDefined();
+		expect( original.languageOptions.parserOptions.extraFileExtensions ).toEqual( [
+			'.svelte',
+		] );
 	} );
 
 
-	test( 'Overrides', () => {
+	test( 'Svelte config added as override', () => {
 		const config = require( '../../index.js' );
-		const override = config.default[ config.default.length - 1 ];
+		const svelteConfig = config.default[ config.default.length - 1 ];
 
-		expect( override ).toEqual( {
-			files: [
-				'*.svelte',
+		expect( svelteConfig.files ).toEqual( [
+			'**/*.svelte',
+			'*.svelte',
+		] );
+
+		expect( JSON.stringify( svelteConfig.languageOptions.parserOptions.parser ) ).toEqual( JSON.stringify( tsParser ) );
+		expect( svelteConfig.rules ).toEqual( {
+			'no-unused-vars': [
+				0,
 			],
-			extends: [
-				'plugin:svelte/recommended',
+			'prefer-const': [
+				0,
 			],
-			parser: 'svelte-eslint-parser',
-			parserOptions: {
-				parser: '@typescript-eslint/parser',
-			},
-			rules: {
-				'prefer-const': [
-					0,
-				],
-			},
 		} );
 	} );
 
