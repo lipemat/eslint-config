@@ -26,7 +26,6 @@
   "dependencies": {
     "@eslint/compat": "^1.2.4",
     "@eslint/eslintrc": "^3.2.0",
-    "@humanfs/node": "^0.16.6",
     "@stylistic/eslint-plugin-ts": "^2.12.1",
     "@types/eslint": "^9",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
@@ -51,8 +50,5 @@
   "peerDependencies": {
     "@lipemat/js-boilerplate": "^10.3.1"
   },
-  "packageManager": "yarn@4.5.3",
-  "resolutions": {
-    "@lipemat/js-boilerplate-svelte": "portal:/E:/SVN/the-boilerplate/packages/js-boilerplate-svelte"
-  }
+  "packageManager": "yarn@4.5.3"
 }
