@@ -1,9 +1,26 @@
 /**
  * @notice This file is required in the root of the JS project to allow `jest` to run.
  *
- * May adjust configuration here or with a config override via `config/jest.config.js`.
- *
+ * @see jest/helpers/jest-runner-eslint.ts
  */
-const config = require( '@lipemat/js-boilerplate/config/jest.config' );
+import config from '@lipemat/js-boilerplate/config/jest.config.js';
 
-module.exports = config;
+config.transformIgnorePatterns = [
+	'node_modules'
+];
+
+// Passed down from `jestRunnerEslint` to allow for a single linting test.
+if ( process.env.FIXTURE ) {
+	config.roots = [ process.env.FIXTURE ];
+	config.runner = 'jest-runner-eslint';
+	config.testMatch = [ '**/*.{js,svelte,ts}' ];
+	config.moduleFileExtensions = [ 'js', 'svelte', 'ts' ];
+} else {
+	config.roots = [ './jest/tests' ];
+}
+
+// The fixture tests can run long.
+config.testTimeout = 10_000;
+config.testEnvironment = 'node';
+
+export default config;

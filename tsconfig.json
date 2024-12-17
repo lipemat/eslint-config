@@ -1,7 +1,12 @@
 {
   "extends": "@lipemat/js-boilerplate/config/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "Bundler"
+  },
   "include": [
     "./index.js",
+    "jest/**/*.js",
+    "jest/**/*.ts",
     "tests/**/*.ts"
   ]
 }

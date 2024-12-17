@@ -1,6 +1,6 @@
-const {getExtensionsConfig} = require( '@lipemat/js-boilerplate/helpers/config' );
-const {getPackageConfig} = require( '@lipemat/js-boilerplate/helpers/package-config' );
-const path = require( 'path' );
+import {getExtensionsConfig} from '@lipemat/js-boilerplate/helpers/config.js';
+import {getPackageConfig} from '@lipemat/js-boilerplate/helpers/package-config.js';
+import path from 'path';
 
 
 /**
@@ -17,22 +17,18 @@ const path = require( 'path' );
  * @see @lipemat/js-boilerplate/helpers/config
  *
  * @example ```ts
- * // standard
- * module.export = {
- *     externals: {extra: 'Extra'}
- * }
  * // function
- * module.exports = function( config ) {
- *     return {
- *         externals: {...config.externals, extra: 'Extra'}
- *     }
+ * module.exports = function( config: { configs: Linter.Config[] } ) {
+ *     config.configs[0].push({extra: 'Extra'});
+ *     return config
  * }
  * ```
  *
- * @return {Object}
+ * @return Linter.Config[]
  */
-function getConfig( mergedConfig ) {
-	mergedConfig = {...mergedConfig, ...getExtensionsConfig( 'eslint.config', mergedConfig )};
+export function getConfig( mergedConfig ) {
+	mergedConfig = getExtensionsConfig( 'eslint.config', {configs: mergedConfig} );
+
 	try {
 		const localConfig = require( path.resolve( getPackageConfig().packageDirectory + '/config', 'eslint.config' ) );
 		if ( 'function' === typeof localConfig ) {
@@ -42,9 +38,5 @@ function getConfig( mergedConfig ) {
 		}
 	} catch ( e ) {
 	}
-	return mergedConfig;
+	return mergedConfig.configs;
 }
-
-module.exports = {
-	getConfig,
-};
