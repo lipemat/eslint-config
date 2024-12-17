@@ -14,7 +14,6 @@ const normalize = ( output: string ) =>
 		.replace( /(Time: {8})\d*(\.\d+)? ?m?s/, '$1' );
 
 const jestRunnerEslint = async ( testDir, options = [] ) => {
-	process.env.FIXTURE = join( resolve( __dirname + '/../' ), 'fixtures', testDir );
 	jest.setTimeout( 30_000 );
 
 	const {stdout, stderr} = await execa(
@@ -22,7 +21,11 @@ const jestRunnerEslint = async ( testDir, options = [] ) => {
 		[ '--useStderr', '--no-watchman', '--no-cache' ].concat( options ),
 		{
 			cwd: resolve( __dirname + '/../../' ),
-			env: {...process.env, FORCE_COLOR: '0'},
+			env: {
+				FIXTURE: join( resolve( __dirname + '/../' ), 'fixtures', testDir ),
+				FORCE_COLOR: '0',
+			},
+			extendEnv: false,
 			reject: false,
 		} );
 	return `${normalize( stderr )}\n${normalize( stdout )}`;

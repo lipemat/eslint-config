@@ -6,12 +6,13 @@ import {resolve} from 'path';
  */
 
 export default async function getEslintConfig() {
-	const {stdout, stderr} = await execa(
+	const {stdout} = await execa(
 		'yarn eslint',
 		[ '--print-config', 'index.js' ],
 		{
 			cwd: resolve( __dirname + '/../../' ),
 			reject: false,
+			extendEnv: false,
 		} );
 	return JSON.parse( stdout );
 }
