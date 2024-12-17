@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@lipemat/js-boilerplate": "^10.10.4",
-    "@lipemat/js-boilerplate-svelte": "^1.1.2",
+    "@lipemat/js-boilerplate-svelte": "^2.0.0-beta.1",
     "@types/jest": "^29.5.3",
     "@types/node": "^20",
     "execa": "^5.1.1",
