@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Svelte rules are enabled svelte/no-dupe-style-properties 1`] = `
-"FAIL jest/fixtures/failing-svelte/no-dupe-style-properties/CircleProgress.svelte
+"FAIL jest/fixtures/failing/svelte/no-dupe-style-properties/CircleProgress.svelte
   × null (mocked ms)
 
 
-E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing-svelte\\no-dupe-style-properties\\CircleProgress.svelte
+E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\svelte\\no-dupe-style-properties\\CircleProgress.svelte
   19:0  error  Parsing error: You can only have one top-level <style> tag per component
 
 ✖ 1 problem (1 error, 0 warnings)

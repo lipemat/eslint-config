@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSDoc rules are enabled jsdoc/check-access 1`] = `
+"FAIL jest/fixtures/failing/jsdoc/check-access/incorrect-access.ts
+  × jsdoc/check-access (mocked ms)
+  × jsdoc/check-access (mocked ms)
+  × jsdoc/check-access (mocked ms)
+
+
+E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\jsdoc\\check-access\\incorrect-access.ts
+   2:1  error  Missing valid JSDoc @access level                               jsdoc/check-access
+   8:1  error  At most one access-control tag may be present on a jsdoc block  jsdoc/check-access
+  16:1  error  At most one access-control tag may be present on a jsdoc block  jsdoc/check-access
+
+✖ 3 problems (3 errors, 0 warnings)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        
+Ran all test suites.
+"
+`;

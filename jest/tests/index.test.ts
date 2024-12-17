@@ -1,4 +1,5 @@
 import * as tsParser from '@typescript-eslint/parser';
+import getEslintConfig from '../helpers/eslint-config';
 
 let mockIncludeExtensions = true;
 
@@ -77,5 +78,11 @@ describe( 'index.js', () => {
 			project: './tsconfig.json',
 			warnOnUnsupportedTypeScriptVersion: false,
 		} );
+	} );
+
+
+	test( 'Enabled Rules', async () => {
+		const config = await getEslintConfig();
+		expect( config.rules ).toMatchSnapshot();
 	} );
 } );
