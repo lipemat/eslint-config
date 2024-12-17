@@ -27,7 +27,8 @@ import path from 'path';
  * @return Linter.Config[]
  */
 export function getConfig( mergedConfig ) {
-	mergedConfig = getExtensionsConfig( 'eslint.config', {configs: mergedConfig} );
+	const BASE = {configs: mergedConfig};
+	mergedConfig = {...BASE, ...getExtensionsConfig( 'eslint.config', BASE )};
 
 	try {
 		const localConfig = require( path.resolve( getPackageConfig().packageDirectory + '/config', 'eslint.config' ) );

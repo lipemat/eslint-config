@@ -1,14 +1,14 @@
 import * as tsParser from '@typescript-eslint/parser';
 import getEslintConfig from '../helpers/eslint-config';
 
+let mockUseGetConfig = true;
 let mockIncludeExtensions = true;
-
 
 // Change the result of the getConfig function, so we can change the result during the test.
 jest.mock( '../../helpers/config.js', () => ( {
 	...jest.requireActual( '../../helpers/config.js' ),
 	getConfig: originalConfig => {
-		if ( mockIncludeExtensions ) {
+		if ( mockUseGetConfig ) {
 			return jest.requireActual( '../../helpers/config.js' ).getConfig( originalConfig );
 		}
 		return originalConfig;
@@ -16,8 +16,21 @@ jest.mock( '../../helpers/config.js', () => ( {
 } ) );
 
 
+jest.mock( '@lipemat/js-boilerplate/helpers/config.js', () => ( {
+	...jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ),
+	getExtensionsConfig: originalConfig => {
+		if ( mockIncludeExtensions ) {
+			return jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ).getExtensionsConfig( originalConfig );
+		}
+		// Default result if no extensions are included.
+		return {};
+	},
+} ) );
+
+
 afterEach( () => {
 	jest.resetModules();
+	mockUseGetConfig = true;
 	mockIncludeExtensions = true;
 } );
 
@@ -68,7 +81,7 @@ describe( 'index.js', () => {
 
 
 	test( 'Original Config', () => {
-		mockIncludeExtensions = false;
+		mockUseGetConfig = false;
 		const config = require( '../../index.js' );
 		const original = config.default[ config.default.length - 2 ]
 
@@ -78,6 +91,13 @@ describe( 'index.js', () => {
 			project: './tsconfig.json',
 			warnOnUnsupportedTypeScriptVersion: false,
 		} );
+	} );
+
+
+	test( 'No extensions loaded', () => {
+		mockIncludeExtensions = false;
+		const config = require( '../../index.js' );
+		expect( config.default.length ).toEqual( 18 );
 	} );
 
 
