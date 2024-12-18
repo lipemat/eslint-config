@@ -41,8 +41,6 @@ const BASE_CONFIG = {
 		// Parse error with Svelte v4 due to `as` operator.
 		'import/named': 'off',
 		'import/no-unresolved': 'off',
-		// Parse error with Svelte v4 due to `as` operator.
-		'import/named': 'off',
 		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug' ]} ],
 		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
