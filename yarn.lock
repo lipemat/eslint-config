@@ -2380,14 +2380,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lipemat/eslint-config@npm:^4.0.0-beta.2, @lipemat/eslint-config@workspace:.":
+"@lipemat/eslint-config@npm:^4.0.0, @lipemat/eslint-config@workspace:.":
   version: 0.0.0-use.local
   resolution: "@lipemat/eslint-config@workspace:."
   dependencies:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.2.0"
     "@lipemat/js-boilerplate": "npm:^10.10.4"
-    "@lipemat/js-boilerplate-svelte": "npm:^2.0.0-beta.1"
+    "@lipemat/js-boilerplate-svelte": "npm:^2.0.0"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
     "@types/eslint": "npm:^9"
     "@types/jest": "npm:^29.5.3"
@@ -2409,11 +2409,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lipemat/js-boilerplate-svelte@npm:^2.0.0-beta.1":
-  version: 2.0.0-beta.1
-  resolution: "@lipemat/js-boilerplate-svelte@npm:2.0.0-beta.1"
+"@lipemat/js-boilerplate-svelte@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@lipemat/js-boilerplate-svelte@npm:2.0.0"
   dependencies:
-    "@lipemat/eslint-config": "npm:^4.0.0-beta.2"
+    "@lipemat/eslint-config": "npm:^4.0.0"
     "@tsconfig/svelte": "npm:^5.0.4"
     "@types/eslint": "npm:^9"
     "@typescript-eslint/parser": "npm:^8.18.0"
@@ -2432,7 +2432,7 @@ __metadata:
     eslint: ^9
   bin:
     lipemat-js-boilerplate-svelte: bin/lipemat-js-boilerplate-svelte
-  checksum: 10c0/84801040c3f28ef5c5fa86daecae1650de5f7e147cddd07c2340c86cb3448fc61717add7c440c0bbc497a6078572b1ce0bc4c964d23297de951d115cd133c030
+  checksum: 10c0/bc99f28bea3bbfdb5f74ed19b0e14400dcfe036337ba12471c5e7af9d163fb9cdab333e3d3cce368fd09908dc4d768330b654623809ab316a3d67e5ce3566bcf
   languageName: node
   linkType: hard
 
