@@ -2386,7 +2386,7 @@ __metadata:
   dependencies:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.2.0"
-    "@lipemat/js-boilerplate": "npm:^10.10.4"
+    "@lipemat/js-boilerplate": "npm:^10.10.6"
     "@lipemat/js-boilerplate-svelte": "npm:^2.0.0"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
     "@types/eslint": "npm:^9"
@@ -2404,8 +2404,6 @@ __metadata:
     jest: "npm:^29"
     jest-runner-eslint: "npm:^2.2.1"
     typescript: "npm:^5.7.2"
-  peerDependencies:
-    "@lipemat/js-boilerplate": ^10.3.1
   languageName: unknown
   linkType: soft
 
@@ -2436,9 +2434,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lipemat/js-boilerplate@npm:^10.10.4":
-  version: 10.10.4
-  resolution: "@lipemat/js-boilerplate@npm:10.10.4"
+"@lipemat/js-boilerplate@npm:^10.10.6":
+  version: 10.10.6
+  resolution: "@lipemat/js-boilerplate@npm:10.10.6"
   dependencies:
     "@babel/core": "npm:^7.24.7"
     "@babel/plugin-syntax-dynamic-import": "npm:^7.8.3"
@@ -2476,7 +2474,7 @@ __metadata:
     mini-css-extract-plugin: "npm:^1.3.3"
     minimist: "npm:^1.2.8"
     postcss: "npm:^8.4.47"
-    postcss-color-mod-function: "npm:^3.0.3"
+    postcss-color-mod-function: "npm:^4.1.1"
     postcss-custom-media: "npm:^8.0.1"
     postcss-import: "npm:^15.1.0"
     postcss-loader: "npm:^8.1.1"
@@ -2496,7 +2494,7 @@ __metadata:
     webpack-subresource-integrity: "npm:^5.1.0"
   bin:
     lipemat-js-boilerplate: bin/lipemat-js-boilerplate.js
-  checksum: 10c0/ea08003fb705c9b8054570ed91f2d964ede64f26668870086e6c281ee4464a56134a59182df1fc68a999af9e7f1becdf7cb55455f24e771da5f46061348956e5
+  checksum: 10c0/ca0aa427b5149a4c6ea97203650a201fc74f539a00f22e453ca54117b72d6d35336254360eb5349dc86822444564756bc6ab23f38b7a93eaf78eb006e11d071c
   languageName: node
   linkType: hard
 
@@ -7247,13 +7245,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flatten@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "flatten@npm:1.0.3"
-  checksum: 10c0/9f9b1f3dcd05be057bb83ec27f2513da5306e7bfc0cf8bd839ab423eb1b0f99683a25c97b48fafd5959819159659ce9f1397623a46f89a8577ba095fcf5fb753
-  languageName: node
-  linkType: hard
-
 "follow-redirects@npm:^1.0.0":
   version: 1.15.9
   resolution: "follow-redirects@npm:1.15.9"
@@ -8005,13 +7996,6 @@ __metadata:
   version: 0.1.4
   resolution: "imurmurhash@npm:0.1.4"
   checksum: 10c0/8b51313850dd33605c6c9d3fd9638b714f4c4c40250cff658209f30d40da60f78992fb2df5dabee4acf589a6a82bbc79ad5486550754bd9ec4e3fc0d4a57d6a6
-  languageName: node
-  linkType: hard
-
-"indexes-of@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "indexes-of@npm:1.0.1"
-  checksum: 10c0/1ea1d2d00173fa38f728acfa00303657e1115361481e52f6cbae47c5d603219006c9357abf6bc323f1fb0fbe937e363bbb19e5c66c12578eea6ec6b7e892bdba
   languageName: node
   linkType: hard
 
@@ -10444,13 +10428,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "picocolors@npm:0.2.1"
-  checksum: 10c0/98a83c77912c80aea0fc518aec184768501bfceafa490714b0f43eda9c52e372b844ce0a591e822bbfe5df16dcf366be7cbdb9534d39cf54a80796340371ee17
-  languageName: node
-  linkType: hard
-
 "picocolors@npm:^1.0.0, picocolors@npm:^1.0.1, picocolors@npm:^1.1.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
@@ -10562,14 +10539,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-color-mod-function@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "postcss-color-mod-function@npm:3.0.3"
+"postcss-color-mod-function@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "postcss-color-mod-function@npm:4.1.1"
   dependencies:
     "@csstools/convert-colors": "npm:^1.4.0"
-    postcss: "npm:^7.0.2"
-    postcss-values-parser: "npm:^2.0.0"
-  checksum: 10c0/1a74557199282ab1a90be81c1957146cf4dd6a6d3a2db304d7ce44a8db809cfb8b35d830c2526e1de77b37e8eceaa5d4603d881075eaf19e2d27513cdb70035d
+    postcss-value-parser: "npm:^4.2.0"
+  peerDependencies:
+    postcss: ^8.2.15
+  checksum: 10c0/840466cbba3c029c4912d1952aae2b18aa29e308323334c409aa4f540d505f9553659882171e944da37ed0506968046ebb016e933878175d5d9d74759a2db794
   languageName: node
   linkType: hard
 
@@ -11065,27 +11043,6 @@ __metadata:
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 10c0/f4142a4f56565f77c1831168e04e3effd9ffcc5aebaf0f538eee4b2d465adfd4b85a44257bb48418202a63806a7da7fe9f56c330aebb3cac898e46b4cbf49161
-  languageName: node
-  linkType: hard
-
-"postcss-values-parser@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "postcss-values-parser@npm:2.0.1"
-  dependencies:
-    flatten: "npm:^1.0.2"
-    indexes-of: "npm:^1.0.1"
-    uniq: "npm:^1.0.1"
-  checksum: 10c0/2ac07c134abc1c1f79f3188afa028db4b0f58421b3eb13b8ad5e3c79542735810d70b24a49d274237f9315b13d970ce81790b3c5a676543e0717228a66f9e703
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^7.0.2":
-  version: 7.0.39
-  resolution: "postcss@npm:7.0.39"
-  dependencies:
-    picocolors: "npm:^0.2.1"
-    source-map: "npm:^0.6.1"
-  checksum: 10c0/fd27ee808c0d02407582cccfad4729033e2b439d56cd45534fb39aaad308bb35a290f3b7db5f2394980e8756f9381b458a625618550808c5ff01a125f51efc53
   languageName: node
   linkType: hard
 
@@ -13150,13 +13107,6 @@ __metadata:
   version: 2.1.0
   resolution: "unicode-property-aliases-ecmascript@npm:2.1.0"
   checksum: 10c0/50ded3f8c963c7785e48c510a3b7c6bc4e08a579551489aa0349680a35b1ceceec122e33b2b6c1b579d0be2250f34bb163ac35f5f8695fe10bbc67fb757f0af8
-  languageName: node
-  linkType: hard
-
-"uniq@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "uniq@npm:1.0.1"
-  checksum: 10c0/369dca4a07fdd8de9e48378b9d4b6861722ca71d5f496e91687916bd4b48b8cf3d6db1677be1b40eea63bc6d4728efb4b4e0bd7a89c5fd2d23e7a2cff8009c7a
   languageName: node
   linkType: hard
 
