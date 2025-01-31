@@ -18,7 +18,7 @@ allow PHPStorm to use ESLint.
 ```json
 {
   "devDependencies": {
-    "eslint": "^8",
+    "eslint": "^9",
   }
 }
 
