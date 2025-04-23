@@ -89,6 +89,7 @@ const TS_CONFIG = {
 		'no-undef': 'off',
 		'no-unused-vars': 'off',
 		semi: 'off',
+		'@typescript-eslint/no-empty-object-type': 'warn',
 		'@typescript-eslint/no-explicit-any': 'error',
 		'@typescript-eslint/no-redeclare': [ 'error' ],
 		'@typescript-eslint/no-restricted-types': [ 'error', {
