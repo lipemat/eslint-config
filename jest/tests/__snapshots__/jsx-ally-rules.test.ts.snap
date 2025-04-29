@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSX A11Y rules are enabled jsx-a11y/label-has-associated-control 1`] = `
+"PASS jest/fixtures/passing/jsx-ally/label-has-associated-control/custom-component.tsx
+  √ ESLint (mocked ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        
+Ran all test suites.
+"
+`;
+
+exports[`JSX A11Y rules are enabled jsx-a11y/label-has-associated-control 2`] = `
+"FAIL jest/fixtures/failing/jsx-ally/label-has-associated-control/not-associated.tsx
+  × jsx-a11y/label-has-associated-control (mocked ms)
+
+
+E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\jsx-ally\\label-has-associated-control\\not-associated.tsx
+  4:4  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+
+✖ 1 problem (1 error, 0 warnings)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        
+Ran all test suites.
+"
+`;

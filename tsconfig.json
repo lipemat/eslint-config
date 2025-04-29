@@ -7,6 +7,6 @@
     "./index.js",
     "jest/**/*.js",
     "jest/**/*.ts",
-    "tests/**/*.ts"
+    "jest/**/*.tsx"
   ]
 }
