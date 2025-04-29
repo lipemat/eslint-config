@@ -1144,6 +1144,8 @@ exports[`index.js Enabled Rules 1`] = `
       ],
       "li": [
         "menuitem",
+        "menuitemradio",
+        "menuitemcheckbox",
         "option",
         "row",
         "tab",
