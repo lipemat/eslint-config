@@ -13,8 +13,8 @@ config.transformIgnorePatterns = [
 if ( process.env.FIXTURE ) {
 	config.roots = [ process.env.FIXTURE ];
 	config.runner = 'jest-runner-eslint';
-	config.testMatch = [ '**/*.{js,svelte,ts}' ];
-	config.moduleFileExtensions = [ 'js', 'svelte', 'ts' ];
+	config.testMatch = [ '**/*.{js,svelte,ts,tsx}' ];
+	config.moduleFileExtensions = [ 'js', 'svelte', 'ts', 'tsx' ];
 } else {
 	config.roots = [ './jest/tests' ];
 }
