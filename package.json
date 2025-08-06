@@ -26,7 +26,7 @@
   "dependencies": {
     "@eslint/compat": "^1.2.4",
     "@eslint/eslintrc": "^3.2.0",
-    "@lipemat/js-boilerplate": "^10.10.6",
+    "@lipemat/js-boilerplate": "^10.13.1",
     "@stylistic/eslint-plugin-ts": "^2.12.1",
     "@types/eslint": "^9",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
