@@ -2,6 +2,9 @@
 
 exports[`index.js Enabled Rules 1`] = `
 {
+  "@lipemat/security/no-unsafe-value": [
+    2,
+  ],
   "@wordpress/i18n-ellipsis": [
     2,
   ],

@@ -2506,11 +2506,13 @@ __metadata:
   dependencies:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.2.0"
+    "@lipemat/eslint-plugin-security": "portal:plugins/security"
     "@lipemat/js-boilerplate": "npm:^10.13.1"
     "@lipemat/js-boilerplate-svelte": "npm:^2.0.0"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
     "@types/eslint": "npm:^9"
     "@types/jest": "npm:^29.5.3"
+    "@types/jquery": "npm:^3.5.16"
     "@types/node": "npm:^20"
     "@typescript-eslint/eslint-plugin": "npm:^8.18.0"
     "@typescript-eslint/parser": "npm:^8.18.0"
@@ -2523,8 +2525,14 @@ __metadata:
     globals: "npm:^15.13.0"
     jest: "npm:^29"
     jest-runner-eslint: "npm:^2.2.1"
-    typescript: "npm:^5.7.2"
+    typescript: "npm:^5.9.2"
   languageName: unknown
+  linkType: soft
+
+"@lipemat/eslint-plugin-security@portal:plugins/security::locator=%40lipemat%2Feslint-config%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@lipemat/eslint-plugin-security@portal:plugins/security::locator=%40lipemat%2Feslint-config%40workspace%3A."
+  languageName: node
   linkType: soft
 
 "@lipemat/js-boilerplate-svelte@npm:^2.0.0":
@@ -3265,6 +3273,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jquery@npm:^3.5.16":
+  version: 3.5.32
+  resolution: "@types/jquery@npm:3.5.32"
+  dependencies:
+    "@types/sizzle": "npm:*"
+  checksum: 10c0/4a17ad6819b89026c21323656ab01b0b263f9d470910a87c8740920ff98319d503c7352b85b50134a39724ecbfccabc73aa4c741dfdd460cf8bbe714f9259054
+  languageName: node
+  linkType: hard
+
 "@types/jsdom@npm:^20.0.0":
   version: 20.0.1
   resolution: "@types/jsdom@npm:20.0.1"
@@ -3453,6 +3470,13 @@ __metadata:
     "@types/node": "npm:*"
     "@types/send": "npm:*"
   checksum: 10c0/8ad86a25b87da5276cb1008c43c74667ff7583904d46d5fcaf0355887869d859d453d7dc4f890788ae04705c23720e9b6b6f3215e2d1d2a4278bbd090a9268dd
+  languageName: node
+  linkType: hard
+
+"@types/sizzle@npm:*":
+  version: 2.3.9
+  resolution: "@types/sizzle@npm:2.3.9"
+  checksum: 10c0/db0277ff62e8ebe6cdae2020fd045fd7fd19f29a3a2ce13c555b14fb00e105e79004883732118b9f2e8b943cb302645e9eddb4e7bdeef1a171da679cd4c32b72
   languageName: node
   linkType: hard
 
@@ -12687,7 +12711,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.0.3, typescript@npm:^5.7.2":
+"typescript@npm:^5.0.3":
   version: 5.7.2
   resolution: "typescript@npm:5.7.2"
   bin:
@@ -12707,7 +12731,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.0.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.0.3#optional!builtin<compat/typescript>":
   version: 5.7.2
   resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=5786d5"
   bin:

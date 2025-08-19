@@ -83,7 +83,7 @@ describe( 'index.js', () => {
 	test( 'Original Config', () => {
 		mockUseGetConfig = false;
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 2 ]
+		const original = config.default[ config.default.length - 2 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
 		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
@@ -97,7 +97,7 @@ describe( 'index.js', () => {
 	test( 'No extensions loaded', () => {
 		mockIncludeExtensions = false;
 		const config = require( '../../index.js' );
-		expect( config.default.length ).toEqual( 18 );
+		expect( config.default.length ).toEqual( 19 );
 	} );
 
 
