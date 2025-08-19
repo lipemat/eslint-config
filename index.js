@@ -79,7 +79,6 @@ const TS_CONFIG = {
 	plugins: {
 		'@typescript-eslint': tsPlugin,
 		'@stylistic/ts': stylisticTs,
-		'@lipemat/security': securityPlugin,
 	},
 	//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
 	//@link https://typescript-eslint.io/rules/
@@ -91,7 +90,6 @@ const TS_CONFIG = {
 		'no-undef': 'off',
 		'no-unused-vars': 'off',
 		semi: 'off',
-		//'@lipemat/security/no-unsafe-value': 'error',
 		'@typescript-eslint/no-empty-object-type': 'warn',
 		'@typescript-eslint/no-explicit-any': 'error',
 		'@typescript-eslint/no-redeclare': [ 'error' ],
@@ -133,7 +131,6 @@ try {
 
 export default [
 	...securityPlugin.configs.recommended,
-	//	...fixupConfigRules( flatCompat.extends( 'plugin:@lipemat/security/recommended' ) ),
 	...fixupConfigRules( flatCompat.extends( 'plugin:@wordpress/eslint-plugin/recommended-with-formatting' ) ),
 	...fixupConfigRules( flatCompat.extends( 'plugin:deprecation/recommended' ) ),
 	...mergedConfig,

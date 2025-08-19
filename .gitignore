@@ -24,7 +24,7 @@ install-state.gz
 /node_modules
 
 # Dist files
-dist
+plugins/**/*.js
 
 # PHPStorm files
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore

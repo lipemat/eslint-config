@@ -1,0 +1,367 @@
+import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
+import type {AssignmentExpression, CallExpression, CallExpressionArgument, Expression, JSXAttribute, MemberExpression, PrivateIdentifier, SpreadElement, VariableDeclarator} from '@typescript-eslint/types/dist/generated/ast-spec';
+
+type Context = TSESLint.RuleContext<'dangerousInnerHtml' | 'stringArgument', []>;
+
+// Sinks: property assignments and function calls
+const SENSITIVE_PROPS = [
+	'innerHTML', 'outerHTML', 'href', 'src', 'action',
+	'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port', 'name', 'status',
+];
+const URL_PROPS = new Set( [ 'href', 'src', 'action', 'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port' ] );
+const SENSITIVE_FUNCS = [
+	// Only global sinks here; timers handled separately and jQuery methods handled elsewhere
+	'document.write',
+	'eval',
+];
+
+// React dangerouslySetInnerHTML
+function isDangerouslySetInnerHTML( node: JSXAttribute ): boolean {
+	return (
+		'JSXAttribute' === node.type &&
+		'dangerouslySetInnerHTML' === node.name.name
+	);
+}
+
+function getDangerouslySetInnerHTMLValue( node: JSXAttribute ): null | Expression {
+	// node is a JSXAttribute for dangerouslySetInnerHTML
+	// Expecting value like: {{ __html: expr }}
+	const val = node.value;
+	if ( null === val ) {
+		return null; // No value provided
+	}
+	if ( AST_NODE_TYPES.JSXExpressionContainer !== val.type ) {
+		return null;
+	}
+	const expr = val.expression;
+	if ( AST_NODE_TYPES.ObjectExpression !== expr.type ) {
+		return null;
+	}
+	const htmlProp = expr.properties.find( p => (
+		AST_NODE_TYPES.Property === p.type &&
+		(
+			( AST_NODE_TYPES.Identifier === p.key.type && '__html' === p.key.name ) ||
+			( AST_NODE_TYPES.Literal === p.key.type && '__html' === p.key.value )
+		)
+	) );
+	if ( undefined !== htmlProp && 'value' in htmlProp ) {
+		return htmlProp.value;
+	}
+	return null;
+}
+
+
+function isSanitized( node: Expression | CallExpressionArgument ) {
+	return ( AST_NODE_TYPES.CallExpression === node.type &&
+		(
+			( AST_NODE_TYPES.Identifier === node.callee.type && 'sanitize' === node.callee.name ) ||
+			( AST_NODE_TYPES.MemberExpression === node.callee.type &&
+				'object' in node.callee &&
+				(
+					( AST_NODE_TYPES.Identifier === node.callee.object.type && 'dompurify' === String( node.callee.object.name ).toLowerCase() )
+				) &&
+				'name' in node.callee.property && 'sanitize' === node.callee.property.name )
+		)
+	);
+}
+
+
+function isStringConcat( node: Expression | SpreadElement ): boolean {
+	// 'foo' + userInput + 'bar' (HTML-like only)
+	return AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator &&
+		hasHtmlLikeLiteralStrings( node );
+}
+
+
+function hasHtmlLikeLiteralStrings( node: Expression | PrivateIdentifier ): boolean {
+	if ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value ) {
+		// Only treat as risky if it looks like HTML, e.g., contains angle brackets
+		return /[<>]/.test( node.value );
+	}
+	if ( AST_NODE_TYPES.TemplateLiteral === node.type ) {
+		// Check any static part of template for HTML-like content
+		return node.quasis.some( q => 'string' === typeof q.value.cooked && /[<>]/.test( q.value.cooked ) );
+	}
+	if ( AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator ) {
+		return hasHtmlLikeLiteralStrings( node.left ) || hasHtmlLikeLiteralStrings( node.right );
+	}
+	return false;
+}
+
+
+function isJQueryCall( node: CallExpression ) {
+	// Detect $(...).method(userInput) or jQuery(...).method(...)
+	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
+		return false;
+	}
+	const methodName = node.callee.property.name;
+	if ( ! [ 'after', 'append', 'appendTo', 'before', 'html', 'insertAfter', 'insertBefore', 'prepend', 'prependTo', 'replaceAll', 'replaceWith' ].includes( methodName ) ) {
+		return false;
+	}
+	// Walk to the root object of the call chain
+	let obj = node.callee.object ?? null;
+	if ( null === obj ) {
+		return false;
+	}
+	while ( AST_NODE_TYPES.MemberExpression === obj.type ) {
+		obj = obj.object;
+	}
+	return ( AST_NODE_TYPES.CallExpression === obj.type && AST_NODE_TYPES.Identifier === obj.callee.type &&
+		( '$' === obj.callee.name || 'jQuery' === obj.callee.name )
+	);
+}
+
+
+function isSafeUrlLiteral( node: Expression | SpreadElement ): boolean {
+	return ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value &&
+		! /^(javascript:)/i.test( node.value )
+	);
+}
+
+
+function isAllExpressionsEncoded( templateNode: Expression | SpreadElement ): boolean {
+	if ( AST_NODE_TYPES.TemplateLiteral !== templateNode.type ) {
+		return false;
+	}
+	return Array.isArray( templateNode.expressions ) && templateNode.expressions.length > 0 && templateNode.expressions.every( expr => (
+		AST_NODE_TYPES.CallExpression === expr.type &&
+		AST_NODE_TYPES.Identifier === expr.callee.type &&
+		( 'encodeURIComponent' === expr.callee.name || 'encodeURI' === expr.callee.name )
+	) );
+}
+
+
+function isSafeUrlTemplate( node: Expression | SpreadElement ): boolean {
+	if ( AST_NODE_TYPES.TemplateLiteral !== node.type || 0 === node.quasis.length ) {
+		return false;
+	}
+	// Basic scheme safety on the first static chunk
+	const firstChunk = node.quasis[ 0 ].value.cooked;
+	if ( /^javascript:/i.test( firstChunk ) ) {
+		return false;
+	}
+	return isAllExpressionsEncoded( node );
+}
+
+
+function isWindowLocationAssignment( node: AssignmentExpression ): boolean {
+	// window.location.<prop> = ...
+	return (
+		AST_NODE_TYPES.MemberExpression === node.left.type &&
+		AST_NODE_TYPES.MemberExpression === node.left.object.type &&
+		'name' in node.left.object.object &&
+		'name' in node.left.object.property &&
+		'name' in node.left.property &&
+		'window' === node.left.object.object.name &&
+		'location' === node.left.object.property.name &&
+		SENSITIVE_PROPS.includes( node.left.property.name )
+	);
+}
+
+
+function isWindowAssignment( node: AssignmentExpression ) {
+	// window.<prop> = ...
+	return (
+		AST_NODE_TYPES.MemberExpression === node.left.type &&
+		'name' in node.left.object &&
+		'name' in node.left.property &&
+		'window' === node.left.object.name &&
+		SENSITIVE_PROPS.includes( node.left.property.name )
+	);
+}
+
+function isWindowOrLocationMemberExpression( memberExpr: MemberExpression ): boolean {
+	// Helper to detect window.* or window.location.*
+	if ( AST_NODE_TYPES.MemberExpression !== memberExpr.type ) {
+		return false;
+	}
+	if ( AST_NODE_TYPES.Identifier === memberExpr.object.type && 'window' === memberExpr.object.name ) {
+		return true;
+	}
+	if ( AST_NODE_TYPES.MemberExpression === memberExpr.object.type ) {
+		const memberObject = memberExpr.object;
+		return AST_NODE_TYPES.Identifier === memberObject.object.type && 'window' === memberObject.object.name && 'name' in memberObject.property && 'location' === memberObject.property.name;
+	}
+	return false;
+}
+
+
+const plugin: TSESLint.RuleModule<'dangerousInnerHtml' | 'stringArgument'> = {
+	defaultOptions: [],
+	meta: {
+		type: 'problem',
+		docs: {
+			description: 'Disallow using unsanitized values in sensitive sinks (DOM, navigation, etc)',
+		},
+		messages: {
+			dangerousInnerHtml: 'Any HTML passed to `dangerouslySetInnerHTML` gets executed. Please make sure it\'s properly escaped.',
+			stringArgument: '${calleeName} should not receive a string. Pass a function instead.',
+		},
+		schema: [],
+	},
+	create( context: Context ): TSESLint.RuleListener {
+		return {
+			JSXAttribute( node: JSXAttribute ) {
+				if ( isDangerouslySetInnerHTML( node ) ) {
+					const htmlValue = getDangerouslySetInnerHTMLValue( node );
+					if ( null !== htmlValue && ! isSanitized( htmlValue ) ) {
+						context.report( {
+							node,
+							messageId: 'dangerousInnerHtml',
+						} );
+					}
+				}
+			},
+
+
+			AssignmentExpression( node: AssignmentExpression ) {
+				// innerHTML, outerHTML, href, src, action, value, etc. on generic elements
+
+				const left: Expression = node.left;
+				const right: Expression = node.right;
+				let name: string = '';
+				if ( 'property' in left && 'name' in left.property ) {
+					name = left?.property?.name ?? '';
+				}
+
+				if ( AST_NODE_TYPES.MemberExpression === left.type && SENSITIVE_PROPS.includes( name ) && ! isWindowOrLocationMemberExpression( left ) ) { // avoid duplicate with window checks below
+					const propName = name;
+					const rhsResolved: Expression = right;
+
+
+					if ( 'value' === propName ) {
+						// Be conservative for `.value`: only flag when HTML-like strings are present
+						if ( hasHtmlLikeLiteralStrings( rhsResolved ) && ! isSanitized( rhsResolved ) ) {
+							context.report( {
+								node,
+								message: 'Assignment to value contains HTML-like content. Sanitize with sanitize() or DOMPurify.sanitize()',
+							} );
+						}
+					} else if ( URL_PROPS.has( propName ) && ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) ) {
+						// Safe literal URL assignment (e.g., '#', '/path')
+						return;
+					} else if ( ! isSanitized( rhsResolved ) ) {
+						context.report( {
+							node,
+							message: `Assignment to ${propName} must be sanitized.`,
+						} );
+					}
+				}
+				// window.location.<prop> = ...
+				if ( isWindowLocationAssignment( node ) ) {
+					const propName = name;
+					const rhsResolved: Expression = right;
+					if ( URL_PROPS.has( propName ) && ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) ) {
+						return;
+					}
+					if ( ! isSanitized( rhsResolved ) ) {
+						context.report( {
+							node,
+							message: `Assignment to window.location.${name} must be sanitized with sanitize() or DOMPurify.sanitize()`,
+						} );
+					}
+				}
+				// window.<prop> = ...
+				if ( isWindowAssignment( node ) ) {
+					if ( ! isSanitized( node.right ) ) {
+						context.report( {
+							node,
+							message: `Assignment to window.${name} must be sanitized with sanitize() or DOMPurify.sanitize()`,
+						} );
+					}
+				}
+				// String concat with HTML in assignments
+				if ( isStringConcat( right ) ) {
+					context.report( {
+						node,
+						message: 'String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()',
+					} );
+				}
+			},
+
+
+			VariableDeclarator( node: VariableDeclarator ) {
+				// Detect string concatenation assigned at declaration time
+				const init = node.init;
+				if ( null === init ) {
+					return;
+				}
+				if ( isSanitized( init ) ) {
+					return; // e.g., const x = sanitize('a' + b)
+				}
+				if ( isStringConcat( init ) ) {
+					context.report( {
+						node,
+						message: 'String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()',
+					} );
+				}
+			},
+
+
+			CallExpression( node: CallExpression ) {
+				// document.write, eval, setTimeout, setInterval
+				let calleeName = '';
+				if ( AST_NODE_TYPES.Identifier === node.callee.type ) {
+					calleeName = node.callee.name;
+				} else if ( AST_NODE_TYPES.MemberExpression === node.callee.type ) {
+					if ( 'name' in node.callee.object ) {
+						calleeName = node.callee.object.name;
+						if ( 'name' in node.callee.property ) {
+							calleeName += '.' + node.callee.property.name;
+						}
+					} else if ( 'name' in node.callee.property ) {
+						calleeName = node.callee.property.name;
+					}
+				}
+
+				// Special-case timers: only unsafe when a string is passed (evaluated as code).
+				if ( 'setTimeout' === calleeName || 'setInterval' === calleeName ) {
+					const arg: CallExpressionArgument = node.arguments[ 0 ];
+					const isFunctionArg = (
+						AST_NODE_TYPES.FunctionExpression === arg.type || AST_NODE_TYPES.ArrowFunctionExpression === arg.type || AST_NODE_TYPES.Identifier === arg.type
+					);
+					if ( ! isFunctionArg ) {
+						const isStringy = (
+							( AST_NODE_TYPES.Literal === arg.type && 'string' === typeof arg.value ) ||
+							AST_NODE_TYPES.TemplateLiteral === arg.type ||
+							isStringConcat( arg )
+						);
+						if ( isStringy ) {
+							context.report( {
+								node,
+								messageId: 'stringArgument',
+								data: {
+									calleeName,
+								},
+							} );
+						}
+					}
+					return; // Do not apply generic sanitizer checks to timer callbacks.
+				}
+
+				if ( SENSITIVE_FUNCS.includes( calleeName ) ) {
+					const arg: CallExpressionArgument = node.arguments[ 0 ];
+					if ( ! isSanitized( arg ) ) {
+						context.report( {
+							node,
+							message: `${calleeName} argument must be sanitized with sanitize() or DOMPurify.sanitize()`,
+						} );
+					}
+				}
+
+				// jQuery chained calls: $(body).html(arbitrary).text();
+				if ( isJQueryCall( node ) ) {
+					const arg: CallExpressionArgument = node.arguments[ 0 ];
+					if ( ! isSanitized( arg ) ) {
+						context.report( {
+							node,
+							message: `Any HTML passed to \`${calleeName}\` gets executed. Make sure it\'s properly escaped.`,
+						} );
+					}
+				}
+			},
+		};
+	},
+};
+
+export default plugin;

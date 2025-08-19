@@ -877,6 +877,7 @@ exports[`index.js Enabled Rules 1`] = `
         "WPBlockSelection",
         "WPBlockSerializationOptions",
         "WPBlock",
+        "WPBlockBindingsSource",
         "WPBlockPattern",
         "WPBlockType",
         "WPBlockTypeIcon",
@@ -1286,6 +1287,7 @@ exports[`index.js Enabled Rules 1`] = `
   "no-duplicate-imports": [
     2,
     {
+      "allowSeparateTypeImports": false,
       "includeExports": false,
     },
   ],
@@ -1357,7 +1359,9 @@ exports[`index.js Enabled Rules 1`] = `
       "allow": [],
       "builtinGlobals": false,
       "hoist": "functions",
+      "ignoreFunctionTypeParameterNameValueShadow": true,
       "ignoreOnInitialization": false,
+      "ignoreTypeValueShadow": true,
     },
   ],
   "no-trailing-spaces": [
@@ -1388,6 +1392,7 @@ exports[`index.js Enabled Rules 1`] = `
       "allowTaggedTemplates": false,
       "allowTernary": false,
       "enforceForJSX": false,
+      "ignoreDirectives": false,
     },
   ],
   "no-unused-vars": [

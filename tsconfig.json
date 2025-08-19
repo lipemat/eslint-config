@@ -7,6 +7,7 @@
     "./index.js",
     "jest/**/*.js",
     "jest/**/*.ts",
-    "jest/**/*.tsx"
+    "jest/**/*.tsx",
+    "plugins/**/*.ts"
   ]
 }
