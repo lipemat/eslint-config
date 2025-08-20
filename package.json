@@ -30,7 +30,6 @@
   "dependencies": {
     "@eslint/compat": "^1.2.4",
     "@eslint/eslintrc": "^3.2.0",
-    "@lipemat/eslint-plugin-security": "portal:plugins/security",
     "@lipemat/js-boilerplate": "^10.13.1",
     "@stylistic/eslint-plugin-ts": "^2.12.1",
     "@types/eslint": "^9",

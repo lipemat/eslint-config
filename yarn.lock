@@ -2373,7 +2373,6 @@ __metadata:
   dependencies:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.2.0"
-    "@lipemat/eslint-plugin-security": "portal:plugins/security"
     "@lipemat/js-boilerplate": "npm:^10.13.1"
     "@lipemat/js-boilerplate-svelte": "npm:^2.0.0"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
@@ -2381,8 +2380,8 @@ __metadata:
     "@types/jest": "npm:^29.5.3"
     "@types/jquery": "npm:^3.5.16"
     "@types/node": "npm:^20"
-    "@typescript-eslint/eslint-plugin": "npm:^8.18.0"
-    "@typescript-eslint/parser": "npm:^8.18.0"
+    "@typescript-eslint/eslint-plugin": "npm:^8.40.0"
+    "@typescript-eslint/parser": "npm:^8.40.0"
     "@typescript-eslint/rule-tester": "npm:^8.40.0"
     "@typescript-eslint/types": "npm:^8.40.0"
     "@typescript-eslint/utils": "npm:^8.40.0"
@@ -2397,13 +2396,9 @@ __metadata:
     jest: "npm:^29"
     jest-runner-eslint: "npm:^2.2.1"
     typescript: "npm:5.8.3"
+  peerDependencies:
+    typescript: ^5.8.3
   languageName: unknown
-  linkType: soft
-
-"@lipemat/eslint-plugin-security@portal:plugins/security::locator=%40lipemat%2Feslint-config%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@lipemat/eslint-plugin-security@portal:plugins/security::locator=%40lipemat%2Feslint-config%40workspace%3A."
-  languageName: node
   linkType: soft
 
 "@lipemat/js-boilerplate-svelte@npm:^2.0.0":
@@ -3381,7 +3376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:8.40.0, @typescript-eslint/eslint-plugin@npm:^8.18.0":
+"@typescript-eslint/eslint-plugin@npm:8.40.0, @typescript-eslint/eslint-plugin@npm:^8.40.0":
   version: 8.40.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.40.0"
   dependencies:
@@ -3427,7 +3422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.40.0, @typescript-eslint/parser@npm:^8.18.0":
+"@typescript-eslint/parser@npm:8.40.0, @typescript-eslint/parser@npm:^8.18.0, @typescript-eslint/parser@npm:^8.40.0":
   version: 8.40.0
   resolution: "@typescript-eslint/parser@npm:8.40.0"
   dependencies:

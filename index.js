@@ -2,7 +2,7 @@ import {fixupConfigRules} from '@eslint/compat';
 import {FlatCompat} from '@eslint/eslintrc';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import securityPlugin from '@lipemat/eslint-plugin-security';
+import securityPlugin from './plugins/security/index.js';
 import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 import {getConfig} from './helpers/config.js';
