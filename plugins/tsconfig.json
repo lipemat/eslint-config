@@ -5,9 +5,9 @@
   ],
   "compilerOptions": {
     "declaration": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "strict": true,
     "verbatimModuleSyntax": true,
-    "target":"ES2024"
+    "target": "ES2024"
   }
 }
