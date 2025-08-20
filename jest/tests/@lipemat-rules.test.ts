@@ -6,6 +6,7 @@ import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executi
 import htmlExecutingAssignmentRule from '../../plugins/security/rules/html-executing-assignment';
 import htmlStringConcatRule from '../../plugins/security/rules/html-string-concat';
 import vulnerableTagStrippingRule from '../../plugins/security/rules/vulnerable-tag-stripping';
+import windowEscapingRule from '../../plugins/security/rules/window-escaping';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -742,6 +743,202 @@ describe( 'Vulnerable Tag Stripping', () => {
 					},
 				],
 			},
+		],
+	} );
+} );
+
+describe( 'Window Escaping', () => {
+	ruleTester.run( 'window-escaping', windowEscapingRule, {
+		valid: [
+			{
+				code: 'window.location.href = sanitize(userInput)',
+			},
+			{
+				code: 'window.name = sanitize(userInput)',
+			},
+			{
+				code: 'window.name = DOMPurify.sanitize(userInput)',
+			},
+			// Safe literal assignments
+			{
+				code: 'window.location.href = "#section"',
+			},
+			{
+				code: 'window.location.href = "/path/to/page"',
+			},
+			// Template literals with encoded expressions
+			{
+				code: 'window.location.pathname = `#${encodeURIComponent(userInput)}`',
+			},
+			// Reading
+			{
+				code: 'const w = sanitize( window.location.hostname )',
+			},
+			{
+				code: 'const w = DOMPurify.sanitize( window.name )',
+			},
+		],
+		invalid: [
+			// Invalid window.location assignments without escaping
+			{
+				code: 'window.location.href = userInput',
+				errors: [
+					{
+						messageId: 'unsafeWindowLocation',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propName: 'href',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'window.location.href = sanitize(userInput)',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'window.location.href = DOMPurify.sanitize(userInput)',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'window.location.pathname = userInput',
+				errors: [
+					{
+						messageId: 'unsafeWindowLocation',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propName: 'pathname',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'window.location.pathname = sanitize(userInput)',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'window.location.pathname = DOMPurify.sanitize(userInput)',
+							},
+						],
+					},
+				],
+			},
+			// Invalid window assignments without escaping
+			{
+				code: 'window.name = userInput',
+				errors: [
+					{
+						messageId: 'unsafeWindow',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propName: 'name',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'window.name = sanitize(userInput)',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'window.name = DOMPurify.sanitize(userInput)',
+							},
+						],
+					},
+
+				],
+			},
+			{
+				code: 'window.status = userInput',
+				errors: [
+					{
+						messageId: 'unsafeWindow',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propName: 'status',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'window.status = sanitize(userInput)',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'window.status = DOMPurify.sanitize(userInput)',
+							},
+						],
+					},
+				],
+			},
+			// Using urlencoded for window properties
+			{
+				code: 'window.name = encodeURIComponent( userInput )',
+				errors: [
+					{
+						messageId: 'unsafeWindow',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propName: 'name',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'window.name = sanitize(encodeURIComponent( userInput ))',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'window.name = DOMPurify.sanitize(encodeURIComponent( userInput ))',
+							},
+						],
+					},
+
+				],
+			},
+			// Reading from the properties
+			{
+				code: 'const w = window.name',
+				errors: [
+					{
+						messageId: 'unsafeRead',
+						type: AST_NODE_TYPES.MemberExpression,
+						data: {
+							propName: 'name',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'const w = sanitize( window.name )',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'const w = DOMPurify.sanitize( window.name )',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'const w = window.location.protocol',
+				errors: [
+					{
+						messageId: 'unsafeRead',
+						type: AST_NODE_TYPES.MemberExpression,
+						data: {
+							propName: 'protocol',
+						},
+						suggestions: [
+							{
+								messageId: 'sanitize',
+								output: 'const w = sanitize( window.location.protocol )',
+							},
+							{
+								messageId: 'domPurify',
+								output: 'const w = DOMPurify.sanitize( window.location.protocol )',
+							},
+						],
+					},
+				],
+			}
 		],
 	} );
 } );

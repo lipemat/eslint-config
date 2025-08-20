@@ -1,0 +1,247 @@
+import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
+import {isSanitized} from '../utils/shared.js';
+
+
+type Messages =
+	'unsafeWindow'
+	| 'unsafeRead'
+	| 'unsafeWindowLocation'
+	| 'domPurify'
+	| 'sanitize'
+
+type Context = TSESLint.RuleContext<Messages, []>;
+
+
+// Window and location properties that need special handling
+const LOCATION_PROPS = new Set( [ 'href', 'src', 'action',
+	'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port', 'name', 'status',
+] );
+
+const WINDOW_PROPS = new Set( [ 'name', 'status' ] );
+
+
+function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement ): boolean {
+	if ( AST_NODE_TYPES.TemplateElement !== node.type && AST_NODE_TYPES.Literal !== node.type ) {
+		return false;
+	}
+
+	return 'string' === typeof node.value && ! /^(javascript:)/i.test( node.value );
+}
+
+
+function isSafeUrlTemplate( node: TSESTree.Expression ): boolean {
+	if ( AST_NODE_TYPES.TemplateLiteral !== node.type || 0 === node.quasis.length ) {
+		return false;
+	}
+	// Basic scheme safety on the first static chunk
+	const firstChunk = node.quasis[ 0 ];
+	if ( isSafeUrlLiteral( firstChunk ) ) {
+		return true;
+	}
+	return isUrlEncoded( node );
+}
+
+
+function isUrlEncoded( node: TSESTree.Expression ): boolean {
+	if ( AST_NODE_TYPES.TemplateLiteral !== node.type ) {
+		return false;
+	}
+	return Array.isArray( node.expressions ) && node.expressions.length > 0 && node.expressions.every( isEncoded );
+}
+
+
+function isEncoded( node: TSESTree.Expression ): boolean {
+	if ( AST_NODE_TYPES.CallExpression !== node.type ) {
+		return false;
+	}
+	return AST_NODE_TYPES.Identifier === node.callee.type &&
+		( 'encodeURIComponent' === node.callee.name || 'encodeURI' === node.callee.name );
+}
+
+
+function isWindowLocationAssignment( node: TSESTree.AssignmentExpression ): boolean {
+	// window.location.<prop> = ...
+	return (
+		AST_NODE_TYPES.MemberExpression === node.left.type &&
+		AST_NODE_TYPES.MemberExpression === node.left.object.type &&
+		'name' in node.left.object.object &&
+		'name' in node.left.object.property &&
+		'name' in node.left.property &&
+		'window' === node.left.object.object.name &&
+		'location' === node.left.object.property.name &&
+		LOCATION_PROPS.has( node.left.property.name )
+	);
+}
+
+
+function isWindowAssignment( node: TSESTree.AssignmentExpression ): boolean {
+	// window.<prop> = ...
+	return (
+		AST_NODE_TYPES.MemberExpression === node.left.type &&
+		'name' in node.left.object &&
+		'name' in node.left.property &&
+		'window' === node.left.object.name &&
+		WINDOW_PROPS.has( node.left.property.name )
+	);
+}
+
+function isWindowOrLocationMemberExpression( memberExpr: TSESTree.MemberExpression ): boolean {
+	// Helper to detect window.* or window.location.*
+	if ( AST_NODE_TYPES.MemberExpression !== memberExpr.type ) {
+		return false;
+	}
+	if ( AST_NODE_TYPES.Identifier === memberExpr.object.type && 'window' === memberExpr.object.name ) {
+		return true;
+	}
+	if ( AST_NODE_TYPES.MemberExpression === memberExpr.object.type ) {
+		const memberObject = memberExpr.object;
+		return AST_NODE_TYPES.Identifier === memberObject.object.type && 'window' === memberObject.object.name && 'name' in memberObject.property && 'location' === memberObject.property.name;
+	}
+	return false;
+}
+
+
+const plugin: TSESLint.RuleModule<Messages> = {
+	defaultOptions: [],
+	meta: {
+		type: 'problem',
+		docs: {
+			description: 'Require proper escaping for the window and location property access',
+		},
+		messages: {
+			unsafeWindow: 'Assignment to "{{propName}}" must be sanitized.',
+			unsafeWindowLocation: 'Assignment to window.location.{{propName}} must be sanitized.',
+			unsafeRead: 'Data from JS global {{propName}} may contain user-supplied values and should be sanitized before output to prevent XSS.',
+
+			// Suggestions
+			domPurify: 'Wrap the argument with a `DOMPurify.sanitize()` call.',
+			sanitize: 'Wrap the argument with a `sanitize()` call.',
+		},
+		schema: [],
+		hasSuggestions: true,
+	},
+	create( context: Context ): TSESLint.RuleListener {
+		return {
+			AssignmentExpression( node: TSESTree.AssignmentExpression ): void {
+				const right: TSESTree.Expression = node.right;
+				if ( AST_NODE_TYPES.MemberExpression !== node.left.type || ! ( 'name' in node.left.property ) ) {
+					return;
+				}
+				const propName = node.left.property.name;
+
+				// window.location.<prop> = ...
+				if ( isWindowLocationAssignment( node ) ) {
+					const rhsResolved: TSESTree.Expression = right;
+					if ( ! LOCATION_PROPS.has( propName ) ) {
+						return;
+					}
+					if ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) {
+						return;
+					}
+					if ( isSanitized( rhsResolved ) ) {
+						return;
+					}
+					context.report( {
+						node,
+						messageId: 'unsafeWindowLocation',
+						data: {
+							propName,
+						},
+						suggest: [
+							{
+								messageId: 'sanitize',
+								fix: ( fixer: TSESLint.RuleFixer ) => {
+									const argText = context.sourceCode.getText( right );
+									return fixer.replaceText( right, `sanitize(${argText})` );
+								},
+							}, {
+								messageId: 'domPurify',
+								fix: ( fixer: TSESLint.RuleFixer ) => {
+									const argText = context.sourceCode.getText( right );
+									return fixer.replaceText( right, `DOMPurify.sanitize(${argText})` );
+								},
+							},
+						]
+					} );
+					return;
+				}
+
+				// window.<prop> = ...
+				if ( isWindowAssignment( node ) ) {
+					if ( isSanitized( node.right ) ) {
+						return;
+					}
+					context.report( {
+						node,
+						messageId: 'unsafeWindow',
+						data: {
+							propName,
+						},
+						suggest: [
+							{
+								messageId: 'sanitize',
+								fix: ( fixer: TSESLint.RuleFixer ) => {
+									const argText = context.sourceCode.getText( right );
+									return fixer.replaceText( right, `sanitize(${argText})` );
+								},
+							}, {
+								messageId: 'domPurify',
+								fix: ( fixer: TSESLint.RuleFixer ) => {
+									const argText = context.sourceCode.getText( right );
+									return fixer.replaceText( right, `DOMPurify.sanitize(${argText})` );
+								},
+							},
+						],
+					} );
+				}
+			},
+
+
+			// Check for reading from the window.location properties
+			MemberExpression( node: TSESTree.MemberExpression ): void {
+				const parent = node.parent;
+				if ( AST_NODE_TYPES.AssignmentExpression === parent.type && parent.left === node ) {
+					return;
+				}
+
+				if ( ! isWindowOrLocationMemberExpression( node ) || ! ( 'name' in node.property ) ) {
+					return;
+				}
+				const propName = node.property.name;
+				if ( ! LOCATION_PROPS.has( propName ) ) {
+					return;
+				}
+
+				if ( AST_NODE_TYPES.CallExpression === parent.type && isSanitized( parent ) ) {
+					return;
+				}
+
+				context.report( {
+					node,
+					messageId: 'unsafeRead',
+					data: {
+						propName,
+					},
+					suggest: [
+						{
+							messageId: 'sanitize',
+							fix: ( fixer: TSESLint.RuleFixer ) => {
+								const argText = context.sourceCode.getText( node );
+								return fixer.replaceText( node, `sanitize( ${argText} )` );
+							},
+						},
+						{
+							messageId: 'domPurify',
+							fix: ( fixer: TSESLint.RuleFixer ) => {
+								const argText = context.sourceCode.getText( node );
+								return fixer.replaceText( node, `DOMPurify.sanitize( ${argText} )` );
+							},
+						},
+					],
+				} );
+			},
+		};
+	},
+};
+
+export default plugin;

@@ -5,6 +5,7 @@ import htmlExecutingFunction from './rules/html-executing-function.js';
 import htmlExecutingAssignment from './rules/html-executing-assignment.js';
 import htmlStringConcat from './rules/html-string-concat.js';
 import vulnerableTagStripping from './rules/vulnerable-tag-stripping.js';
+import windowEscaping from './rules/window-escaping.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
@@ -34,6 +35,7 @@ const plugin: Plugin = {
 		'jquery-executing': jqueryExecuting,
 		'html-string-concat': htmlStringConcat,
 		'vulnerable-tag-stripping': vulnerableTagStripping,
+		'window-escaping': windowEscaping,
 	},
 	configs: {
 		recommended: [],
@@ -55,6 +57,7 @@ plugin.configs = Object.freeze( {
 				'@lipemat/security/html-executing-function': 'error',
 				'@lipemat/security/html-string-concat': 'error',
 				'@lipemat/security/vulnerable-tag-stripping': 'error',
+				'@lipemat/security/window-escaping': 'error',
 			},
 		},
 	],

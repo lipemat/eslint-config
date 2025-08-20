@@ -23,6 +23,9 @@ exports[`index.js Enabled Rules 1`] = `
   "@lipemat/security/vulnerable-tag-stripping": [
     2,
   ],
+  "@lipemat/security/window-escaping": [
+    2,
+  ],
   "@wordpress/i18n-ellipsis": [
     2,
   ],
