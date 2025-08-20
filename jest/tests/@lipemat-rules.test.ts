@@ -505,6 +505,12 @@ describe( 'HTML Executing Function', () => {
 			{
 				code: 'element.replaceWith( DOMPurify.sanitize(arbitrary) )',
 			},
+			{
+				code: 'element.insertAdjacentHTML( \'beforeend\', sanitize(content) )',
+			},
+			{
+				code: 'element.insertAdjacentHTML( \'afterend\', DOMPurify.sanitize(content) )',
+			},
 			// Passing an element.
 			{
 				code: 'const foo = document.getElementById( "foo" ); element.after( foo )',
@@ -523,7 +529,7 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'document.write( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -542,7 +548,7 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
 							},
 							{
@@ -562,7 +568,7 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'element.after( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -581,7 +587,7 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'element.append( DOMPurify.sanitize(content) )',
 							},
 							{
@@ -600,7 +606,7 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'element.before( DOMPurify.sanitize(content) )',
 							},
 							{
@@ -619,7 +625,7 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'element.prepend( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -638,12 +644,50 @@ describe( 'HTML Executing Function', () => {
 						type: AST_NODE_TYPES.CallExpression,
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: 'element.replaceWith( DOMPurify.sanitize(content) )',
 							},
 							{
 								messageId: 'sanitize',
 								output: 'element.replaceWith( sanitize(content) )',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'element.insertAdjacentHTML( \'beforeend\', userInput )',
+				errors: [
+					{
+						messageId: 'insertAdjacentHTML',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'element.insertAdjacentHTML( \'beforeend\', DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.insertAdjacentHTML( \'beforeend\', sanitize(userInput) )',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'element.setAttribute( \'onclick\', content )',
+				errors: [
+					{
+						messageId: 'setAttribute',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'element.setAttribute( \'onclick\', DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.setAttribute( \'onclick\', sanitize(content) )',
 							},
 						],
 					},

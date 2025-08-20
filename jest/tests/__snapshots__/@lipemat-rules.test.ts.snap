@@ -56,6 +56,9 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × deprecation/deprecation (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
   × @typescript-eslint/strict-boolean-expressions (mocked ms)
+  × @lipemat/security/html-executing-function (mocked ms)
+  × @lipemat/security/html-executing-function (mocked ms)
+  × @lipemat/security/html-executing-function (mocked ms)
 
 
 E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lipemat\\security\\not-sanitized.tsx
@@ -113,12 +116,15 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   82:10  error    'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)                        deprecation/deprecation
   83:1   error    Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                                     @lipemat/security/html-executing-function
   86:6   warning  Unexpected object value in conditional. The condition is always true                                                     @typescript-eslint/strict-boolean-expressions
+  87:2   error    Any HTML used with \`insertAdjacentHTML\` gets executed. Make sure it's properly escaped                                   @lipemat/security/html-executing-function
+  90:2   error    Any HTML used with \`setAttribute\` can lead to XSS. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
+  92:2   error    Any HTML used with \`setAttribute\` can lead to XSS. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
 
-✖ 54 problems (53 errors, 1 warning)
+✖ 57 problems (56 errors, 1 warning)
   2 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
-Tests:       53 failed, 53 total
+Tests:       56 failed, 56 total
 Snapshots:   0 total
 Time:        
 Ran all test suites.
