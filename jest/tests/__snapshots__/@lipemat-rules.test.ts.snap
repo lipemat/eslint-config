@@ -91,7 +91,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   87:6   warning  Unexpected object value in conditional. The condition is always true                                @typescript-eslint/strict-boolean-expressions
 
 ✖ 42 problems (40 errors, 2 warnings)
-  21 errors and 0 warnings potentially fixable with the \`--fix\` option.
+  2 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
 Tests:       40 failed, 40 total

@@ -15,7 +15,9 @@ type UnsafeCalls =
 	| 'replaceAll'
 	| 'replaceWith';
 
-type Context = TSESLint.RuleContext<UnsafeCalls, []>;
+type Messages = UnsafeCalls | 'sanitize' | 'dom-purify';
+type Context = TSESLint.RuleContext<Messages, []>;
+
 
 const JQUERY_METHODS: UnsafeCalls[] = [
 	'after', 'append', 'appendTo', 'before', 'html',
@@ -73,13 +75,14 @@ function getJQueryCall( node: TSESTree.CallExpression ): UnsafeCalls | null {
 	return isJQueryCall( node ) ? methodName : null;
 }
 
-const plugin: TSESLint.RuleModule<UnsafeCalls> = {
+const plugin: TSESLint.RuleModule<Messages> = {
 	defaultOptions: [],
 	meta: {
 		docs: {
 			description: 'Disallow using unsanitized values in jQuery methods that execute HTML',
 		},
 		fixable: 'code',
+		hasSuggestions: true,
 		messages: {
 			after: 'Any HTML used with `after` gets executed. Make sure it\'s properly escaped.',
 			append: 'Any HTML used with `append` gets executed. Make sure it\'s properly escaped.',
@@ -92,6 +95,10 @@ const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 			prependTo: 'Any HTML used with `prependTo` gets executed. Make sure it\'s properly escaped.',
 			replaceAll: 'Any HTML used with `replaceAll` gets executed. Make sure it\'s properly escaped.',
 			replaceWith: 'Any HTML used with `replaceWith` gets executed. Make sure it\'s properly escaped.',
+
+			// Suggestions
+			'dom-purify': 'Wrap the argument with a `DOMPurify.sanitize()` call.',
+			sanitize: 'Wrap the argument with a `sanitize()` call.',
 		},
 		schema: [],
 		type: 'problem',
@@ -106,10 +113,22 @@ const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 						context.report( {
 							node,
 							messageId: methodName,
-							fix: ( fixer: TSESLint.RuleFixer ) => {
-								const argText = context.sourceCode.getText( arg );
-								return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
-							},
+							suggest: [
+								{
+									messageId: 'dom-purify',
+									fix: ( fixer: TSESLint.RuleFixer ) => {
+										const argText = context.sourceCode.getText( arg );
+										return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
+									},
+								},
+								{
+									messageId: 'sanitize',
+									fix: ( fixer: TSESLint.RuleFixer ) => {
+										const argText = context.sourceCode.getText( arg );
+										return fixer.replaceText( arg, `sanitize(${argText})` );
+									},
+								},
+							],
 						} );
 					}
 				}

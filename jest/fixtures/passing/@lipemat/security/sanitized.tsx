@@ -36,21 +36,28 @@ $( 'body' ).replaceAll( sanitize( arbitrary ) );
 $( 'body' ).replaceWith( sanitize( arbitrary ) );
 
 
+const created = document.createElement( 'div' );
+
 passElement.after( DOMPurify.sanitize( arbitrary ) );
 passElement.after( sanitize( arbitrary ) );
-passElement.after( DOMPurify.sanitize( passElement ) );
+passElement.after( passElement );
+passElement.after( created );
 passElement.append( DOMPurify.sanitize( arbitrary ) );
 passElement.append( sanitize( arbitrary ) );
-passElement.append( DOMPurify.sanitize( passElement ) );
+passElement.append( passElement );
+passElement.append( created );
 passElement.before( DOMPurify.sanitize( arbitrary ) );
 passElement.before( sanitize( arbitrary ) );
-passElement.before( DOMPurify.sanitize( passElement ) );
+passElement.before( passElement );
+passElement.before( created );
 passElement.prepend( DOMPurify.sanitize( arbitrary ) );
 passElement.prepend( sanitize( arbitrary ) );
-passElement.prepend( DOMPurify.sanitize( passElement ) );
+passElement.prepend( passElement );
+passElement.prepend( created );
 passElement.replaceWith( DOMPurify.sanitize( arbitrary ) );
 passElement.replaceWith( sanitize( arbitrary ) );
-passElement.replaceWith( DOMPurify.sanitize( passElement ) );
+passElement.replaceWith( passElement );
+passElement.replaceWith( created );
 
 // InnerHTMLSniff.
 // @ts-ignore

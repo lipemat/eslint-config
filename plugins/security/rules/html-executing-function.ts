@@ -2,9 +2,7 @@ import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/u
 import {isDomElementType, isSanitized} from '../utils/shared.js';
 import {isJQueryCall} from './jquery-executing.js';
 
-type HtmlExecutingFunctions =
-	'document.write' | 'document.writeln';
-
+type HtmlExecutingFunctions = 'document.write' | 'document.writeln';
 
 type UnsafeCalls =
 	'after'
@@ -13,7 +11,10 @@ type UnsafeCalls =
 	| 'prepend'
 	| 'replaceWith';
 
-type Context = TSESLint.RuleContext<HtmlExecutingFunctions | UnsafeCalls, []>;
+
+type Messages = HtmlExecutingFunctions | UnsafeCalls | 'sanitize' | 'dom-purify';
+type Context = TSESLint.RuleContext<Messages, []>;
+
 
 const DOCUMENT_METHODS: HtmlExecutingFunctions[] = [
 	'document.write',
@@ -72,13 +73,14 @@ function getElementMethodCall( node: TSESTree.CallExpression ): UnsafeCalls | nu
 }
 
 
-const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
+const plugin: TSESLint.RuleModule<Messages> = {
 	defaultOptions: [],
 	meta: {
 		docs: {
 			description: 'Disallow using unsanitized values in functions that execute HTML',
 		},
 		fixable: 'code',
+		hasSuggestions: true,
 		messages: {
 			'document.write': 'Any HTML used with `document.write` gets executed. Make sure it\'s properly escaped.',
 			'document.writeln': 'Any HTML used with `document.writeln` gets executed. Make sure it\'s properly escaped.',
@@ -87,6 +89,10 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 			before: 'Any HTML used with `before` gets executed. Make sure it\'s properly escaped.',
 			prepend: 'Any HTML used with `prepend` gets executed. Make sure it\'s properly escaped.',
 			replaceWith: 'Any HTML used with `replaceWith` gets executed. Make sure it\'s properly escaped.',
+
+			// Suggestions
+			sanitize: 'Wrap the argument with a `sanitize()` call.',
+			'dom-purify': 'Wrap the argument with a `DOMPurify.sanitize()` call.',
 		},
 		schema: [],
 		type: 'problem',
@@ -112,10 +118,22 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 					context.report( {
 						node,
 						messageId: method,
-						fix: ( fixer: TSESLint.RuleFixer ) => {
-							const argText = context.sourceCode.getText( arg );
-							return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
-						},
+						suggest: [
+							{
+								messageId: 'dom-purify',
+								fix: ( fixer: TSESLint.RuleFixer ) => {
+									const argText = context.sourceCode.getText( arg );
+									return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
+								},
+							},
+							{
+								messageId: 'sanitize',
+								fix: ( fixer: TSESLint.RuleFixer ) => {
+									const argText = context.sourceCode.getText( arg );
+									return fixer.replaceText( arg, `sanitize(${argText})` );
+								},
+							},
+						],
 					} );
 				}
 			},

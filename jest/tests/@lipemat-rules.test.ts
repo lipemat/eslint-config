@@ -110,9 +110,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'after',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).after( DOMPurify.sanitize(arbitrary) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).after( sanitize(arbitrary) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).after( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: '$( \'body\' ).append( content )',
@@ -120,9 +129,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'append',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).append( DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).append( sanitize(content) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).append( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: '$( \'body\' ).appendTo( userInput )',
@@ -130,9 +148,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'appendTo',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).appendTo( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).appendTo( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).appendTo( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).before( arbitrary )',
@@ -140,9 +167,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'before',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).before( DOMPurify.sanitize(arbitrary) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).before( sanitize(arbitrary) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).before( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: '$( \'body\' ).html( userInput )',
@@ -150,9 +186,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'html',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).html( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).insertAfter( content )',
@@ -160,9 +205,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'insertAfter',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).insertAfter( DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).insertAfter( sanitize(content) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).insertAfter( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: '$( \'body\' ).insertBefore( userInput )',
@@ -170,9 +224,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'insertBefore',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).insertBefore( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).insertBefore( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).insertBefore( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).prepend( arbitrary )',
@@ -180,9 +243,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'prepend',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).prepend( DOMPurify.sanitize(arbitrary) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).prepend( sanitize(arbitrary) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).prepend( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: '$( \'body\' ).prependTo( content )',
@@ -190,9 +262,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'prependTo',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).prependTo( DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).prependTo( sanitize(content) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).prependTo( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: '$( \'body\' ).replaceAll( userInput )',
@@ -200,9 +281,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'replaceAll',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).replaceAll( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).replaceAll( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).replaceAll( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).replaceWith( arbitrary )',
@@ -210,9 +300,18 @@ describe( 'jQuery Executing', () => {
 					{
 						messageId: 'replaceWith',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: '$( \'body\' ).replaceWith( DOMPurify.sanitize(arbitrary) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).replaceWith( sanitize(arbitrary) )',
+							},
+						],
 					},
 				],
-				output: '$( \'body\' ).replaceWith( DOMPurify.sanitize(arbitrary) )',
 			},
 		],
 	} );
@@ -282,9 +381,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'document.write',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'document.write( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'document.write( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: 'document.write( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: 'document.writeln( arbitrary )',
@@ -292,9 +400,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'document.writeln',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'document.writeln( sanitize(arbitrary) )',
+							},
+						],
 					},
 				],
-				output: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
 			},
 			// Element methods without sanitization
 			{
@@ -303,9 +420,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'after',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'element.after( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.after( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: 'element.after( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: 'element.append( content )',
@@ -313,9 +439,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'append',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'element.append( DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.append( sanitize(content) )',
+							},
+						],
 					},
 				],
-				output: 'element.append( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: 'element.before( content )',
@@ -323,9 +458,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'before',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'element.before( DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.before( sanitize(content) )',
+							},
+						],
 					},
 				],
-				output: 'element.before( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: 'element.prepend( userInput )',
@@ -333,9 +477,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'prepend',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'element.prepend( DOMPurify.sanitize(userInput) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.prepend( sanitize(userInput) )',
+							},
+						],
 					},
 				],
-				output: 'element.prepend( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: 'element.replaceWith( content )',
@@ -343,9 +496,18 @@ describe( 'HTML Executing Function', () => {
 					{
 						messageId: 'replaceWith',
 						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'dom-purify',
+								output: 'element.replaceWith( DOMPurify.sanitize(content) )',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.replaceWith( sanitize(content) )',
+							},
+						],
 					},
 				],
-				output: 'element.replaceWith( DOMPurify.sanitize(content) )',
 			},
 		],
 	} );
