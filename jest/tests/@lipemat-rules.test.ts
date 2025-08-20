@@ -3,6 +3,7 @@ import {RuleTester} from '@typescript-eslint/rule-tester';
 import noUnsafeValueRule from '../../plugins/security/rules/no-unsafe-value';
 import dangerouslySetInnerHtmlRule from '../../plugins/security/rules/dangerously-set-inner-html';
 import jqueryExecutingRule from '../../plugins/security/rules/jquery-executing';
+import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executing-function';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -197,6 +198,41 @@ describe( 'Individual rules', () => {
 					},
 				],
 				output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(arbitrary)}} /></div>',
+			},
+		],
+	} );
+
+	ruleTester.run( 'html-executing-function', htmlExecutingFunctionRule, {
+		valid: [
+			// Document methods with sanitization
+			{
+				code: 'document.write( sanitize(content) )',
+			},
+			{
+				code: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
+			},
+		],
+		invalid: [
+			// Document methods without sanitization
+			{
+				code: 'document.write( userInput )',
+				errors: [
+					{
+						messageId: 'document.write',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'document.write( DOMPurify.sanitize(userInput) )',
+			},
+			{
+				code: 'document.writeln( arbitrary )',
+				errors: [
+					{
+						messageId: 'document.writeln',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
 			},
 		],
 	} );

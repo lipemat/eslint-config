@@ -34,10 +34,10 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × @lipemat/security/no-unsafe-value (mocked ms)
   × deprecation/deprecation (mocked ms)
   × deprecation/deprecation (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
   × no-eval (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/html-executing-function (mocked ms)
   × deprecation/deprecation (mocked ms)
+  × @lipemat/security/html-executing-function (mocked ms)
 
 
 E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lipemat\\security\\not-sanitized.tsx
@@ -73,13 +73,13 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   56:2   error  Assignment to window.status must be sanitized with sanitize() or DOMPurify.sanitize()               @lipemat/security/no-unsafe-value
   56:9   error  'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
   69:13  error  'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
-  77:1   error  eval argument must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
   77:1   error  eval can be harmful                                                                                 no-eval
-  79:1   error  document.write argument must be sanitized with sanitize() or DOMPurify.sanitize()                   @lipemat/security/no-unsafe-value
+  79:1   error  Any HTML used with \`document.write\` gets executed. Make sure it's properly escaped                  @lipemat/security/html-executing-function
   79:10  error  'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)   deprecation/deprecation
+  80:1   error  Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                @lipemat/security/html-executing-function
 
 ✖ 36 problems (36 errors, 0 warnings)
-  2 errors and 0 warnings potentially fixable with the \`--fix\` option.
+  4 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
 Tests:       36 failed, 36 total

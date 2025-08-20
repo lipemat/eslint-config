@@ -10,11 +10,7 @@ const SENSITIVE_PROPS = [
 	'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port', 'name', 'status',
 ];
 const URL_PROPS = new Set( [ 'href', 'src', 'action', 'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port' ] );
-const SENSITIVE_FUNCS = [
-	// Only global sinks here; timers handled separately and jQuery methods handled elsewhere
-	'document.write',
-	'eval',
-];
+
 
 function isStringConcat( node: Expression | SpreadElement ): boolean {
 	// 'foo' + userInput + 'bar' (HTML-like only)
@@ -252,15 +248,6 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 					return; // Do not apply generic sanitizer checks to timer callbacks.
 				}
 
-				if ( SENSITIVE_FUNCS.includes( calleeName ) ) {
-					const arg: CallExpressionArgument = node.arguments[ 0 ];
-					if ( ! isSanitized( arg ) ) {
-						context.report( {
-							node,
-							message: `${calleeName} argument must be sanitized with sanitize() or DOMPurify.sanitize()`,
-						} );
-					}
-				}
 			},
 		};
 	},

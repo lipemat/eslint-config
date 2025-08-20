@@ -1,6 +1,7 @@
 import noUnsafeValue from './rules/no-unsafe-value.js';
 import dangerouslySetInnerHtml from './rules/dangerously-set-inner-html.js';
 import jqueryExecuting from './rules/jquery-executing.js';
+import htmlExecutingFunction from './rules/html-executing-function.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/dist/ts-eslint/Config';
@@ -18,6 +19,7 @@ const plugin: FlatConfig.Plugin = {
 		'no-unsafe-value': noUnsafeValue,
 		'dangerously-set-inner-html': dangerouslySetInnerHtml,
 		'jquery-executing': jqueryExecuting,
+		'html-executing-function': htmlExecutingFunction,
 	},
 };
 
@@ -31,6 +33,7 @@ plugin.configs = Object.freeze( {
 				'@lipemat/security/no-unsafe-value': 'error',
 				'@lipemat/security/dangerously-set-inner-html': 'error',
 				'@lipemat/security/jquery-executing': 'error',
+				'@lipemat/security/html-executing-function': 'error',
 			},
 		},
 	],
