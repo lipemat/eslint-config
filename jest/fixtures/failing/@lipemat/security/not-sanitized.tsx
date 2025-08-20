@@ -2,6 +2,8 @@
 
 let arbitrary = 'First &middot; Second';
 
+const body = document.getElementById( 'body' );
+
 function snx( s: string ): string {
 	return '';
 }
@@ -31,7 +33,6 @@ const Test = ( {} ) => {
 	$( 'body' ).replaceWith( arbitrary );
 
 	// InnerHTMLSniff.
-	const body = document.getElementById( 'body' );
 	if ( body ) {
 		body.innerHTML = arbitrary;
 	}
@@ -69,3 +70,21 @@ const Test = ( {} ) => {
 
 	console.error( w );
 };
+
+
+setTimeout( arbitrary );
+setInterval( arbitrary );
+eval( arbitrary );
+
+document.write( arbitrary );
+document.writeln( arbitrary );
+window.open( arbitrary );
+
+if ( body ) {
+	body.insertAdjacentHTML( 'beforeend', arbitrary );
+	Function( arbitrary );
+	body.onclick = arbitrary;
+	body.setAttribute( 'onclick', arbitrary );
+	body.style.cssText = arbitrary;
+	body.setAttribute( 'style', arbitrary );
+}

@@ -1,56 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
-"FAIL jest/fixtures/failing/@lipemat/security/global-sinks.ts
+"FAIL jest/fixtures/failing/@lipemat/security/not-sanitized.tsx
+  × prefer-const (mocked ms)
+  × @typescript-eslint/no-unused-vars (mocked ms)
+  × @typescript-eslint/no-unused-vars (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @typescript-eslint/no-unused-vars (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @typescript-eslint/no-unused-vars (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × deprecation/deprecation (mocked ms)
+  × deprecation/deprecation (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × no-eval (mocked ms)
+  × @lipemat/security/no-unsafe-value (mocked ms)
+  × deprecation/deprecation (mocked ms)
 
-E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lipemat\\security\\global-sinks.ts
-  6:1   error  eval argument must be sanitized with sanitize() or DOMPurify.sanitize()                            @lipemat/security/no-unsafe-value
-  6:1   error  eval can be harmful                                                                                no-eval
-  8:1   error  document.write argument must be sanitized with sanitize() or DOMPurify.sanitize()                  @lipemat/security/no-unsafe-value
-  8:10  error  'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)  deprecation/deprecation
-
-✖ 4 problems (4 errors, 0 warnings)
-
-FAIL jest/fixtures/failing/@lipemat/security/not-sanitized.tsx
 
 E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lipemat\\security\\not-sanitized.tsx
    3:5   error  'arbitrary' is never reassigned. Use 'const' instead                                                prefer-const
-   5:15  error  's' is defined but never used                                                                       @typescript-eslint/no-unused-vars
-   9:10  error  'ReactComponent' is defined but never used                                                          @typescript-eslint/no-unused-vars
-  14:9   error  Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped  @lipemat/security/no-unsafe-value
-  19:7   error  'Test' is assigned a value but never used                                                           @typescript-eslint/no-unused-vars
-  21:2   error  Any HTML passed to \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/no-unsafe-value
-  22:2   error  Any HTML passed to \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
-  23:2   error  Any HTML passed to \`appendTo\` gets executed. Make sure it's properly escaped                        @lipemat/security/no-unsafe-value
-  24:2   error  Any HTML passed to \`before\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
-  25:2   error  Any HTML passed to \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/no-unsafe-value
-  26:2   error  Any HTML passed to \`insertAfter\` gets executed. Make sure it's properly escaped                     @lipemat/security/no-unsafe-value
-  27:2   error  Any HTML passed to \`insertBefore\` gets executed. Make sure it's properly escaped                    @lipemat/security/no-unsafe-value
-  28:2   error  Any HTML passed to \`prepend\` gets executed. Make sure it's properly escaped                         @lipemat/security/no-unsafe-value
-  29:2   error  Any HTML passed to \`prependTo\` gets executed. Make sure it's properly escaped                       @lipemat/security/no-unsafe-value
-  30:2   error  Any HTML passed to \`replaceAll\` gets executed. Make sure it's properly escaped                      @lipemat/security/no-unsafe-value
-  31:2   error  Any HTML passed to \`replaceWith\` gets executed. Make sure it's properly escaped                     @lipemat/security/no-unsafe-value
-  36:3   error  Assignment to innerHTML must be sanitized                                                           @lipemat/security/no-unsafe-value
-  40:8   error  String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()           @lipemat/security/no-unsafe-value
-  40:8   error  'str' is assigned a value but never used                                                            @typescript-eslint/no-unused-vars
-  43:2   error  Any HTML passed to \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/no-unsafe-value
-  46:2   error  Assignment to window.location.href must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  47:2   error  Assignment to window.location.protocol must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
-  48:2   error  Assignment to window.location.host must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  49:2   error  Assignment to window.location.hostname must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
-  50:2   error  Assignment to window.location.pathname must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
-  51:2   error  Assignment to window.location.search must be sanitized with sanitize() or DOMPurify.sanitize()      @lipemat/security/no-unsafe-value
-  52:2   error  Assignment to window.location.hash must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  53:2   error  Assignment to window.location.port must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  54:2   error  Assignment to window.name must be sanitized with sanitize() or DOMPurify.sanitize()                 @lipemat/security/no-unsafe-value
-  55:2   error  Assignment to window.status must be sanitized with sanitize() or DOMPurify.sanitize()               @lipemat/security/no-unsafe-value
-  55:9   error  'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
-  68:13  error  'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
+   7:15  error  's' is defined but never used                                                                       @typescript-eslint/no-unused-vars
+  11:10  error  'ReactComponent' is defined but never used                                                          @typescript-eslint/no-unused-vars
+  16:9   error  Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped  @lipemat/security/no-unsafe-value
+  21:7   error  'Test' is assigned a value but never used                                                           @typescript-eslint/no-unused-vars
+  23:2   error  Any HTML passed to \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/no-unsafe-value
+  24:2   error  Any HTML passed to \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
+  25:2   error  Any HTML passed to \`appendTo\` gets executed. Make sure it's properly escaped                        @lipemat/security/no-unsafe-value
+  26:2   error  Any HTML passed to \`before\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
+  27:2   error  Any HTML passed to \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/no-unsafe-value
+  28:2   error  Any HTML passed to \`insertAfter\` gets executed. Make sure it's properly escaped                     @lipemat/security/no-unsafe-value
+  29:2   error  Any HTML passed to \`insertBefore\` gets executed. Make sure it's properly escaped                    @lipemat/security/no-unsafe-value
+  30:2   error  Any HTML passed to \`prepend\` gets executed. Make sure it's properly escaped                         @lipemat/security/no-unsafe-value
+  31:2   error  Any HTML passed to \`prependTo\` gets executed. Make sure it's properly escaped                       @lipemat/security/no-unsafe-value
+  32:2   error  Any HTML passed to \`replaceAll\` gets executed. Make sure it's properly escaped                      @lipemat/security/no-unsafe-value
+  33:2   error  Any HTML passed to \`replaceWith\` gets executed. Make sure it's properly escaped                     @lipemat/security/no-unsafe-value
+  37:3   error  Assignment to innerHTML must be sanitized                                                           @lipemat/security/no-unsafe-value
+  41:8   error  String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()           @lipemat/security/no-unsafe-value
+  41:8   error  'str' is assigned a value but never used                                                            @typescript-eslint/no-unused-vars
+  44:2   error  Any HTML passed to \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/no-unsafe-value
+  47:2   error  Assignment to window.location.href must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
+  48:2   error  Assignment to window.location.protocol must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
+  49:2   error  Assignment to window.location.host must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
+  50:2   error  Assignment to window.location.hostname must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
+  51:2   error  Assignment to window.location.pathname must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
+  52:2   error  Assignment to window.location.search must be sanitized with sanitize() or DOMPurify.sanitize()      @lipemat/security/no-unsafe-value
+  53:2   error  Assignment to window.location.hash must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
+  54:2   error  Assignment to window.location.port must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
+  55:2   error  Assignment to window.name must be sanitized with sanitize() or DOMPurify.sanitize()                 @lipemat/security/no-unsafe-value
+  56:2   error  Assignment to window.status must be sanitized with sanitize() or DOMPurify.sanitize()               @lipemat/security/no-unsafe-value
+  56:9   error  'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
+  69:13  error  'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
+  77:1   error  eval argument must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
+  77:1   error  eval can be harmful                                                                                 no-eval
+  79:1   error  document.write argument must be sanitized with sanitize() or DOMPurify.sanitize()                   @lipemat/security/no-unsafe-value
+  79:10  error  'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)   deprecation/deprecation
 
-✖ 32 problems (32 errors, 0 warnings)
+✖ 36 problems (36 errors, 0 warnings)
   1 error and 0 warnings potentially fixable with the \`--fix\` option.
 
-Test Suites: 2 failed, 2 total
+Test Suites: 1 failed, 1 total
 Tests:       36 failed, 36 total
 Snapshots:   0 total
 Time:        
