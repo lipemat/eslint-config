@@ -4,8 +4,7 @@ import {isSanitized} from '../utils/shared.js';
 type Context = TSESLint.RuleContext<'stringArgument', []>;
 
 // Sinks: property assignments and function calls
-const SENSITIVE_PROPS = [
-	'innerHTML', 'outerHTML', 'href', 'src', 'action',
+const SENSITIVE_PROPS = [ 'href', 'src', 'action',
 	'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port', 'name', 'status',
 ];
 const URL_PROPS = new Set( [ 'href', 'src', 'action', 'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port' ] );

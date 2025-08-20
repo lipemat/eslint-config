@@ -38,9 +38,8 @@ body.prepend( arbitrary );
 body.replaceWith( arbitrary );
 
 // InnerHTMLSniff.
-if ( body ) {
-	body.innerHTML = arbitrary;
-}
+body.innerHTML = arbitrary;
+body.outerHTML = arbitrary;
 
 // StringConcatSniff.
 const str = 'test' + '<concat>' + 'test' + snx( '</concat>' );

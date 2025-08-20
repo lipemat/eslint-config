@@ -1,9 +1,9 @@
 import jestRunnerEslint from '../helpers/jest-runner-eslint';
 import {RuleTester} from '@typescript-eslint/rule-tester';
-import noUnsafeValueRule from '../../plugins/security/rules/no-unsafe-value';
 import dangerouslySetInnerHtmlRule from '../../plugins/security/rules/dangerously-set-inner-html';
 import jqueryExecutingRule from '../../plugins/security/rules/jquery-executing';
 import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executing-function';
+import htmlExecutingAssignmentRule from '../../plugins/security/rules/html-executing-assignment';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -37,27 +37,6 @@ describe( '@lipemat rules are enabled', () => {
 	} );
 } );
 
-
-describe( 'No Unsafe Value', () => {
-	ruleTester.run( 'no-unsafe-value', noUnsafeValueRule, {
-		valid: [
-			{
-				code: 'document.getElementById( \'body\' ).innerHTML = sanitize(arbitrary)',
-			},
-		],
-		invalid: [
-			{
-				code: 'document.getElementById( \'body\' ).innerHTML = arbitrary',
-				errors: [
-					{
-						message: 'Assignment to innerHTML must be sanitized.',
-						type: AST_NODE_TYPES.AssignmentExpression,
-					},
-				],
-			},
-		],
-	} );
-} );
 
 describe( 'jQuery Executing', () => {
 	ruleTester.run( 'jquery-executing', jqueryExecutingRule, {
@@ -335,6 +314,106 @@ describe( 'Dangerously Set Inner HTML', () => {
 				],
 				output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(arbitrary)}} /></div>',
 			},
+		],
+	} );
+} );
+
+describe( 'HTML Executing Assignment', () => {
+	ruleTester.run( 'html-executing-assignment', htmlExecutingAssignmentRule, {
+		valid: [
+			// Property assignments with sanitization
+			{
+				code: 'element.innerHTML = sanitize(content)',
+			},
+			{
+				code: 'element.outerHTML = DOMPurify.sanitize(arbitrary)',
+			},
+		],
+		invalid: [
+			// Property assignments without sanitization
+			{
+				code: 'element.innerHTML = userInput',
+				errors: [
+					{
+						messageId: 'executed',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propertyName: 'innerHTML',
+						},
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'element.innerHTML = DOMPurify.sanitize(userInput)',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.innerHTML = sanitize(userInput)',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'element.outerHTML = content',
+				errors: [
+					{
+						messageId: 'executed',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propertyName: 'outerHTML',
+						},
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'element.outerHTML = DOMPurify.sanitize(content)',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'element.outerHTML = sanitize(content)',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: `if (body) {body.innerHTML = arbitrary; body.outerHTML = arbitrary; }`,
+				errors: [
+					{
+						messageId: 'executed',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propertyName: 'innerHTML',
+						},
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: `if (body) {body.innerHTML = DOMPurify.sanitize(arbitrary); body.outerHTML = arbitrary; }`,
+							},
+							{
+								messageId: 'sanitize',
+								output: `if (body) {body.innerHTML = sanitize(arbitrary); body.outerHTML = arbitrary; }`,
+							},
+						],
+					},
+					{
+						messageId: 'executed',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						data: {
+							propertyName: 'outerHTML',
+						},
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = DOMPurify.sanitize(arbitrary); }`,
+							},
+							{
+								messageId: 'sanitize',
+								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = sanitize(arbitrary); }`,
+							},
+						],
+					},
+				]
+			}
 		],
 	} );
 } );

@@ -2,9 +2,11 @@ import noUnsafeValue from './rules/no-unsafe-value.js';
 import dangerouslySetInnerHtml from './rules/dangerously-set-inner-html.js';
 import jqueryExecuting from './rules/jquery-executing.js';
 import htmlExecutingFunction from './rules/html-executing-function.js';
+import htmlExecutingAssignment from './rules/html-executing-assignment.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
+
 
 const pkg = JSON.parse(
 	readFileSync( resolve( './package.json' ), 'utf8' ),
@@ -25,12 +27,13 @@ const plugin: Plugin = {
 	rules: {
 		'no-unsafe-value': noUnsafeValue,
 		'dangerously-set-inner-html': dangerouslySetInnerHtml,
-		'jquery-executing': jqueryExecuting,
+		'html-executing-assignment': htmlExecutingAssignment,
 		'html-executing-function': htmlExecutingFunction,
+		'jquery-executing': jqueryExecuting,
 	},
 	configs: {
 		recommended: [],
-	}
+	},
 };
 
 // Freeze the plugin to prevent modifications and use the plugin within.
@@ -44,6 +47,7 @@ plugin.configs = Object.freeze( {
 				'@lipemat/security/no-unsafe-value': 'error',
 				'@lipemat/security/dangerously-set-inner-html': 'error',
 				'@lipemat/security/jquery-executing': 'error',
+				'@lipemat/security/html-executing-assignment': 'error',
 				'@lipemat/security/html-executing-function': 'error',
 			},
 		},
