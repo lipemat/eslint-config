@@ -24,7 +24,7 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × @lipemat/security/html-executing-function (mocked ms)
   × @lipemat/security/html-executing-assignment (mocked ms)
   × @lipemat/security/html-executing-assignment (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/html-string-concat (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
   × @lipemat/security/jquery-executing (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
@@ -47,48 +47,48 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
 
 
 E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lipemat\\security\\not-sanitized.tsx
-   3:5   error    'arbitrary' is never reassigned. Use 'const' instead                                                prefer-const
-   7:15  error    's' is defined but never used                                                                       @typescript-eslint/no-unused-vars
-  11:10  error    'ReactComponent' is defined but never used                                                          @typescript-eslint/no-unused-vars
-  16:9   error    Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped  @lipemat/security/dangerously-set-inner-html
-  22:1   error    Any HTML used with \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/jquery-executing
-  23:1   error    Any HTML used with \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/jquery-executing
-  24:1   error    Any HTML used with \`appendTo\` gets executed. Make sure it's properly escaped                        @lipemat/security/jquery-executing
-  25:1   error    Any HTML used with \`before\` gets executed. Make sure it's properly escaped                          @lipemat/security/jquery-executing
-  26:1   error    Any HTML used with \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/jquery-executing
-  27:1   error    Any HTML used with \`insertAfter\` gets executed. Make sure it's properly escaped                     @lipemat/security/jquery-executing
-  28:1   error    Any HTML used with \`insertBefore\` gets executed. Make sure it's properly escaped                    @lipemat/security/jquery-executing
-  29:1   error    Any HTML used with \`prepend\` gets executed. Make sure it's properly escaped                         @lipemat/security/jquery-executing
-  30:1   error    Any HTML used with \`prependTo\` gets executed. Make sure it's properly escaped                       @lipemat/security/jquery-executing
-  31:1   error    Any HTML used with \`replaceAll\` gets executed. Make sure it's properly escaped                      @lipemat/security/jquery-executing
-  32:1   error    Any HTML used with \`replaceWith\` gets executed. Make sure it's properly escaped                     @lipemat/security/jquery-executing
-  34:1   error    Any HTML used with \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/html-executing-function
-  35:1   error    Any HTML used with \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/html-executing-function
-  36:1   error    Any HTML used with \`before\` gets executed. Make sure it's properly escaped                          @lipemat/security/html-executing-function
-  37:1   error    Any HTML used with \`prepend\` gets executed. Make sure it's properly escaped                         @lipemat/security/html-executing-function
-  38:1   error    Any HTML used with \`replaceWith\` gets executed. Make sure it's properly escaped                     @lipemat/security/html-executing-function
-  41:1   error    Any HTML used with \`innerHTML\` gets executed. Make sure it's properly escaped                       @lipemat/security/html-executing-assignment
-  42:1   error    Any HTML used with \`outerHTML\` gets executed. Make sure it's properly escaped                       @lipemat/security/html-executing-assignment
-  45:7   error    String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()           @lipemat/security/no-unsafe-value
-  45:7   error    'str' is assigned a value but never used                                                            @typescript-eslint/no-unused-vars
-  48:1   error    Any HTML used with \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/jquery-executing
-  51:1   error    Assignment to window.location.href must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  52:1   error    Assignment to window.location.protocol must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
-  53:1   error    Assignment to window.location.host must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  54:1   error    Assignment to window.location.hostname must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
-  55:1   error    Assignment to window.location.pathname must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
-  56:1   error    Assignment to window.location.search must be sanitized with sanitize() or DOMPurify.sanitize()      @lipemat/security/no-unsafe-value
-  57:1   error    Assignment to window.location.hash must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  58:1   error    Assignment to window.location.port must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
-  59:1   error    Assignment to window.name must be sanitized with sanitize() or DOMPurify.sanitize()                 @lipemat/security/no-unsafe-value
-  60:1   error    Assignment to window.status must be sanitized with sanitize() or DOMPurify.sanitize()               @lipemat/security/no-unsafe-value
-  60:8   error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
-  73:12  error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)   deprecation/deprecation
-  80:1   error    eval can be harmful                                                                                 no-eval
-  82:1   error    Any HTML used with \`document.write\` gets executed. Make sure it's properly escaped                  @lipemat/security/html-executing-function
-  82:10  error    'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)   deprecation/deprecation
-  83:1   error    Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                @lipemat/security/html-executing-function
-  86:6   warning  Unexpected object value in conditional. The condition is always true                                @typescript-eslint/strict-boolean-expressions
+   3:5   error    'arbitrary' is never reassigned. Use 'const' instead                                                                     prefer-const
+   7:15  error    's' is defined but never used                                                                                            @typescript-eslint/no-unused-vars
+  11:10  error    'ReactComponent' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+  16:9   error    Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped                       @lipemat/security/dangerously-set-inner-html
+  22:1   error    Any HTML used with \`after\` gets executed. Make sure it's properly escaped                                                @lipemat/security/jquery-executing
+  23:1   error    Any HTML used with \`append\` gets executed. Make sure it's properly escaped                                               @lipemat/security/jquery-executing
+  24:1   error    Any HTML used with \`appendTo\` gets executed. Make sure it's properly escaped                                             @lipemat/security/jquery-executing
+  25:1   error    Any HTML used with \`before\` gets executed. Make sure it's properly escaped                                               @lipemat/security/jquery-executing
+  26:1   error    Any HTML used with \`html\` gets executed. Make sure it's properly escaped                                                 @lipemat/security/jquery-executing
+  27:1   error    Any HTML used with \`insertAfter\` gets executed. Make sure it's properly escaped                                          @lipemat/security/jquery-executing
+  28:1   error    Any HTML used with \`insertBefore\` gets executed. Make sure it's properly escaped                                         @lipemat/security/jquery-executing
+  29:1   error    Any HTML used with \`prepend\` gets executed. Make sure it's properly escaped                                              @lipemat/security/jquery-executing
+  30:1   error    Any HTML used with \`prependTo\` gets executed. Make sure it's properly escaped                                            @lipemat/security/jquery-executing
+  31:1   error    Any HTML used with \`replaceAll\` gets executed. Make sure it's properly escaped                                           @lipemat/security/jquery-executing
+  32:1   error    Any HTML used with \`replaceWith\` gets executed. Make sure it's properly escaped                                          @lipemat/security/jquery-executing
+  34:1   error    Any HTML used with \`after\` gets executed. Make sure it's properly escaped                                                @lipemat/security/html-executing-function
+  35:1   error    Any HTML used with \`append\` gets executed. Make sure it's properly escaped                                               @lipemat/security/html-executing-function
+  36:1   error    Any HTML used with \`before\` gets executed. Make sure it's properly escaped                                               @lipemat/security/html-executing-function
+  37:1   error    Any HTML used with \`prepend\` gets executed. Make sure it's properly escaped                                              @lipemat/security/html-executing-function
+  38:1   error    Any HTML used with \`replaceWith\` gets executed. Make sure it's properly escaped                                          @lipemat/security/html-executing-function
+  41:1   error    Any HTML used with \`innerHTML\` gets executed. Make sure it's properly escaped                                            @lipemat/security/html-executing-assignment
+  42:1   error    Any HTML used with \`outerHTML\` gets executed. Make sure it's properly escaped                                            @lipemat/security/html-executing-assignment
+  45:7   error    HTML string concatenation detected, this is a security risk, use DOM node construction or a templating language instead  @lipemat/security/html-string-concat
+  45:7   error    'str' is assigned a value but never used                                                                                 @typescript-eslint/no-unused-vars
+  48:1   error    Any HTML used with \`html\` gets executed. Make sure it's properly escaped                                                 @lipemat/security/jquery-executing
+  51:1   error    Assignment to window.location.href must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
+  52:1   error    Assignment to window.location.protocol must be sanitized with sanitize() or DOMPurify.sanitize()                         @lipemat/security/no-unsafe-value
+  53:1   error    Assignment to window.location.host must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
+  54:1   error    Assignment to window.location.hostname must be sanitized with sanitize() or DOMPurify.sanitize()                         @lipemat/security/no-unsafe-value
+  55:1   error    Assignment to window.location.pathname must be sanitized with sanitize() or DOMPurify.sanitize()                         @lipemat/security/no-unsafe-value
+  56:1   error    Assignment to window.location.search must be sanitized with sanitize() or DOMPurify.sanitize()                           @lipemat/security/no-unsafe-value
+  57:1   error    Assignment to window.location.hash must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
+  58:1   error    Assignment to window.location.port must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
+  59:1   error    Assignment to window.name must be sanitized with sanitize() or DOMPurify.sanitize()                                      @lipemat/security/no-unsafe-value
+  60:1   error    Assignment to window.status must be sanitized with sanitize() or DOMPurify.sanitize()                                    @lipemat/security/no-unsafe-value
+  60:8   error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)                        deprecation/deprecation
+  73:12  error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)                        deprecation/deprecation
+  80:1   error    eval can be harmful                                                                                                      no-eval
+  82:1   error    Any HTML used with \`document.write\` gets executed. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
+  82:10  error    'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)                        deprecation/deprecation
+  83:1   error    Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                                     @lipemat/security/html-executing-function
+  86:6   warning  Unexpected object value in conditional. The condition is always true                                                     @typescript-eslint/strict-boolean-expressions
 
 ✖ 42 problems (41 errors, 1 warning)
   2 errors and 0 warnings potentially fixable with the \`--fix\` option.

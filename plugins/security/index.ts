@@ -3,6 +3,7 @@ import dangerouslySetInnerHtml from './rules/dangerously-set-inner-html.js';
 import jqueryExecuting from './rules/jquery-executing.js';
 import htmlExecutingFunction from './rules/html-executing-function.js';
 import htmlExecutingAssignment from './rules/html-executing-assignment.js';
+import htmlStringConcat from './rules/html-string-concat.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
@@ -30,6 +31,7 @@ const plugin: Plugin = {
 		'html-executing-assignment': htmlExecutingAssignment,
 		'html-executing-function': htmlExecutingFunction,
 		'jquery-executing': jqueryExecuting,
+		'html-string-concat': htmlStringConcat,
 	},
 	configs: {
 		recommended: [],
@@ -49,6 +51,7 @@ plugin.configs = Object.freeze( {
 				'@lipemat/security/jquery-executing': 'error',
 				'@lipemat/security/html-executing-assignment': 'error',
 				'@lipemat/security/html-executing-function': 'error',
+				'@lipemat/security/html-string-concat': 'error',
 			},
 		},
 	],

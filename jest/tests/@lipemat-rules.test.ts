@@ -4,6 +4,7 @@ import dangerouslySetInnerHtmlRule from '../../plugins/security/rules/dangerousl
 import jqueryExecutingRule from '../../plugins/security/rules/jquery-executing';
 import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executing-function';
 import htmlExecutingAssignmentRule from '../../plugins/security/rules/html-executing-assignment';
+import htmlStringConcatRule from '../../plugins/security/rules/html-string-concat';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -412,8 +413,8 @@ describe( 'HTML Executing Assignment', () => {
 							},
 						],
 					},
-				]
-			}
+				],
+			},
 		],
 	} );
 } );
@@ -585,6 +586,49 @@ describe( 'HTML Executing Function', () => {
 								output: 'element.replaceWith( sanitize(content) )',
 							},
 						],
+					},
+				],
+			},
+		],
+	} );
+} );
+
+describe( 'HTML String Concatenation', () => {
+	ruleTester.run( 'html-string-concat', htmlStringConcatRule, {
+		valid: [
+			// Wrapped in a function before direct assignment
+			{
+				code: 'element.innerHTML = wrapped("div>" + userInput + "</div>")',
+			},
+			{
+				code: 'const html = other("<p>" + content + "</p>")',
+			},
+			// Non-HTML string concatenation (no < or > characters)
+			{
+				code: 'const message = "Hello " + name + "!"',
+			},
+			{
+				code: 'element.textContent = "Value: " + userInput',
+			},
+		],
+		invalid: [
+			// Assignment with HTML string concatenation
+			{
+				code: 'element.innerHTML = "<div>" + userInput + "</div>"',
+				errors: [
+					{
+						messageId: 'htmlStringConcat',
+						type: AST_NODE_TYPES.AssignmentExpression,
+					},
+				],
+			},
+			// Variable declaration with HTML string concatenation
+			{
+				code: 'const html = "<p>" + content + "</p>"',
+				errors: [
+					{
+						messageId: 'htmlStringConcat',
+						type: AST_NODE_TYPES.VariableDeclarator,
 					},
 				],
 			},

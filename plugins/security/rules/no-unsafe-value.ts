@@ -10,29 +10,6 @@ const SENSITIVE_PROPS = [ 'href', 'src', 'action',
 const URL_PROPS = new Set( [ 'href', 'src', 'action', 'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port' ] );
 
 
-function isStringConcat( node: TSESTree.CallExpressionArgument ): boolean {
-	// 'foo' + userInput + 'bar' (HTML-like only)
-	return AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator &&
-		hasHtmlLikeLiteralStrings( node );
-}
-
-
-function hasHtmlLikeLiteralStrings( node: TSESTree.Expression | TSESTree.PrivateIdentifier ): boolean {
-	if ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value ) {
-		// Only treat as risky if it looks like HTML, e.g., contains angle brackets
-		return /[<>]/.test( node.value );
-	}
-	if ( AST_NODE_TYPES.TemplateLiteral === node.type ) {
-		// Check any static part of the template for HTML-like content
-		return node.quasis.some( q => /[<>]/.test( q.value.cooked ) );
-	}
-	if ( AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator ) {
-		return hasHtmlLikeLiteralStrings( node.left ) || hasHtmlLikeLiteralStrings( node.right );
-	}
-	return false;
-}
-
-
 function isSafeUrlLiteral( node: TSESTree.Expression ): boolean {
 	return ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value &&
 		! /^(javascript:)/i.test( node.value )
@@ -136,16 +113,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 					const rhsResolved: TSESTree.Expression = right;
 
 
-					if ( 'value' === propName ) {
-						// Be conservative for `.value`: only flag when HTML-like strings are present
-						if ( hasHtmlLikeLiteralStrings( rhsResolved ) && ! isSanitized( rhsResolved ) ) {
-							context.report( {
-								node,
-								// @ts-expect-error
-								message: 'Assignment to value contains HTML-like content. Sanitize with sanitize() or DOMPurify.sanitize()',
-							} );
-						}
-					} else if ( URL_PROPS.has( propName ) && ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) ) {
+					if ( URL_PROPS.has( propName ) && ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) ) {
 						// Safe literal URL assignment (e.g., '#', '/path')
 						return;
 					} else if ( ! isSanitized( rhsResolved ) ) {
@@ -181,33 +149,6 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 						} );
 					}
 				}
-				// String concat with HTML in assignments
-				if ( isStringConcat( right ) ) {
-					context.report( {
-						node,
-						// @ts-expect-error
-						message: 'String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()',
-					} );
-				}
-			},
-
-
-			VariableDeclarator( node: TSESTree.VariableDeclarator ) {
-				// Detect string concatenation assigned at declaration time
-				const init = node.init;
-				if ( null === init ) {
-					return;
-				}
-				if ( isSanitized( init ) ) {
-					return; // e.g., const x = sanitize('a' + b)
-				}
-				if ( isStringConcat( init ) ) {
-					context.report( {
-						node,
-						// @ts-expect-error
-						message: 'String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()',
-					} );
-				}
 			},
 
 
@@ -236,8 +177,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 					if ( ! isFunctionArg ) {
 						const isStringy = (
 							( AST_NODE_TYPES.Literal === arg.type && 'string' === typeof arg.value ) ||
-							AST_NODE_TYPES.TemplateLiteral === arg.type ||
-							isStringConcat( arg )
+							AST_NODE_TYPES.TemplateLiteral === arg.type
 						);
 						if ( isStringy ) {
 							context.report( {
