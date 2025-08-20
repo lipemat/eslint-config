@@ -7,23 +7,25 @@ import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executi
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
+const ruleTester = new RuleTester( {
+	languageOptions: {
+		parser,
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+	},
+} );
+
+
 describe( '@lipemat rules are enabled', () => {
 	test( '@lipemat/no-unsafe-value failing', async () => {
 		expect( await jestRunnerEslint( 'failing/@lipemat/security' ) ).toMatchSnapshot();
 	} );
 } );
 
-describe( 'Individual rules', () => {
-	const ruleTester = new RuleTester( {
-		languageOptions: {
-			parser,
-			parserOptions: {
-				ecmaFeatures: {
-					jsx: true,
-				},
-			},
-		},
-	} );
+describe( 'No Unsafe Value', () => {
 	ruleTester.run( 'no-unsafe-value', noUnsafeValueRule, {
 		valid: [
 			{
@@ -42,7 +44,9 @@ describe( 'Individual rules', () => {
 			},
 		],
 	} );
+} );
 
+describe( 'jQuery Executing', () => {
 	ruleTester.run( 'jquery-executing', jqueryExecutingRule, {
 		valid: [
 			{
@@ -192,7 +196,9 @@ describe( 'Individual rules', () => {
 			},
 		],
 	} );
+} );
 
+describe( 'Dangerously Set Inner HTML', () => {
 	ruleTester.run( 'dangerously-set-inner-html', dangerouslySetInnerHtmlRule, {
 		valid: [
 			{
@@ -212,7 +218,9 @@ describe( 'Individual rules', () => {
 			},
 		],
 	} );
+} );
 
+describe( 'HTML Executing Function', () => {
 	ruleTester.run( 'html-executing-function', htmlExecutingFunctionRule, {
 		valid: [
 			// Document methods with sanitization
