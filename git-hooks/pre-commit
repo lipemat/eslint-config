@@ -38,6 +38,19 @@ function js_tests() {
 }
 js_tests &
 
+function js_build() {
+    echo "${YELLOW}[pre-commit]${BLUE} Running \`yarn build\`... ${WHITE}"
+    OUTPUT=$(yarn build 2>&1)
+    if [[ $? != 0 ]]; then
+        echo
+        echo "${BLUE}JS Build failed."
+        echo "${RED}$OUTPUT"
+        exit_reset_colors
+    fi
+    echo "${YELLOW}[pre-commit]${GREEN} Yarn Build Completed!${RESET_COLOR}"
+}
+js_build &
+
 # Go through each background task
 # If it sent exit code 1, it failed and the result from `wait` will be false.
 FAIL=0
