@@ -1,20 +1,46 @@
 import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
 import type {CallExpression, CallExpressionArgument} from '@typescript-eslint/types/dist/generated/ast-spec';
 import {isSanitized} from '../utils/shared.js';
+import {isJQueryCall} from './jquery-executing.js';
 
 type HtmlExecutingFunctions =
 	'document.write' | 'document.writeln';
 
-type Context = TSESLint.RuleContext<HtmlExecutingFunctions, []>;
+
+type UnsafeCalls =
+	'after'
+	| 'append'
+	| 'appendTo'
+	| 'before'
+	| 'html'
+	| 'insertAfter'
+	| 'insertBefore'
+	| 'prepend'
+	| 'prependTo'
+	| 'replaceAll'
+	| 'replaceWith';
+
+type Context = TSESLint.RuleContext<HtmlExecutingFunctions | UnsafeCalls, []>;
 
 const DOCUMENT_METHODS: HtmlExecutingFunctions[] = [
 	'document.write',
 	'document.writeln',
 ];
 
+const UNSAFE_METHODS: UnsafeCalls[] = [
+	'after', 'append', 'appendTo', 'before', 'html',
+	'insertAfter', 'insertBefore', 'prepend', 'prependTo',
+	'replaceAll', 'replaceWith',
+];
+
 function isDocumentMethod( methodName: string ): methodName is HtmlExecutingFunctions {
 	return DOCUMENT_METHODS.includes( methodName as HtmlExecutingFunctions );
 }
+
+function isUnsafeMethod( methodName: string ): methodName is UnsafeCalls {
+	return UNSAFE_METHODS.includes( methodName as UnsafeCalls );
+}
+
 
 function getDocumentCall( node: CallExpression ): HtmlExecutingFunctions | null {
 	let calleeName = '';
@@ -37,7 +63,25 @@ function getDocumentCall( node: CallExpression ): HtmlExecutingFunctions | null 
 	return null;
 }
 
-const plugin: TSESLint.RuleModule<HtmlExecutingFunctions> = {
+
+function getElementMethodCall( node: CallExpression ): UnsafeCalls | null {
+	// Detect element.method(userInput) calls
+	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
+		return null;
+	}
+	const methodName = node.callee.property.name;
+	if ( ! isUnsafeMethod( methodName ) ) {
+		return null;
+	}
+	if ( isJQueryCall( node ) ) {
+		return null; // Handled in jquery-executing rule
+	}
+	// This is a generic element method call, not jQuery specific
+	return methodName;
+}
+
+
+const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 	defaultOptions: [],
 	meta: {
 		docs: {
@@ -47,6 +91,17 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions> = {
 		messages: {
 			'document.write': 'Any HTML used with `document.write` gets executed. Make sure it\'s properly escaped.',
 			'document.writeln': 'Any HTML used with `document.writeln` gets executed. Make sure it\'s properly escaped.',
+			after: 'Any HTML used with `after` gets executed. Make sure it\'s properly escaped.',
+			append: 'Any HTML used with `append` gets executed. Make sure it\'s properly escaped.',
+			appendTo: 'Any HTML used with `appendTo` gets executed. Make sure it\'s properly escaped.',
+			before: 'Any HTML used with `before` gets executed. Make sure it\'s properly escaped.',
+			html: 'Any HTML used with `html` gets executed. Make sure it\'s properly escaped.',
+			insertAfter: 'Any HTML used with `insertAfter` gets executed. Make sure it\'s properly escaped.',
+			insertBefore: 'Any HTML used with `insertBefore` gets executed. Make sure it\'s properly escaped.',
+			prepend: 'Any HTML used with `prepend` gets executed. Make sure it\'s properly escaped.',
+			prependTo: 'Any HTML used with `prependTo` gets executed. Make sure it\'s properly escaped.',
+			replaceAll: 'Any HTML used with `replaceAll` gets executed. Make sure it\'s properly escaped.',
+			replaceWith: 'Any HTML used with `replaceWith` gets executed. Make sure it\'s properly escaped.',
 		},
 		schema: [],
 		type: 'problem',
@@ -63,6 +118,22 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions> = {
 						context.report( {
 							node,
 							messageId: documentMethod,
+							fix: ( fixer: TSESLint.RuleFixer ) => {
+								const argText = context.sourceCode.getText( arg );
+								return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
+							},
+						} );
+					}
+				}
+
+				// Check for Element methods
+				const elementMethod = getElementMethodCall( node );
+				if ( elementMethod !== null ) {
+					const arg: CallExpressionArgument = node.arguments[ 0 ];
+					if ( ! isSanitized( arg ) ) {
+						context.report( {
+							node,
+							messageId: elementMethod,
 							fix: ( fixer: TSESLint.RuleFixer ) => {
 								const argText = context.sourceCode.getText( arg );
 								return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );

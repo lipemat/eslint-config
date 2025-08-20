@@ -27,6 +27,23 @@ function isJQueryMethod( methodName: string ): methodName is UnsafeCalls {
 	return JQUERY_METHODS.includes( methodName as UnsafeCalls );
 }
 
+export function isJQueryCall( node: CallExpression ): boolean {
+	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
+		return false;
+	}
+	// Walk to the root object of the call chain
+	let obj = node.callee.object ?? null;
+	if ( null === obj ) {
+		return false;
+	}
+	while ( AST_NODE_TYPES.MemberExpression === obj.type ) {
+		obj = obj.object;
+	}
+	return ( AST_NODE_TYPES.CallExpression === obj.type && AST_NODE_TYPES.Identifier === obj.callee.type &&
+		( '$' === obj.callee.name || 'jQuery' === obj.callee.name )
+	);
+}
+
 
 function getJQueryCall( node: CallExpression ): UnsafeCalls | null {
 	// Detect $(...).method(userInput) or jQuery(...).method(...)
@@ -37,19 +54,7 @@ function getJQueryCall( node: CallExpression ): UnsafeCalls | null {
 	if ( ! isJQueryMethod( methodName ) ) {
 		return null;
 	}
-	// Walk to the root object of the call chain
-	let obj = node.callee.object ?? null;
-	if ( null === obj ) {
-		return null;
-	}
-	while ( AST_NODE_TYPES.MemberExpression === obj.type ) {
-		obj = obj.object;
-	}
-	const isJQuery: boolean = ( AST_NODE_TYPES.CallExpression === obj.type && AST_NODE_TYPES.Identifier === obj.callee.type &&
-		( '$' === obj.callee.name || 'jQuery' === obj.callee.name )
-	);
-
-	return isJQuery ? methodName : null;
+	return isJQueryCall( node ) ? methodName : null;
 }
 
 

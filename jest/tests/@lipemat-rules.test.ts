@@ -222,6 +222,40 @@ describe( 'Individual rules', () => {
 			{
 				code: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
 			},
+			// Element methods with sanitization
+			{
+				code: 'element.after( sanitize(content) )',
+			},
+			{
+				code: 'element.append( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.appendTo( sanitize(content) )',
+			},
+			{
+				code: 'element.before( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.html( sanitize(userInput) )',
+			},
+			{
+				code: 'element.insertAfter( sanitize(content) )',
+			},
+			{
+				code: 'element.insertBefore( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.prepend( sanitize(content) )',
+			},
+			{
+				code: 'element.prependTo( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.replaceAll( sanitize(content) )',
+			},
+			{
+				code: 'element.replaceWith( DOMPurify.sanitize(arbitrary) )',
+			},
 		],
 		invalid: [
 			// Document methods without sanitization
@@ -244,6 +278,117 @@ describe( 'Individual rules', () => {
 					},
 				],
 				output: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
+			},
+			// Element methods without sanitization
+			{
+				code: 'element.after( userInput )',
+				errors: [
+					{
+						messageId: 'after',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.after( DOMPurify.sanitize(userInput) )',
+			},
+			{
+				code: 'element.append( content )',
+				errors: [
+					{
+						messageId: 'append',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.append( DOMPurify.sanitize(content) )',
+			},
+			{
+				code: 'element.html( arbitrary )',
+				errors: [
+					{
+						messageId: 'html',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.html( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.insertAfter( userInput )',
+				errors: [
+					{
+						messageId: 'insertAfter',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.insertAfter( DOMPurify.sanitize(userInput) )',
+			},
+			{
+				code: 'element.appendTo( userInput )',
+				errors: [
+					{
+						messageId: 'appendTo',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.appendTo( DOMPurify.sanitize(userInput) )',
+			},
+			{
+				code: 'element.before( content )',
+				errors: [
+					{
+						messageId: 'before',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.before( DOMPurify.sanitize(content) )',
+			},
+			{
+				code: 'element.insertBefore( arbitrary )',
+				errors: [
+					{
+						messageId: 'insertBefore',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.insertBefore( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.prepend( userInput )',
+				errors: [
+					{
+						messageId: 'prepend',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.prepend( DOMPurify.sanitize(userInput) )',
+			},
+			{
+				code: 'element.prependTo( content )',
+				errors: [
+					{
+						messageId: 'prependTo',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.prependTo( DOMPurify.sanitize(content) )',
+			},
+			{
+				code: 'element.replaceAll( arbitrary )',
+				errors: [
+					{
+						messageId: 'replaceAll',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.replaceAll( DOMPurify.sanitize(arbitrary) )',
+			},
+			{
+				code: 'element.replaceWith( content )',
+				errors: [
+					{
+						messageId: 'replaceWith',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+				output: 'element.replaceWith( DOMPurify.sanitize(content) )',
 			},
 		],
 	} );
