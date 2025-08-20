@@ -34,8 +34,8 @@
     "@lipemat/js-boilerplate": "^10.13.1",
     "@stylistic/eslint-plugin-ts": "^2.12.1",
     "@types/eslint": "^9",
-    "@typescript-eslint/eslint-plugin": "^8.18.0",
-    "@typescript-eslint/parser": "^8.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
     "@wordpress/eslint-plugin": "^22.0.0",
     "eslint": "^9",
     "eslint-plugin-deprecation": "^3",
@@ -56,6 +56,9 @@
     "jest": "^29",
     "jest-runner-eslint": "^2.2.1",
     "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
   },
   "resolutions": {
     "@babel/runtime": "^7.27.0"

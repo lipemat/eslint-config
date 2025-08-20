@@ -13,7 +13,13 @@
     "rules/",
     "utils/"
   ],
-  "devDependencies": {
-    "eslint": "^9"
+  "dependencies": {
+    "eslint": "^9",
+    "@typescript-eslint/utils": "^8.40.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9",
+    "@typescript-eslint/parser": "^8.40.0",
+    "typescript": "^5.8.3"
   }
 }

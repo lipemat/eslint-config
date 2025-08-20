@@ -245,9 +245,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 							} );
 						}
 					}
-					return; // Do not apply generic sanitizer checks to timer callbacks.
 				}
-
 			},
 		};
 	},
