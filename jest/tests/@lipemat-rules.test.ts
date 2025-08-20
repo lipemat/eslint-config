@@ -1,6 +1,7 @@
 import jestRunnerEslint from '../helpers/jest-runner-eslint';
 import {RuleTester} from '@typescript-eslint/rule-tester';
-import rule from '../../plugins/security/rules/no-unsafe-value';
+import noUnsafeValueRule from '../../plugins/security/rules/no-unsafe-value';
+import dangerouslySetInnerHtmlRule from '../../plugins/security/rules/dangerously-set-inner-html';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -21,7 +22,7 @@ describe( 'Individual rules', () => {
 			},
 		},
 	} );
-	ruleTester.run( 'no-unsafe-value', rule, {
+	ruleTester.run( 'no-unsafe-value', noUnsafeValueRule, {
 		valid: [
 			{
 				code: '$( \'body\' ).after( sanitize(arbitrary) )',
@@ -31,9 +32,6 @@ describe( 'Individual rules', () => {
 			},
 			{
 				code: 'document.getElementById( \'body\' ).innerHTML = sanitize(arbitrary)',
-			},
-			{
-				code: '() => <div><div dangerouslySetInnerHTML={{__html: sanitize(arbitrary)}} /></div>',
 			},
 		],
 		invalid: [
@@ -46,6 +44,16 @@ describe( 'Individual rules', () => {
 					},
 				],
 			},
+		],
+	} );
+
+	ruleTester.run( 'dangerously-set-inner-html', dangerouslySetInnerHtmlRule, {
+		valid: [
+			{
+				code: '() => <div><div dangerouslySetInnerHTML={{__html: sanitize(arbitrary)}} /></div>',
+			},
+		],
+		invalid: [
 			{
 				code: '() => <div><div dangerouslySetInnerHTML={{__html: arbitrary}} /></div>',
 				errors: [
@@ -54,6 +62,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.JSXAttribute,
 					},
 				],
+				output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(arbitrary)}} /></div>',
 			},
 		],
 	} );

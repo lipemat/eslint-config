@@ -5,7 +5,7 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × prefer-const (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/dangerously-set-inner-html (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
@@ -44,7 +44,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
    3:5   error  'arbitrary' is never reassigned. Use 'const' instead                                                prefer-const
    7:15  error  's' is defined but never used                                                                       @typescript-eslint/no-unused-vars
   11:10  error  'ReactComponent' is defined but never used                                                          @typescript-eslint/no-unused-vars
-  16:9   error  Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped  @lipemat/security/no-unsafe-value
+  16:9   error  Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped  @lipemat/security/dangerously-set-inner-html
   21:7   error  'Test' is assigned a value but never used                                                           @typescript-eslint/no-unused-vars
   23:2   error  Any HTML passed to \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/no-unsafe-value
   24:2   error  Any HTML passed to \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
@@ -79,7 +79,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   79:10  error  'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)   deprecation/deprecation
 
 ✖ 36 problems (36 errors, 0 warnings)
-  1 error and 0 warnings potentially fixable with the \`--fix\` option.
+  2 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
 Tests:       36 failed, 36 total

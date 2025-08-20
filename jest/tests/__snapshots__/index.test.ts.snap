@@ -2,6 +2,9 @@
 
 exports[`index.js Enabled Rules 1`] = `
 {
+  "@lipemat/security/dangerously-set-inner-html": [
+    2,
+  ],
   "@lipemat/security/no-unsafe-value": [
     2,
   ],

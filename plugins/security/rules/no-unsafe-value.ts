@@ -1,7 +1,8 @@
 import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
-import type {AssignmentExpression, CallExpression, CallExpressionArgument, Expression, JSXAttribute, MemberExpression, PrivateIdentifier, SpreadElement, VariableDeclarator} from '@typescript-eslint/types/dist/generated/ast-spec';
+import type {AssignmentExpression, CallExpression, CallExpressionArgument, Expression, MemberExpression, PrivateIdentifier, SpreadElement, VariableDeclarator} from '@typescript-eslint/types/dist/generated/ast-spec';
+import {isSanitized} from '../utils/shared.js';
 
-type Context = TSESLint.RuleContext<'dangerousInnerHtml' | 'stringArgument', []>;
+type Context = TSESLint.RuleContext<'stringArgument', []>;
 
 // Sinks: property assignments and function calls
 const SENSITIVE_PROPS = [
@@ -14,57 +15,6 @@ const SENSITIVE_FUNCS = [
 	'document.write',
 	'eval',
 ];
-
-// React dangerouslySetInnerHTML
-function isDangerouslySetInnerHTML( node: JSXAttribute ): boolean {
-	return (
-		'JSXAttribute' === node.type &&
-		'dangerouslySetInnerHTML' === node.name.name
-	);
-}
-
-function getDangerouslySetInnerHTMLValue( node: JSXAttribute ): null | Expression {
-	// node is a JSXAttribute for dangerouslySetInnerHTML
-	// Expecting value like: {{ __html: expr }}
-	const val = node.value;
-	if ( null === val ) {
-		return null; // No value provided
-	}
-	if ( AST_NODE_TYPES.JSXExpressionContainer !== val.type ) {
-		return null;
-	}
-	const expr = val.expression;
-	if ( AST_NODE_TYPES.ObjectExpression !== expr.type ) {
-		return null;
-	}
-	const htmlProp = expr.properties.find( p => (
-		AST_NODE_TYPES.Property === p.type &&
-		(
-			( AST_NODE_TYPES.Identifier === p.key.type && '__html' === p.key.name ) ||
-			( AST_NODE_TYPES.Literal === p.key.type && '__html' === p.key.value )
-		)
-	) );
-	if ( undefined !== htmlProp && 'value' in htmlProp ) {
-		return htmlProp.value;
-	}
-	return null;
-}
-
-
-function isSanitized( node: Expression | CallExpressionArgument ) {
-	return ( AST_NODE_TYPES.CallExpression === node.type &&
-		(
-			( AST_NODE_TYPES.Identifier === node.callee.type && 'sanitize' === node.callee.name ) ||
-			( AST_NODE_TYPES.MemberExpression === node.callee.type &&
-				'object' in node.callee &&
-				(
-					( AST_NODE_TYPES.Identifier === node.callee.object.type && 'dompurify' === String( node.callee.object.name ).toLowerCase() )
-				) &&
-				'name' in node.callee.property && 'sanitize' === node.callee.property.name )
-		)
-	);
-}
-
 
 function isStringConcat( node: Expression | SpreadElement ): boolean {
 	// 'foo' + userInput + 'bar' (HTML-like only)
@@ -80,7 +30,7 @@ function hasHtmlLikeLiteralStrings( node: Expression | PrivateIdentifier ): bool
 	}
 	if ( AST_NODE_TYPES.TemplateLiteral === node.type ) {
 		// Check any static part of template for HTML-like content
-		return node.quasis.some( q => 'string' === typeof q.value.cooked && /[<>]/.test( q.value.cooked ) );
+		return node.quasis.some( q => /[<>]/.test( q.value.cooked ) );
 	}
 	if ( AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator ) {
 		return hasHtmlLikeLiteralStrings( node.left ) || hasHtmlLikeLiteralStrings( node.right );
@@ -186,7 +136,7 @@ function isWindowOrLocationMemberExpression( memberExpr: MemberExpression ): boo
 }
 
 
-const plugin: TSESLint.RuleModule<'dangerousInnerHtml' | 'stringArgument'> = {
+const plugin: TSESLint.RuleModule<'stringArgument'> = {
 	defaultOptions: [],
 	meta: {
 		type: 'problem',
@@ -194,26 +144,12 @@ const plugin: TSESLint.RuleModule<'dangerousInnerHtml' | 'stringArgument'> = {
 			description: 'Disallow using unsanitized values in sensitive sinks (DOM, navigation, etc)',
 		},
 		messages: {
-			dangerousInnerHtml: 'Any HTML passed to `dangerouslySetInnerHTML` gets executed. Please make sure it\'s properly escaped.',
 			stringArgument: '${calleeName} should not receive a string. Pass a function instead.',
 		},
 		schema: [],
 	},
 	create( context: Context ): TSESLint.RuleListener {
 		return {
-			JSXAttribute( node: JSXAttribute ) {
-				if ( isDangerouslySetInnerHTML( node ) ) {
-					const htmlValue = getDangerouslySetInnerHTMLValue( node );
-					if ( null !== htmlValue && ! isSanitized( htmlValue ) ) {
-						context.report( {
-							node,
-							messageId: 'dangerousInnerHtml',
-						} );
-					}
-				}
-			},
-
-
 			AssignmentExpression( node: AssignmentExpression ) {
 				// innerHTML, outerHTML, href, src, action, value, etc. on generic elements
 

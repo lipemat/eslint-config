@@ -1,4 +1,5 @@
 import noUnsafeValue from './rules/no-unsafe-value.js';
+import dangerouslySetInnerHtml from './rules/dangerously-set-inner-html.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/dist/ts-eslint/Config';
@@ -14,6 +15,7 @@ const plugin: FlatConfig.Plugin = {
 	},
 	rules: {
 		'no-unsafe-value': noUnsafeValue,
+		'dangerously-set-inner-html': dangerouslySetInnerHtml,
 	},
 };
 
@@ -25,6 +27,7 @@ plugin.configs = Object.freeze( {
 			},
 			rules: {
 				'@lipemat/security/no-unsafe-value': 'error',
+				'@lipemat/security/dangerously-set-inner-html': 'error',
 			},
 		},
 	],

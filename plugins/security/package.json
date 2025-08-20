@@ -7,6 +7,12 @@
   "type": "module",
   "main": "index.js",
   "source": "index.ts",
+  "files": [
+    "index.ts",
+    "index.js",
+    "rules/",
+    "utils/"
+  ],
   "devDependencies": {
     "eslint": "^9"
   }
