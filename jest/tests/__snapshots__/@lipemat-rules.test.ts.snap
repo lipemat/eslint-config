@@ -79,7 +79,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   80:1   error  Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                @lipemat/security/html-executing-function
 
 ✖ 36 problems (36 errors, 0 warnings)
-  4 errors and 0 warnings potentially fixable with the \`--fix\` option.
+  16 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
 Tests:       36 failed, 36 total

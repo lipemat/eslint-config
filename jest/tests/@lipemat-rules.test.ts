@@ -88,6 +88,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).after( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: '$( \'body\' ).append( content )',
@@ -97,6 +98,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).append( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: '$( \'body\' ).appendTo( userInput )',
@@ -106,6 +108,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).appendTo( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).before( arbitrary )',
@@ -115,6 +118,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).before( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: '$( \'body\' ).html( userInput )',
@@ -124,6 +128,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).insertAfter( content )',
@@ -133,6 +138,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).insertAfter( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: '$( \'body\' ).insertBefore( userInput )',
@@ -142,6 +148,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).insertBefore( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).prepend( arbitrary )',
@@ -151,6 +158,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).prepend( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: '$( \'body\' ).prependTo( content )',
@@ -160,6 +168,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).prependTo( DOMPurify.sanitize(content) )',
 			},
 			{
 				code: '$( \'body\' ).replaceAll( userInput )',
@@ -169,6 +178,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).replaceAll( DOMPurify.sanitize(userInput) )',
 			},
 			{
 				code: '$( \'body\' ).replaceWith( arbitrary )',
@@ -178,6 +188,7 @@ describe( 'Individual rules', () => {
 						type: AST_NODE_TYPES.CallExpression,
 					},
 				],
+				output: '$( \'body\' ).replaceWith( DOMPurify.sanitize(arbitrary) )',
 			},
 		],
 	} );

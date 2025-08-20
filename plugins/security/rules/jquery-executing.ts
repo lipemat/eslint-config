@@ -57,10 +57,10 @@ function getJQueryCall( node: CallExpression ): UnsafeCalls | null {
 const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 	defaultOptions: [],
 	meta: {
-		type: 'problem',
 		docs: {
 			description: 'Disallow using unsanitized values in jQuery methods that execute HTML',
 		},
+		fixable: 'code',
 		messages: {
 			after: 'Any HTML used with `after` gets executed. Make sure it\'s properly escaped.',
 			append: 'Any HTML used with `append` gets executed. Make sure it\'s properly escaped.',
@@ -75,6 +75,7 @@ const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 			replaceWith: 'Any HTML used with `replaceWith` gets executed. Make sure it\'s properly escaped.',
 		},
 		schema: [],
+		type: 'problem',
 	},
 	create( context: Context ): TSESLint.RuleListener {
 		return {
@@ -86,6 +87,10 @@ const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 						context.report( {
 							node,
 							messageId: methodName,
+							fix: ( fixer: TSESLint.RuleFixer ) => {
+								const argText = context.sourceCode.getText( arg );
+								return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
+							},
 						} );
 					}
 				}
