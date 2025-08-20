@@ -1,6 +1,6 @@
 import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
 import type {CallExpression, CallExpressionArgument} from '@typescript-eslint/types/dist/generated/ast-spec';
-import {isSanitized} from '../utils/shared.js';
+import {isDomElementType, isSanitized} from '../utils/shared.js';
 import {isJQueryCall} from './jquery-executing.js';
 
 type HtmlExecutingFunctions =
@@ -10,14 +10,8 @@ type HtmlExecutingFunctions =
 type UnsafeCalls =
 	'after'
 	| 'append'
-	| 'appendTo'
 	| 'before'
-	| 'html'
-	| 'insertAfter'
-	| 'insertBefore'
 	| 'prepend'
-	| 'prependTo'
-	| 'replaceAll'
 	| 'replaceWith';
 
 type Context = TSESLint.RuleContext<HtmlExecutingFunctions | UnsafeCalls, []>;
@@ -28,9 +22,7 @@ const DOCUMENT_METHODS: HtmlExecutingFunctions[] = [
 ];
 
 const UNSAFE_METHODS: UnsafeCalls[] = [
-	'after', 'append', 'appendTo', 'before', 'html',
-	'insertAfter', 'insertBefore', 'prepend', 'prependTo',
-	'replaceAll', 'replaceWith',
+	'after', 'append', 'before', 'prepend', 'replaceWith',
 ];
 
 function isDocumentMethod( methodName: string ): methodName is HtmlExecutingFunctions {
@@ -93,14 +85,8 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 			'document.writeln': 'Any HTML used with `document.writeln` gets executed. Make sure it\'s properly escaped.',
 			after: 'Any HTML used with `after` gets executed. Make sure it\'s properly escaped.',
 			append: 'Any HTML used with `append` gets executed. Make sure it\'s properly escaped.',
-			appendTo: 'Any HTML used with `appendTo` gets executed. Make sure it\'s properly escaped.',
 			before: 'Any HTML used with `before` gets executed. Make sure it\'s properly escaped.',
-			html: 'Any HTML used with `html` gets executed. Make sure it\'s properly escaped.',
-			insertAfter: 'Any HTML used with `insertAfter` gets executed. Make sure it\'s properly escaped.',
-			insertBefore: 'Any HTML used with `insertBefore` gets executed. Make sure it\'s properly escaped.',
 			prepend: 'Any HTML used with `prepend` gets executed. Make sure it\'s properly escaped.',
-			prependTo: 'Any HTML used with `prependTo` gets executed. Make sure it\'s properly escaped.',
-			replaceAll: 'Any HTML used with `replaceAll` gets executed. Make sure it\'s properly escaped.',
 			replaceWith: 'Any HTML used with `replaceWith` gets executed. Make sure it\'s properly escaped.',
 		},
 		schema: [],
@@ -110,36 +96,28 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 	create( context: Context ): TSESLint.RuleListener {
 		return {
 			CallExpression( node: CallExpression ) {
-				// Check for document methods
+				let method: HtmlExecutingFunctions | UnsafeCalls | null;
 				const documentMethod = getDocumentCall( node );
-				if ( documentMethod !== null ) {
-					const arg: CallExpressionArgument = node.arguments[ 0 ];
-					if ( ! isSanitized( arg ) ) {
-						context.report( {
-							node,
-							messageId: documentMethod,
-							fix: ( fixer: TSESLint.RuleFixer ) => {
-								const argText = context.sourceCode.getText( arg );
-								return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
-							},
-						} );
+
+				if ( null !== documentMethod ) {
+					method = documentMethod;
+				} else {
+					method = getElementMethodCall( node );
+					if ( null === method ) {
+						return;
 					}
 				}
 
-				// Check for Element methods
-				const elementMethod = getElementMethodCall( node );
-				if ( elementMethod !== null ) {
-					const arg: CallExpressionArgument = node.arguments[ 0 ];
-					if ( ! isSanitized( arg ) ) {
-						context.report( {
-							node,
-							messageId: elementMethod,
-							fix: ( fixer: TSESLint.RuleFixer ) => {
-								const argText = context.sourceCode.getText( arg );
-								return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
-							},
-						} );
-					}
+				const arg: CallExpressionArgument = node.arguments[ 0 ];
+				if ( ! isSanitized( arg ) && ! isDomElementType<Context>( arg, context ) ) {
+					context.report( {
+						node,
+						messageId: method,
+						fix: ( fixer: TSESLint.RuleFixer ) => {
+							const argText = context.sourceCode.getText( arg );
+							return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
+						},
+					} );
 				}
 			},
 		};

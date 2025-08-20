@@ -7,10 +7,18 @@ import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executi
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
+/**
+ * @link https://typescript-eslint.io/packages/rule-tester
+ */
 const ruleTester = new RuleTester( {
 	languageOptions: {
 		parser,
 		parserOptions: {
+			allowDefaultProject: true,
+			project: '../../tsconfig.json',
+			projectService: {
+				allowDefaultProject: [ '*.ts*', '*.tsx' ],
+			},
 			ecmaFeatures: {
 				jsx: true,
 			},
@@ -23,7 +31,12 @@ describe( '@lipemat rules are enabled', () => {
 	test( '@lipemat/no-unsafe-value failing', async () => {
 		expect( await jestRunnerEslint( 'failing/@lipemat/security' ) ).toMatchSnapshot();
 	} );
+
+	test( '@lipemat/no-unsafe-value passing', async () => {
+		expect( await jestRunnerEslint( 'passing/@lipemat/security' ) ).toMatchSnapshot();
+	} );
 } );
+
 
 describe( 'No Unsafe Value', () => {
 	ruleTester.run( 'no-unsafe-value', noUnsafeValueRule, {
@@ -81,6 +94,13 @@ describe( 'jQuery Executing', () => {
 			},
 			{
 				code: '$( \'body\' ).replaceWith( DOMPurify.sanitize(content) )',
+			},
+			// Passing an element.
+			{
+				code: 'const foo = $("div"); $( \'body\' ).after(foo)',
+			},
+			{
+				code: '$( \'body\' ).prepend(jQuery("div"))',
 			},
 		],
 		invalid: [
@@ -238,31 +258,20 @@ describe( 'HTML Executing Function', () => {
 				code: 'element.append( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
-				code: 'element.appendTo( sanitize(content) )',
-			},
-			{
 				code: 'element.before( DOMPurify.sanitize(arbitrary) )',
-			},
-			{
-				code: 'element.html( sanitize(userInput) )',
-			},
-			{
-				code: 'element.insertAfter( sanitize(content) )',
-			},
-			{
-				code: 'element.insertBefore( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: 'element.prepend( sanitize(content) )',
 			},
 			{
-				code: 'element.prependTo( DOMPurify.sanitize(arbitrary) )',
-			},
-			{
-				code: 'element.replaceAll( sanitize(content) )',
-			},
-			{
 				code: 'element.replaceWith( DOMPurify.sanitize(arbitrary) )',
+			},
+			// Passing an element.
+			{
+				code: 'const foo = document.getElementById( "foo" ); element.after( foo )',
+			},
+			{
+				code: 'const passElement: HTMLBodyElement = document.getElementById( "body" ) as HTMLBodyElement; element.before( passElement )',
 			},
 		],
 		invalid: [
@@ -309,36 +318,6 @@ describe( 'HTML Executing Function', () => {
 				output: 'element.append( DOMPurify.sanitize(content) )',
 			},
 			{
-				code: 'element.html( arbitrary )',
-				errors: [
-					{
-						messageId: 'html',
-						type: AST_NODE_TYPES.CallExpression,
-					},
-				],
-				output: 'element.html( DOMPurify.sanitize(arbitrary) )',
-			},
-			{
-				code: 'element.insertAfter( userInput )',
-				errors: [
-					{
-						messageId: 'insertAfter',
-						type: AST_NODE_TYPES.CallExpression,
-					},
-				],
-				output: 'element.insertAfter( DOMPurify.sanitize(userInput) )',
-			},
-			{
-				code: 'element.appendTo( userInput )',
-				errors: [
-					{
-						messageId: 'appendTo',
-						type: AST_NODE_TYPES.CallExpression,
-					},
-				],
-				output: 'element.appendTo( DOMPurify.sanitize(userInput) )',
-			},
-			{
 				code: 'element.before( content )',
 				errors: [
 					{
@@ -349,16 +328,6 @@ describe( 'HTML Executing Function', () => {
 				output: 'element.before( DOMPurify.sanitize(content) )',
 			},
 			{
-				code: 'element.insertBefore( arbitrary )',
-				errors: [
-					{
-						messageId: 'insertBefore',
-						type: AST_NODE_TYPES.CallExpression,
-					},
-				],
-				output: 'element.insertBefore( DOMPurify.sanitize(arbitrary) )',
-			},
-			{
 				code: 'element.prepend( userInput )',
 				errors: [
 					{
@@ -367,26 +336,6 @@ describe( 'HTML Executing Function', () => {
 					},
 				],
 				output: 'element.prepend( DOMPurify.sanitize(userInput) )',
-			},
-			{
-				code: 'element.prependTo( content )',
-				errors: [
-					{
-						messageId: 'prependTo',
-						type: AST_NODE_TYPES.CallExpression,
-					},
-				],
-				output: 'element.prependTo( DOMPurify.sanitize(content) )',
-			},
-			{
-				code: 'element.replaceAll( arbitrary )',
-				errors: [
-					{
-						messageId: 'replaceAll',
-						type: AST_NODE_TYPES.CallExpression,
-					},
-				],
-				output: 'element.replaceAll( DOMPurify.sanitize(arbitrary) )',
 			},
 			{
 				code: 'element.replaceWith( content )',

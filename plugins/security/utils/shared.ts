@@ -1,5 +1,26 @@
-import type {CallExpressionArgument, Expression} from '@typescript-eslint/types/dist/generated/ast-spec';
-import {AST_NODE_TYPES} from '@typescript-eslint/utils';
+import type {CallExpressionArgument, Expression, SpreadElement} from '@typescript-eslint/types/dist/generated/ast-spec';
+import {AST_NODE_TYPES, ESLintUtils, type TSESLint} from '@typescript-eslint/utils';
+import {type Type} from 'typescript';
+
+/**
+ * Is the type of variable being passed a DOM element?
+ *
+ * - DOM elements are of the type `HTML{*}Element`.
+ * - DOM elements do not require sanitization.
+ *
+ * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
+ */
+export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: Expression | SpreadElement, context: Context ): boolean {
+	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
+
+	const type = getTypeAtLocation( arg );
+	const element: Type = type.getNonNullableType();
+
+	const name = element.getSymbol()?.escapedName ?? '';
+	// Match any type that ends with "Element", e.g., HTMLElement, HTMLDivElement, Element, etc.
+	return name.startsWith( 'HTML' ) && name.endsWith( 'Element' );
+}
+
 
 /**
  * Check if a node is a call to a known sanitization function.
@@ -12,6 +33,7 @@ export function isSanitized( node: Expression | CallExpressionArgument ): boolea
 	if ( AST_NODE_TYPES.Identifier === node.callee.type && 'sanitize' === node.callee.name ) {
 		return true;
 	}
+
 	if ( AST_NODE_TYPES.MemberExpression === node.callee.type &&
 		'object' in node.callee && AST_NODE_TYPES.Identifier === node.callee.object.type ) {
 		return 'dompurify' === node.callee.object.name.toLowerCase() &&

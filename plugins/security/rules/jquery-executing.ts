@@ -1,6 +1,7 @@
-import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
+import {AST_NODE_TYPES, ESLintUtils, type TSESLint} from '@typescript-eslint/utils';
 import type {CallExpression, CallExpressionArgument} from '@typescript-eslint/types/dist/generated/ast-spec';
 import {isSanitized} from '../utils/shared.js';
+import type {Type} from 'typescript';
 
 type UnsafeCalls =
 	'after'
@@ -22,6 +23,22 @@ const JQUERY_METHODS: UnsafeCalls[] = [
 	'insertAfter', 'insertBefore', 'prepend', 'prependTo',
 	'replaceAll', 'replaceWith',
 ];
+
+/**
+ * Is the type of variable being passed a jQuery element?
+ *
+ * - jQuery elements are of type `JQuery`.
+ * - jQuery elements do not require sanitization.
+ *
+ * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
+ */
+export function isJQueryElementType( arg: CallExpressionArgument, context: Context ): boolean {
+	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
+	const type = getTypeAtLocation( arg );
+	const element: Type = type.getNonNullableType();
+	return 'JQuery' === element.getSymbol()?.escapedName;
+}
+
 
 function isJQueryMethod( methodName: string ): methodName is UnsafeCalls {
 	return JQUERY_METHODS.includes( methodName as UnsafeCalls );
@@ -57,8 +74,6 @@ function getJQueryCall( node: CallExpression ): UnsafeCalls | null {
 	return isJQueryCall( node ) ? methodName : null;
 }
 
-
-// noinspection GrazieInspection
 const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 	defaultOptions: [],
 	meta: {
@@ -88,7 +103,7 @@ const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 				const methodName = getJQueryCall( node );
 				if ( null !== methodName ) {
 					const arg: CallExpressionArgument = node.arguments[ 0 ];
-					if ( ! isSanitized( arg ) ) {
+					if ( ! isSanitized( arg ) && ! isJQueryElementType( arg, context ) ) {
 						context.report( {
 							node,
 							messageId: methodName,
