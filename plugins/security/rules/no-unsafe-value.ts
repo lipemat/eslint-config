@@ -39,29 +39,6 @@ function hasHtmlLikeLiteralStrings( node: Expression | PrivateIdentifier ): bool
 }
 
 
-function isJQueryCall( node: CallExpression ) {
-	// Detect $(...).method(userInput) or jQuery(...).method(...)
-	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
-		return false;
-	}
-	const methodName = node.callee.property.name;
-	if ( ! [ 'after', 'append', 'appendTo', 'before', 'html', 'insertAfter', 'insertBefore', 'prepend', 'prependTo', 'replaceAll', 'replaceWith' ].includes( methodName ) ) {
-		return false;
-	}
-	// Walk to the root object of the call chain
-	let obj = node.callee.object ?? null;
-	if ( null === obj ) {
-		return false;
-	}
-	while ( AST_NODE_TYPES.MemberExpression === obj.type ) {
-		obj = obj.object;
-	}
-	return ( AST_NODE_TYPES.CallExpression === obj.type && AST_NODE_TYPES.Identifier === obj.callee.type &&
-		( '$' === obj.callee.name || 'jQuery' === obj.callee.name )
-	);
-}
-
-
 function isSafeUrlLiteral( node: Expression | SpreadElement ): boolean {
 	return ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value &&
 		! /^(javascript:)/i.test( node.value )
@@ -281,17 +258,6 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 						context.report( {
 							node,
 							message: `${calleeName} argument must be sanitized with sanitize() or DOMPurify.sanitize()`,
-						} );
-					}
-				}
-
-				// jQuery chained calls: $(body).html(arbitrary).text();
-				if ( isJQueryCall( node ) ) {
-					const arg: CallExpressionArgument = node.arguments[ 0 ];
-					if ( ! isSanitized( arg ) ) {
-						context.report( {
-							node,
-							message: `Any HTML passed to \`${calleeName}\` gets executed. Make sure it\'s properly escaped.`,
 						} );
 					}
 				}

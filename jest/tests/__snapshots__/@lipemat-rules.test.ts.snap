@@ -7,21 +7,21 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × @typescript-eslint/no-unused-vars (mocked ms)
   × @lipemat/security/dangerously-set-inner-html (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
-  × @lipemat/security/no-unsafe-value (mocked ms)
+  × @lipemat/security/jquery-executing (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
@@ -46,21 +46,21 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   11:10  error  'ReactComponent' is defined but never used                                                          @typescript-eslint/no-unused-vars
   16:9   error  Any HTML passed to \`dangerouslySetInnerHTML\` gets executed. Please make sure it's properly escaped  @lipemat/security/dangerously-set-inner-html
   21:7   error  'Test' is assigned a value but never used                                                           @typescript-eslint/no-unused-vars
-  23:2   error  Any HTML passed to \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/no-unsafe-value
-  24:2   error  Any HTML passed to \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
-  25:2   error  Any HTML passed to \`appendTo\` gets executed. Make sure it's properly escaped                        @lipemat/security/no-unsafe-value
-  26:2   error  Any HTML passed to \`before\` gets executed. Make sure it's properly escaped                          @lipemat/security/no-unsafe-value
-  27:2   error  Any HTML passed to \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/no-unsafe-value
-  28:2   error  Any HTML passed to \`insertAfter\` gets executed. Make sure it's properly escaped                     @lipemat/security/no-unsafe-value
-  29:2   error  Any HTML passed to \`insertBefore\` gets executed. Make sure it's properly escaped                    @lipemat/security/no-unsafe-value
-  30:2   error  Any HTML passed to \`prepend\` gets executed. Make sure it's properly escaped                         @lipemat/security/no-unsafe-value
-  31:2   error  Any HTML passed to \`prependTo\` gets executed. Make sure it's properly escaped                       @lipemat/security/no-unsafe-value
-  32:2   error  Any HTML passed to \`replaceAll\` gets executed. Make sure it's properly escaped                      @lipemat/security/no-unsafe-value
-  33:2   error  Any HTML passed to \`replaceWith\` gets executed. Make sure it's properly escaped                     @lipemat/security/no-unsafe-value
+  23:2   error  Any HTML used with \`after\` gets executed. Make sure it's properly escaped                           @lipemat/security/jquery-executing
+  24:2   error  Any HTML used with \`append\` gets executed. Make sure it's properly escaped                          @lipemat/security/jquery-executing
+  25:2   error  Any HTML used with \`appendTo\` gets executed. Make sure it's properly escaped                        @lipemat/security/jquery-executing
+  26:2   error  Any HTML used with \`before\` gets executed. Make sure it's properly escaped                          @lipemat/security/jquery-executing
+  27:2   error  Any HTML used with \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/jquery-executing
+  28:2   error  Any HTML used with \`insertAfter\` gets executed. Make sure it's properly escaped                     @lipemat/security/jquery-executing
+  29:2   error  Any HTML used with \`insertBefore\` gets executed. Make sure it's properly escaped                    @lipemat/security/jquery-executing
+  30:2   error  Any HTML used with \`prepend\` gets executed. Make sure it's properly escaped                         @lipemat/security/jquery-executing
+  31:2   error  Any HTML used with \`prependTo\` gets executed. Make sure it's properly escaped                       @lipemat/security/jquery-executing
+  32:2   error  Any HTML used with \`replaceAll\` gets executed. Make sure it's properly escaped                      @lipemat/security/jquery-executing
+  33:2   error  Any HTML used with \`replaceWith\` gets executed. Make sure it's properly escaped                     @lipemat/security/jquery-executing
   37:3   error  Assignment to innerHTML must be sanitized                                                           @lipemat/security/no-unsafe-value
   41:8   error  String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()           @lipemat/security/no-unsafe-value
   41:8   error  'str' is assigned a value but never used                                                            @typescript-eslint/no-unused-vars
-  44:2   error  Any HTML passed to \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/no-unsafe-value
+  44:2   error  Any HTML used with \`html\` gets executed. Make sure it's properly escaped                            @lipemat/security/jquery-executing
   47:2   error  Assignment to window.location.href must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
   48:2   error  Assignment to window.location.protocol must be sanitized with sanitize() or DOMPurify.sanitize()    @lipemat/security/no-unsafe-value
   49:2   error  Assignment to window.location.host must be sanitized with sanitize() or DOMPurify.sanitize()        @lipemat/security/no-unsafe-value
