@@ -15,7 +15,7 @@ type UnsafeCalls =
 	| 'replaceAll'
 	| 'replaceWith';
 
-type Messages = UnsafeCalls | 'sanitize' | 'dom-purify';
+type Messages = 'needsEscaping' | 'sanitize' | 'domPurify';
 type Context = TSESLint.RuleContext<Messages, []>;
 
 
@@ -84,20 +84,10 @@ const plugin: TSESLint.RuleModule<Messages> = {
 		fixable: 'code',
 		hasSuggestions: true,
 		messages: {
-			after: 'Any HTML used with `after` gets executed. Make sure it\'s properly escaped.',
-			append: 'Any HTML used with `append` gets executed. Make sure it\'s properly escaped.',
-			appendTo: 'Any HTML used with `appendTo` gets executed. Make sure it\'s properly escaped.',
-			before: 'Any HTML used with `before` gets executed. Make sure it\'s properly escaped.',
-			html: 'Any HTML used with `html` gets executed. Make sure it\'s properly escaped.',
-			insertAfter: 'Any HTML used with `insertAfter` gets executed. Make sure it\'s properly escaped.',
-			insertBefore: 'Any HTML used with `insertBefore` gets executed. Make sure it\'s properly escaped.',
-			prepend: 'Any HTML used with `prepend` gets executed. Make sure it\'s properly escaped.',
-			prependTo: 'Any HTML used with `prependTo` gets executed. Make sure it\'s properly escaped.',
-			replaceAll: 'Any HTML used with `replaceAll` gets executed. Make sure it\'s properly escaped.',
-			replaceWith: 'Any HTML used with `replaceWith` gets executed. Make sure it\'s properly escaped.',
+			needsEscaping: 'Any HTML used with `{{methodName}}` gets executed. Make sure it\'s properly escaped.',
 
 			// Suggestions
-			'dom-purify': 'Wrap the argument with a `DOMPurify.sanitize()` call.',
+			domPurify: 'Wrap the argument with a `DOMPurify.sanitize()` call.',
 			sanitize: 'Wrap the argument with a `sanitize()` call.',
 		},
 		schema: [],
@@ -112,10 +102,13 @@ const plugin: TSESLint.RuleModule<Messages> = {
 					if ( ! isSanitized( arg ) && ! isJQueryElementType( arg, context ) ) {
 						context.report( {
 							node,
-							messageId: methodName,
+							messageId: 'needsEscaping',
+							data: {
+								methodName,
+							},
 							suggest: [
 								{
-									messageId: 'dom-purify',
+									messageId: 'domPurify',
 									fix: ( fixer: TSESLint.RuleFixer ) => {
 										const argText = context.sourceCode.getText( arg );
 										return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );

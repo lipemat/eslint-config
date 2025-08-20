@@ -75,6 +75,9 @@ describe( 'jQuery Executing', () => {
 			{
 				code: '$( \'body\' ).replaceWith( DOMPurify.sanitize(content) )',
 			},
+			{
+				code: '$( \'body\' ).html( sanitize(userInput) ).text()',
+			},
 			// Passing an element.
 			{
 				code: 'const foo = $("div"); $( \'body\' ).after(foo)',
@@ -88,11 +91,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).after( arbitrary )',
 				errors: [
 					{
-						messageId: 'after',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'after',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).after( DOMPurify.sanitize(arbitrary) )',
 							},
 							{
@@ -107,11 +113,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).append( content )',
 				errors: [
 					{
-						messageId: 'append',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'append',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).append( DOMPurify.sanitize(content) )',
 							},
 							{
@@ -126,11 +135,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).appendTo( userInput )',
 				errors: [
 					{
-						messageId: 'appendTo',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'appendTo',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).appendTo( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -145,11 +157,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).before( arbitrary )',
 				errors: [
 					{
-						messageId: 'before',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'before',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).before( DOMPurify.sanitize(arbitrary) )',
 							},
 							{
@@ -164,11 +179,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).html( userInput )',
 				errors: [
 					{
-						messageId: 'html',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'html',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -183,11 +201,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).insertAfter( content )',
 				errors: [
 					{
-						messageId: 'insertAfter',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'insertAfter',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).insertAfter( DOMPurify.sanitize(content) )',
 							},
 							{
@@ -202,11 +223,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).insertBefore( userInput )',
 				errors: [
 					{
-						messageId: 'insertBefore',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'insertBefore',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).insertBefore( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -221,11 +245,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).prepend( arbitrary )',
 				errors: [
 					{
-						messageId: 'prepend',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'prepend',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).prepend( DOMPurify.sanitize(arbitrary) )',
 							},
 							{
@@ -240,11 +267,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).prependTo( content )',
 				errors: [
 					{
-						messageId: 'prependTo',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'prependTo',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).prependTo( DOMPurify.sanitize(content) )',
 							},
 							{
@@ -259,11 +289,14 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).replaceAll( userInput )',
 				errors: [
 					{
-						messageId: 'replaceAll',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'replaceAll',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).replaceAll( DOMPurify.sanitize(userInput) )',
 							},
 							{
@@ -278,16 +311,41 @@ describe( 'jQuery Executing', () => {
 				code: '$( \'body\' ).replaceWith( arbitrary )',
 				errors: [
 					{
-						messageId: 'replaceWith',
+						messageId: 'needsEscaping',
 						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'replaceWith',
+						},
 						suggestions: [
 							{
-								messageId: 'dom-purify',
+								messageId: 'domPurify',
 								output: '$( \'body\' ).replaceWith( DOMPurify.sanitize(arbitrary) )',
 							},
 							{
 								messageId: 'sanitize',
 								output: '$( \'body\' ).replaceWith( sanitize(arbitrary) )',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: '$( \'body\' ).html( userInput ).text()',
+				errors: [
+					{
+						messageId: 'needsEscaping',
+						type: AST_NODE_TYPES.CallExpression,
+						data: {
+							methodName: 'html',
+						},
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) ).text()',
+							},
+							{
+								messageId: 'sanitize',
+								output: '$( \'body\' ).html( sanitize(userInput) ).text()',
 							},
 						],
 					},
