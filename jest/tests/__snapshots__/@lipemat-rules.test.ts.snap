@@ -26,6 +26,7 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × @lipemat/security/html-executing-assignment (mocked ms)
   × @lipemat/security/html-string-concat (mocked ms)
   × @typescript-eslint/no-unused-vars (mocked ms)
+  × @lipemat/security/vulnerable-tag-stripping (mocked ms)
   × @lipemat/security/jquery-executing (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
   × @lipemat/security/no-unsafe-value (mocked ms)
@@ -71,6 +72,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   42:1   error    Any HTML used with \`outerHTML\` gets executed. Make sure it's properly escaped                                            @lipemat/security/html-executing-assignment
   45:7   error    HTML string concatenation detected, this is a security risk, use DOM node construction or a templating language instead  @lipemat/security/html-string-concat
   45:7   error    'str' is assigned a value but never used                                                                                 @typescript-eslint/no-unused-vars
+  48:1   error    Using .html().text() can lead to XSS vulnerabilities through tag stripping. Use only .text()                             @lipemat/security/vulnerable-tag-stripping
   48:1   error    Any HTML used with \`html\` gets executed. Make sure it's properly escaped                                                 @lipemat/security/jquery-executing
   51:1   error    Assignment to window.location.href must be sanitized with sanitize() or DOMPurify.sanitize()                             @lipemat/security/no-unsafe-value
   52:1   error    Assignment to window.location.protocol must be sanitized with sanitize() or DOMPurify.sanitize()                         @lipemat/security/no-unsafe-value
@@ -90,11 +92,11 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   83:1   error    Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                                     @lipemat/security/html-executing-function
   86:6   warning  Unexpected object value in conditional. The condition is always true                                                     @typescript-eslint/strict-boolean-expressions
 
-✖ 42 problems (41 errors, 1 warning)
+✖ 43 problems (42 errors, 1 warning)
   2 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
-Tests:       41 failed, 41 total
+Tests:       42 failed, 42 total
 Snapshots:   0 total
 Time:        
 Ran all test suites.

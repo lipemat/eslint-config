@@ -74,7 +74,7 @@ document.getElementById( 'body' ).innerHTML = sanitize( arbitrary );
 window.str = 'test' + sanitize( '<concat>' ) + sanitize( 'test' ) + snx( '</concat>' );
 
 // StrippingTagsSniff.
-$( 'body' ).html( sanitize( arbitrary ) ).text();
+$( 'body' ).text( arbitrary );
 
 // WindowSniff.
 window.location.href = sanitize( arbitrary );

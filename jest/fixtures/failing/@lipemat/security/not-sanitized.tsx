@@ -44,7 +44,7 @@ body.outerHTML = arbitrary;
 // StringConcatSniff.
 const str = 'test' + '<concat>' + 'test' + snx( '</concat>' );
 
-// StrippingTagsSniff.
+// VulnerableTagStrippingSniff.
 $( 'body' ).html( arbitrary ).text();
 
 // WindowSniff.

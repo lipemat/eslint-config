@@ -20,6 +20,9 @@ exports[`index.js Enabled Rules 1`] = `
   "@lipemat/security/no-unsafe-value": [
     2,
   ],
+  "@lipemat/security/vulnerable-tag-stripping": [
+    2,
+  ],
   "@wordpress/i18n-ellipsis": [
     2,
   ],

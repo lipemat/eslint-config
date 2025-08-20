@@ -19,6 +19,9 @@ type Messages = 'needsEscaping' | 'sanitize' | 'domPurify';
 type Context = TSESLint.RuleContext<Messages, []>;
 
 
+/**
+ * @link https://docs.wpvip.com/security/javascript-security-recommendations/#h-stripping-tags
+ */
 const JQUERY_METHODS: UnsafeCalls[] = [
 	'after', 'append', 'appendTo', 'before', 'html',
 	'insertAfter', 'insertBefore', 'prepend', 'prependTo',
@@ -63,7 +66,7 @@ export function isJQueryCall( node: TSESTree.CallExpression ): boolean {
 }
 
 
-function getJQueryCall( node: TSESTree.CallExpression ): UnsafeCalls | null {
+export function getJQueryCall( node: TSESTree.CallExpression ): UnsafeCalls | null {
 	// Detect $(...).method(userInput) or jQuery(...).method(...)
 	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
 		return null;

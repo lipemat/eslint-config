@@ -5,6 +5,7 @@ import jqueryExecutingRule from '../../plugins/security/rules/jquery-executing';
 import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executing-function';
 import htmlExecutingAssignmentRule from '../../plugins/security/rules/html-executing-assignment';
 import htmlStringConcatRule from '../../plugins/security/rules/html-string-concat';
+import vulnerableTagStrippingRule from '../../plugins/security/rules/vulnerable-tag-stripping';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -687,6 +688,57 @@ describe( 'HTML String Concatenation', () => {
 					{
 						messageId: 'htmlStringConcat',
 						type: AST_NODE_TYPES.VariableDeclarator,
+					},
+				],
+			},
+		],
+	} );
+} );
+
+describe( 'Vulnerable Tag Stripping', () => {
+	ruleTester.run( 'vulnerable-tag-stripping', vulnerableTagStrippingRule, {
+		valid: [
+			{
+				code: '$( \'body\' ).html(  sanitize(userInput) )',
+			},
+			{
+				code: '$( \'body\' ).text()',
+			},
+			{
+				code: 'element.html( userInput ).text()',
+			},
+			{
+				code: 'const foo = $("div"); $( \'body\' ).html(foo)',
+			},
+		],
+		invalid: [
+			{
+				code: '$( \'body\' ).html( userInput ).text()',
+				errors: [
+					{
+						messageId: 'vulnerableTagStripping',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'useTextOnly',
+								output: '$( \'body\' ).text( userInput )',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: '$( \'body\' ).html( sanitize(userInput) ).text()',
+				errors: [
+					{
+						messageId: 'vulnerableTagStripping',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'useTextOnly',
+								output: '$( \'body\' ).text( sanitize(userInput) )',
+							},
+						],
 					},
 				],
 			},
