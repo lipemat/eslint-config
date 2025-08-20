@@ -73,7 +73,7 @@ w = window.location.port;
 w = window.name;
 w = window.status;
 
-console.error( w );
+window.w = w;
 
 
 setTimeout( arbitrary );

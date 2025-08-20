@@ -1,5 +1,4 @@
-import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
-import type {AssignmentExpression, CallExpression, CallExpressionArgument, Expression, MemberExpression, PrivateIdentifier, SpreadElement, VariableDeclarator} from '@typescript-eslint/types/dist/generated/ast-spec';
+import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {isSanitized} from '../utils/shared.js';
 
 type Context = TSESLint.RuleContext<'stringArgument', []>;
@@ -12,20 +11,20 @@ const SENSITIVE_PROPS = [
 const URL_PROPS = new Set( [ 'href', 'src', 'action', 'protocol', 'host', 'hostname', 'pathname', 'search', 'hash', 'username', 'port' ] );
 
 
-function isStringConcat( node: Expression | SpreadElement ): boolean {
+function isStringConcat( node: TSESTree.CallExpressionArgument ): boolean {
 	// 'foo' + userInput + 'bar' (HTML-like only)
 	return AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator &&
 		hasHtmlLikeLiteralStrings( node );
 }
 
 
-function hasHtmlLikeLiteralStrings( node: Expression | PrivateIdentifier ): boolean {
+function hasHtmlLikeLiteralStrings( node: TSESTree.Expression | TSESTree.PrivateIdentifier ): boolean {
 	if ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value ) {
 		// Only treat as risky if it looks like HTML, e.g., contains angle brackets
 		return /[<>]/.test( node.value );
 	}
 	if ( AST_NODE_TYPES.TemplateLiteral === node.type ) {
-		// Check any static part of template for HTML-like content
+		// Check any static part of the template for HTML-like content
 		return node.quasis.some( q => /[<>]/.test( q.value.cooked ) );
 	}
 	if ( AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator ) {
@@ -35,14 +34,14 @@ function hasHtmlLikeLiteralStrings( node: Expression | PrivateIdentifier ): bool
 }
 
 
-function isSafeUrlLiteral( node: Expression | SpreadElement ): boolean {
+function isSafeUrlLiteral( node: TSESTree.Expression ): boolean {
 	return ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value &&
 		! /^(javascript:)/i.test( node.value )
 	);
 }
 
 
-function isAllExpressionsEncoded( templateNode: Expression | SpreadElement ): boolean {
+function isAllExpressionsEncoded( templateNode: TSESTree.Expression ): boolean {
 	if ( AST_NODE_TYPES.TemplateLiteral !== templateNode.type ) {
 		return false;
 	}
@@ -54,7 +53,7 @@ function isAllExpressionsEncoded( templateNode: Expression | SpreadElement ): bo
 }
 
 
-function isSafeUrlTemplate( node: Expression | SpreadElement ): boolean {
+function isSafeUrlTemplate( node: TSESTree.Expression ): boolean {
 	if ( AST_NODE_TYPES.TemplateLiteral !== node.type || 0 === node.quasis.length ) {
 		return false;
 	}
@@ -67,7 +66,7 @@ function isSafeUrlTemplate( node: Expression | SpreadElement ): boolean {
 }
 
 
-function isWindowLocationAssignment( node: AssignmentExpression ): boolean {
+function isWindowLocationAssignment( node: TSESTree.AssignmentExpression ): boolean {
 	// window.location.<prop> = ...
 	return (
 		AST_NODE_TYPES.MemberExpression === node.left.type &&
@@ -82,7 +81,7 @@ function isWindowLocationAssignment( node: AssignmentExpression ): boolean {
 }
 
 
-function isWindowAssignment( node: AssignmentExpression ) {
+function isWindowAssignment( node: TSESTree.AssignmentExpression ) {
 	// window.<prop> = ...
 	return (
 		AST_NODE_TYPES.MemberExpression === node.left.type &&
@@ -93,7 +92,7 @@ function isWindowAssignment( node: AssignmentExpression ) {
 	);
 }
 
-function isWindowOrLocationMemberExpression( memberExpr: MemberExpression ): boolean {
+function isWindowOrLocationMemberExpression( memberExpr: TSESTree.MemberExpression ): boolean {
 	// Helper to detect window.* or window.location.*
 	if ( AST_NODE_TYPES.MemberExpression !== memberExpr.type ) {
 		return false;
@@ -123,11 +122,11 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 	},
 	create( context: Context ): TSESLint.RuleListener {
 		return {
-			AssignmentExpression( node: AssignmentExpression ) {
+			AssignmentExpression( node: TSESTree.AssignmentExpression ) {
 				// innerHTML, outerHTML, href, src, action, value, etc. on generic elements
 
-				const left: Expression = node.left;
-				const right: Expression = node.right;
+				const left: TSESTree.Expression = node.left;
+				const right: TSESTree.Expression = node.right;
 				let name: string = '';
 				if ( 'property' in left && 'name' in left.property ) {
 					name = left?.property?.name ?? '';
@@ -135,7 +134,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 
 				if ( AST_NODE_TYPES.MemberExpression === left.type && SENSITIVE_PROPS.includes( name ) && ! isWindowOrLocationMemberExpression( left ) ) { // avoid duplicate with window checks below
 					const propName = name;
-					const rhsResolved: Expression = right;
+					const rhsResolved: TSESTree.Expression = right;
 
 
 					if ( 'value' === propName ) {
@@ -143,6 +142,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 						if ( hasHtmlLikeLiteralStrings( rhsResolved ) && ! isSanitized( rhsResolved ) ) {
 							context.report( {
 								node,
+								// @ts-expect-error
 								message: 'Assignment to value contains HTML-like content. Sanitize with sanitize() or DOMPurify.sanitize()',
 							} );
 						}
@@ -152,6 +152,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 					} else if ( ! isSanitized( rhsResolved ) ) {
 						context.report( {
 							node,
+							// @ts-expect-error
 							message: `Assignment to ${propName} must be sanitized.`,
 						} );
 					}
@@ -159,13 +160,14 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 				// window.location.<prop> = ...
 				if ( isWindowLocationAssignment( node ) ) {
 					const propName = name;
-					const rhsResolved: Expression = right;
+					const rhsResolved: TSESTree.Expression = right;
 					if ( URL_PROPS.has( propName ) && ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) ) {
 						return;
 					}
 					if ( ! isSanitized( rhsResolved ) ) {
 						context.report( {
 							node,
+							// @ts-expect-error
 							message: `Assignment to window.location.${name} must be sanitized with sanitize() or DOMPurify.sanitize()`,
 						} );
 					}
@@ -175,6 +177,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 					if ( ! isSanitized( node.right ) ) {
 						context.report( {
 							node,
+							// @ts-expect-error
 							message: `Assignment to window.${name} must be sanitized with sanitize() or DOMPurify.sanitize()`,
 						} );
 					}
@@ -183,13 +186,14 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 				if ( isStringConcat( right ) ) {
 					context.report( {
 						node,
+						// @ts-expect-error
 						message: 'String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()',
 					} );
 				}
 			},
 
 
-			VariableDeclarator( node: VariableDeclarator ) {
+			VariableDeclarator( node: TSESTree.VariableDeclarator ) {
 				// Detect string concatenation assigned at declaration time
 				const init = node.init;
 				if ( null === init ) {
@@ -201,13 +205,14 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 				if ( isStringConcat( init ) ) {
 					context.report( {
 						node,
+						// @ts-expect-error
 						message: 'String concatenation with potential HTML detected. Use sanitize() or DOMPurify.sanitize()',
 					} );
 				}
 			},
 
 
-			CallExpression( node: CallExpression ) {
+			CallExpression( node: TSESTree.CallExpression ) {
 				// document.write, eval, setTimeout, setInterval
 				let calleeName = '';
 				if ( AST_NODE_TYPES.Identifier === node.callee.type ) {
@@ -225,7 +230,7 @@ const plugin: TSESLint.RuleModule<'stringArgument'> = {
 
 				// Special-case timers: only unsafe when a string is passed (evaluated as code).
 				if ( 'setTimeout' === calleeName || 'setInterval' === calleeName ) {
-					const arg: CallExpressionArgument = node.arguments[ 0 ];
+					const arg: TSESTree.CallExpressionArgument = node.arguments[ 0 ];
 					const isFunctionArg = (
 						AST_NODE_TYPES.FunctionExpression === arg.type || AST_NODE_TYPES.ArrowFunctionExpression === arg.type || AST_NODE_TYPES.Identifier === arg.type
 					);

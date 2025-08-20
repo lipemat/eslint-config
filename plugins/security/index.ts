@@ -4,13 +4,20 @@ import jqueryExecuting from './rules/jquery-executing.js';
 import htmlExecutingFunction from './rules/html-executing-function.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
-import type {FlatConfig} from '@typescript-eslint/utils/dist/ts-eslint/Config';
+import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
 const pkg = JSON.parse(
 	readFileSync( resolve( './package.json' ), 'utf8' ),
 );
 
-const plugin: FlatConfig.Plugin = {
+
+type Plugin = FlatConfig.Plugin & {
+	configs: {
+		recommended: FlatConfig.ConfigArray;
+	}
+}
+
+const plugin: Plugin = {
 	meta: {
 		name: pkg.name,
 		version: pkg.version,
@@ -21,8 +28,12 @@ const plugin: FlatConfig.Plugin = {
 		'jquery-executing': jqueryExecuting,
 		'html-executing-function': htmlExecutingFunction,
 	},
+	configs: {
+		recommended: [],
+	}
 };
 
+// Freeze the plugin to prevent modifications and use the plugin within.
 plugin.configs = Object.freeze( {
 	recommended: [
 		{

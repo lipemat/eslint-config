@@ -1,5 +1,4 @@
-import {AST_NODE_TYPES, ESLintUtils, type TSESLint} from '@typescript-eslint/utils';
-import type {CallExpression, CallExpressionArgument} from '@typescript-eslint/types/dist/generated/ast-spec';
+import {AST_NODE_TYPES, ESLintUtils, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {isSanitized} from '../utils/shared.js';
 import type {Type} from 'typescript';
 
@@ -32,7 +31,7 @@ const JQUERY_METHODS: UnsafeCalls[] = [
  *
  * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
  */
-export function isJQueryElementType( arg: CallExpressionArgument, context: Context ): boolean {
+export function isJQueryElementType( arg: TSESTree.CallExpressionArgument, context: Context ): boolean {
 	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
 	const type = getTypeAtLocation( arg );
 	const element: Type = type.getNonNullableType();
@@ -44,7 +43,7 @@ function isJQueryMethod( methodName: string ): methodName is UnsafeCalls {
 	return JQUERY_METHODS.includes( methodName as UnsafeCalls );
 }
 
-export function isJQueryCall( node: CallExpression ): boolean {
+export function isJQueryCall( node: TSESTree.CallExpression ): boolean {
 	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
 		return false;
 	}
@@ -62,7 +61,7 @@ export function isJQueryCall( node: CallExpression ): boolean {
 }
 
 
-function getJQueryCall( node: CallExpression ): UnsafeCalls | null {
+function getJQueryCall( node: TSESTree.CallExpression ): UnsafeCalls | null {
 	// Detect $(...).method(userInput) or jQuery(...).method(...)
 	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
 		return null;
@@ -99,10 +98,10 @@ const plugin: TSESLint.RuleModule<UnsafeCalls> = {
 	},
 	create( context: Context ): TSESLint.RuleListener {
 		return {
-			CallExpression( node: CallExpression ) {
+			CallExpression( node: TSESTree.CallExpression ) {
 				const methodName = getJQueryCall( node );
 				if ( null !== methodName ) {
-					const arg: CallExpressionArgument = node.arguments[ 0 ];
+					const arg: TSESTree.CallExpressionArgument = node.arguments[ 0 ];
 					if ( ! isSanitized( arg ) && ! isJQueryElementType( arg, context ) ) {
 						context.report( {
 							node,

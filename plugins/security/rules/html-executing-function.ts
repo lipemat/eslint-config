@@ -1,5 +1,4 @@
-import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
-import type {CallExpression, CallExpressionArgument} from '@typescript-eslint/types/dist/generated/ast-spec';
+import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {isDomElementType, isSanitized} from '../utils/shared.js';
 import {isJQueryCall} from './jquery-executing.js';
 
@@ -34,7 +33,7 @@ function isUnsafeMethod( methodName: string ): methodName is UnsafeCalls {
 }
 
 
-function getDocumentCall( node: CallExpression ): HtmlExecutingFunctions | null {
+function getDocumentCall( node: TSESTree.CallExpression ): HtmlExecutingFunctions | null {
 	let calleeName = '';
 	if ( AST_NODE_TYPES.Identifier === node.callee.type ) {
 		calleeName = node.callee.name;
@@ -56,7 +55,7 @@ function getDocumentCall( node: CallExpression ): HtmlExecutingFunctions | null 
 }
 
 
-function getElementMethodCall( node: CallExpression ): UnsafeCalls | null {
+function getElementMethodCall( node: TSESTree.CallExpression ): UnsafeCalls | null {
 	// Detect element.method(userInput) calls
 	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
 		return null;
@@ -95,7 +94,7 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 	},
 	create( context: Context ): TSESLint.RuleListener {
 		return {
-			CallExpression( node: CallExpression ) {
+			CallExpression( node: TSESTree.CallExpression ) {
 				let method: HtmlExecutingFunctions | UnsafeCalls | null;
 				const documentMethod = getDocumentCall( node );
 
@@ -108,7 +107,7 @@ const plugin: TSESLint.RuleModule<HtmlExecutingFunctions | UnsafeCalls> = {
 					}
 				}
 
-				const arg: CallExpressionArgument = node.arguments[ 0 ];
+				const arg: TSESTree.CallExpressionArgument = node.arguments[ 0 ];
 				if ( ! isSanitized( arg ) && ! isDomElementType<Context>( arg, context ) ) {
 					context.report( {
 						node,

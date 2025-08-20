@@ -1,5 +1,4 @@
-import type {CallExpressionArgument, Expression, SpreadElement} from '@typescript-eslint/types/dist/generated/ast-spec';
-import {AST_NODE_TYPES, ESLintUtils, type TSESLint} from '@typescript-eslint/utils';
+import {AST_NODE_TYPES, ESLintUtils, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {type Type} from 'typescript';
 
 /**
@@ -10,7 +9,7 @@ import {type Type} from 'typescript';
  *
  * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
  */
-export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: Expression | SpreadElement, context: Context ): boolean {
+export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: TSESTree.CallExpressionArgument, context: Context ): boolean {
 	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
 
 	const type = getTypeAtLocation( arg );
@@ -26,7 +25,7 @@ export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<s
  * Check if a node is a call to a known sanitization function.
  * - Currently recognizes `sanitize(...)` and `DOMPurify.sanitize(...)`.
  */
-export function isSanitized( node: Expression | CallExpressionArgument ): boolean {
+export function isSanitized( node: TSESTree.Property['value'] | TSESTree.CallExpressionArgument ): boolean {
 	if ( AST_NODE_TYPES.CallExpression !== node.type ) {
 		return false;
 	}

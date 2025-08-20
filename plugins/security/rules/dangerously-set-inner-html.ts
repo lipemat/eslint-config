@@ -1,18 +1,16 @@
-import {AST_NODE_TYPES, type TSESLint} from '@typescript-eslint/utils';
-import type {Expression, JSXAttribute} from '@typescript-eslint/types/dist/generated/ast-spec';
+import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {isSanitized} from '../utils/shared.js';
 
 type Context = TSESLint.RuleContext<'dangerousInnerHtml', []>;
 
-function isDangerouslySetInnerHTML( node: JSXAttribute ): boolean {
+function isDangerouslySetInnerHTML( node: TSESTree.JSXAttribute ): boolean {
 	return (
 		'JSXAttribute' === node.type &&
 		'dangerouslySetInnerHTML' === node.name.name
 	);
 }
 
-function getDangerouslySetInnerHTMLValue( node: JSXAttribute ): null | Expression {
-	// node is a JSXAttribute for dangerouslySetInnerHTML
+function getDangerouslySetInnerHTMLValue( node: TSESTree.JSXAttribute ): null | TSESTree.Property['value'] {
 	// Expecting value like: {{ __html: expr }}
 	const val = node.value;
 	if ( null === val ) {
@@ -33,7 +31,7 @@ function getDangerouslySetInnerHTMLValue( node: JSXAttribute ): null | Expressio
 		)
 	) );
 	if ( undefined !== htmlProp && 'value' in htmlProp ) {
-		return htmlProp.value as Expression;
+		return htmlProp.value;
 	}
 	return null;
 }
@@ -54,7 +52,7 @@ const plugin: TSESLint.RuleModule<'dangerousInnerHtml'> = {
 	},
 	create( context: Context ): TSESLint.RuleListener {
 		return {
-			JSXAttribute( node: JSXAttribute ) {
+			JSXAttribute( node: TSESTree.JSXAttribute ) {
 				if ( ! isDangerouslySetInnerHTML( node ) ) {
 					return;
 				}
