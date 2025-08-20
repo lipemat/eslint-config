@@ -8,8 +8,10 @@
   },
   "type": "module",
   "main": "index.js",
+  "source": "index.ts",
   "files": [
     "index.js",
+    "index.ts",
     "helpers/",
     "plugins/"
   ],
@@ -35,6 +37,7 @@
     "@types/eslint": "^9",
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
+    "@typescript-eslint/utils": "^8.40.0",
     "@wordpress/eslint-plugin": "^22.0.0",
     "eslint": "^9",
     "eslint-plugin-deprecation": "^3",
@@ -49,7 +52,6 @@
     "@types/node": "^20",
     "@typescript-eslint/rule-tester": "^8.40.0",
     "@typescript-eslint/types": "^8.40.0",
-    "@typescript-eslint/utils": "^8.40.0",
     "dompurify": "^3.2.6",
     "execa": "^5.1.1",
     "jest": "^29",

@@ -24,6 +24,8 @@ install-state.gz
 /node_modules
 
 # Dist files
+/index.js
+helpers/**/*.js
 plugins/**/*.js
 
 # PHPStorm files

@@ -1,11 +1,14 @@
 import {getExtensionsConfig} from '@lipemat/js-boilerplate/helpers/config.js';
+import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
+
+type ExtensionConfig = { configs: FlatConfig.Config[] };
 
 /**
  * Get a config from our /index.js merged with any
  * matching configuration from the project directory.
  *
- * For instance if we have a file named config/eslint.config.js in our project
+ * For instance, if we have a file named config/eslint.config.js in our project
  * we will merge the contents with our config/eslint.config.js in favor of whatever
  * is specified with the project's file.
  *
@@ -20,12 +23,14 @@ import {getExtensionsConfig} from '@lipemat/js-boilerplate/helpers/config.js';
  *     config.configs[0].push({extra: 'Extra'});
  *     return config
  * }
- * ```
- *
- * @return {Object[]} - `eslint.Linter.Config[]`
  */
-export function getConfig( mergedConfig ) {
-	const BASE = {configs: mergedConfig};
-	mergedConfig = {...BASE, ...getExtensionsConfig( 'eslint.config', BASE )};
+export function getConfig( configs: FlatConfig.Config[] ): FlatConfig.Config[] {
+	const BASE = {
+		configs: configs
+	};
+	const mergedConfig: ExtensionConfig = {
+		...BASE,
+		...getExtensionsConfig<ExtensionConfig>( 'eslint.config', BASE )
+	};
 	return mergedConfig.configs;
 }

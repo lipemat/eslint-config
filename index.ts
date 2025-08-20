@@ -6,6 +6,7 @@ import securityPlugin from './plugins/security/index.js';
 import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 import {getConfig} from './helpers/config.js';
+import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
 
 const flatCompat = new FlatCompat();
@@ -14,7 +15,7 @@ const flatCompat = new FlatCompat();
  * Default config if no extensions override it.
  *
  */
-const BASE_CONFIG = {
+const BASE_CONFIG: FlatConfig.Config = {
 	languageOptions: {
 		ecmaVersion: 7,
 		globals: {
@@ -74,7 +75,7 @@ const BASE_CONFIG = {
 };
 
 
-const TS_CONFIG = {
+const TS_CONFIG: FlatConfig.Config = {
 	files: [ '**/*.ts', '**/*.tsx' ],
 	plugins: {
 		'@typescript-eslint': tsPlugin,
@@ -121,7 +122,7 @@ const TS_CONFIG = {
 /**
  * Merge in any extensions' config.
  */
-let mergedConfig = [ BASE_CONFIG, TS_CONFIG ];
+let mergedConfig: FlatConfig.Config[] = [ BASE_CONFIG, TS_CONFIG ];
 try {
 	mergedConfig = getConfig( mergedConfig );
 } catch ( e ) {
