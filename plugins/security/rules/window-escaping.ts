@@ -24,13 +24,11 @@ function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement 
 	if ( AST_NODE_TYPES.TemplateElement !== node.type && AST_NODE_TYPES.Literal !== node.type ) {
 		return false;
 	}
+	if ( typeof node.value !== 'string' ) {
+		return false;
+	}
 
-	return (
-		typeof node.value === 'string' &&
-		!/^\s*(?:javascript|data|vbscript)\s*:/i.test(
-			decodeURIComponent(node.value.replace(/[\u0000-\u001F\u007F]+/g, ''))
-		)
-	);
+	return ! /^\s*(?:javascript|data|vbscript)\s*:/i.test( decodeURIComponent( node.value.replace( /[\u0000-\u001F\u007F]+/g, '' ) ) );
 }
 
 
@@ -69,9 +67,9 @@ function isWindowLocationAssignment( node: TSESTree.AssignmentExpression ): bool
 	return (
 		AST_NODE_TYPES.MemberExpression === node.left.type &&
 		AST_NODE_TYPES.MemberExpression === node.left.object.type &&
-		'name' in node.left.object.object &&
-		'name' in node.left.object.property &&
-		'name' in node.left.property &&
+		AST_NODE_TYPES.Identifier === node.left.object.property.type &&
+		AST_NODE_TYPES.Identifier === node.left.object.object.type &&
+		AST_NODE_TYPES.Identifier === node.left.property.type &&
 		'window' === node.left.object.object.name &&
 		'location' === node.left.object.property.name &&
 		LOCATION_PROPS.has( node.left.property.name )
@@ -83,15 +81,16 @@ function isWindowAssignment( node: TSESTree.AssignmentExpression ): boolean {
 	// window.<prop> = ...
 	return (
 		AST_NODE_TYPES.MemberExpression === node.left.type &&
-		'name' in node.left.object &&
-		'name' in node.left.property &&
+		AST_NODE_TYPES.Identifier === node.left.object.type &&
+		AST_NODE_TYPES.Identifier === node.left.property.type &&
 		'window' === node.left.object.name &&
 		WINDOW_PROPS.has( node.left.property.name )
 	);
 }
 
+
 function isWindowOrLocationMemberExpression( memberExpr: TSESTree.MemberExpression ): boolean {
-	// Helper to detect window.* or window.location.*
+	// Helper to detect a window.* or window.location.*
 	if ( AST_NODE_TYPES.MemberExpression !== memberExpr.type ) {
 		return false;
 	}
@@ -100,8 +99,12 @@ function isWindowOrLocationMemberExpression( memberExpr: TSESTree.MemberExpressi
 	}
 	if ( AST_NODE_TYPES.MemberExpression === memberExpr.object.type ) {
 		const memberObject = memberExpr.object;
-		return AST_NODE_TYPES.Identifier === memberObject.object.type && 'window' === memberObject.object.name && 'name' in memberObject.property && 'location' === memberObject.property.name;
+		const isObjectWindow = AST_NODE_TYPES.Identifier === memberObject.object.type && memberObject.object.name === 'window';
+		const isPropertyLocation = AST_NODE_TYPES.Identifier === memberObject.property.type && memberObject.property.name === 'location';
+
+		return isObjectWindow && isPropertyLocation;
 	}
+
 	return false;
 }
 

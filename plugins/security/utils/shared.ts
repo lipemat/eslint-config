@@ -49,10 +49,9 @@ export function isSanitized( node: TSESTree.Property['value'] | TSESTree.CallExp
 		return true;
 	}
 
-	if ( AST_NODE_TYPES.MemberExpression === node.callee.type &&
-		'object' in node.callee && AST_NODE_TYPES.Identifier === node.callee.object.type ) {
+	if ( AST_NODE_TYPES.MemberExpression === node.callee.type && AST_NODE_TYPES.Identifier === node.callee.object.type ) {
 		return 'dompurify' === node.callee.object.name.toLowerCase() &&
-			'name' in node.callee.property && 'sanitize' === node.callee.property.name;
+			AST_NODE_TYPES.Identifier === node.callee.property.type && 'sanitize' === node.callee.property.name;
 	}
 	return false;
 }
