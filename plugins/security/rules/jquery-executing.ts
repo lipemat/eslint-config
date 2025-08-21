@@ -1,5 +1,5 @@
-import {AST_NODE_TYPES, ESLintUtils, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isSanitized} from '../utils/shared.js';
+import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
+import {getType, isSanitized} from '../utils/shared.js';
 import type {Type} from 'typescript';
 
 type UnsafeCalls =
@@ -37,9 +37,7 @@ const JQUERY_METHODS: UnsafeCalls[] = [
  * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
  */
 export function isJQueryElementType( arg: TSESTree.CallExpressionArgument, context: Context ): boolean {
-	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
-	const type = getTypeAtLocation( arg );
-	const element: Type = type.getNonNullableType();
+	const element: Type = getType<Context>( arg, context );
 	return 'JQuery' === element.getSymbol()?.escapedName;
 }
 

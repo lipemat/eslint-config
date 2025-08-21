@@ -1,9 +1,10 @@
-import noUnsafeValue from './rules/no-unsafe-value.js';
 import dangerouslySetInnerHtml from './rules/dangerously-set-inner-html.js';
-import jqueryExecuting from './rules/jquery-executing.js';
-import htmlExecutingFunction from './rules/html-executing-function.js';
 import htmlExecutingAssignment from './rules/html-executing-assignment.js';
+import htmlExecutingFunction from './rules/html-executing-function.js';
+import htmlSinks from './rules/html-sinks.js';
 import htmlStringConcat from './rules/html-string-concat.js';
+import jqueryExecuting from './rules/jquery-executing.js';
+import noUnsafeValue from './rules/no-unsafe-value.js';
 import vulnerableTagStripping from './rules/vulnerable-tag-stripping.js';
 import windowEscaping from './rules/window-escaping.js';
 import {readFileSync} from 'fs';
@@ -28,12 +29,13 @@ const plugin: Plugin = {
 		version: pkg.version,
 	},
 	rules: {
-		'no-unsafe-value': noUnsafeValue,
 		'dangerously-set-inner-html': dangerouslySetInnerHtml,
 		'html-executing-assignment': htmlExecutingAssignment,
 		'html-executing-function': htmlExecutingFunction,
-		'jquery-executing': jqueryExecuting,
+		'html-sinks': htmlSinks,
 		'html-string-concat': htmlStringConcat,
+		'jquery-executing': jqueryExecuting,
+		'no-unsafe-value': noUnsafeValue,
 		'vulnerable-tag-stripping': vulnerableTagStripping,
 		'window-escaping': windowEscaping,
 	},
@@ -50,18 +52,18 @@ plugin.configs = Object.freeze( {
 				'@lipemat/security': plugin,
 			},
 			rules: {
-				'@lipemat/security/no-unsafe-value': 'error',
 				'@lipemat/security/dangerously-set-inner-html': 'error',
-				'@lipemat/security/jquery-executing': 'error',
 				'@lipemat/security/html-executing-assignment': 'error',
 				'@lipemat/security/html-executing-function': 'error',
+				'@lipemat/security/html-sinks': 'error',
 				'@lipemat/security/html-string-concat': 'error',
+				'@lipemat/security/jquery-executing': 'error',
+				'@lipemat/security/no-unsafe-value': 'error',
 				'@lipemat/security/vulnerable-tag-stripping': 'error',
 				'@lipemat/security/window-escaping': 'error',
 			},
 		},
 	],
 } );
-
 
 export default plugin;

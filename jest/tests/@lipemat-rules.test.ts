@@ -7,6 +7,7 @@ import htmlExecutingAssignmentRule from '../../plugins/security/rules/html-execu
 import htmlStringConcatRule from '../../plugins/security/rules/html-string-concat';
 import vulnerableTagStrippingRule from '../../plugins/security/rules/vulnerable-tag-stripping';
 import windowEscapingRule from '../../plugins/security/rules/window-escaping';
+import htmlSinksRule from '../../plugins/security/rules/html-sinks';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
@@ -39,7 +40,6 @@ describe( '@lipemat rules are enabled', () => {
 		expect( await jestRunnerEslint( 'passing/@lipemat/security' ) ).toMatchSnapshot();
 	} );
 } );
-
 
 describe( 'jQuery Executing', () => {
 	ruleTester.run( 'jquery-executing', jqueryExecutingRule, {
@@ -655,44 +655,6 @@ describe( 'HTML Executing Function', () => {
 					},
 				],
 			},
-			{
-				code: 'element.insertAdjacentHTML( \'beforeend\', userInput )',
-				errors: [
-					{
-						messageId: 'insertAdjacentHTML',
-						type: AST_NODE_TYPES.CallExpression,
-						suggestions: [
-							{
-								messageId: 'domPurify',
-								output: 'element.insertAdjacentHTML( \'beforeend\', DOMPurify.sanitize(userInput) )',
-							},
-							{
-								messageId: 'sanitize',
-								output: 'element.insertAdjacentHTML( \'beforeend\', sanitize(userInput) )',
-							},
-						],
-					},
-				],
-			},
-			{
-				code: 'element.setAttribute( \'onclick\', content )',
-				errors: [
-					{
-						messageId: 'setAttribute',
-						type: AST_NODE_TYPES.CallExpression,
-						suggestions: [
-							{
-								messageId: 'domPurify',
-								output: 'element.setAttribute( \'onclick\', DOMPurify.sanitize(content) )',
-							},
-							{
-								messageId: 'sanitize',
-								output: 'element.setAttribute( \'onclick\', sanitize(content) )',
-							},
-						],
-					},
-				],
-			},
 		],
 	} );
 } );
@@ -982,7 +944,179 @@ describe( 'Window Escaping', () => {
 						],
 					},
 				],
-			}
+			},
+		],
+	} );
+} );
+
+describe( 'HTML Sinks', () => {
+	ruleTester.run( 'html-sinks', htmlSinksRule, {
+		valid: [
+			// setTimeout with function (valid)
+			{
+				code: 'setTimeout(function() { console.log("test"); }, 1000)',
+			},
+			{
+				code: 'setTimeout(() => console.log("test"), 1000)',
+			},
+			{
+				code: 'setTimeout(myFunction, 1000)',
+			},
+			// setInterval with function (valid)
+			{
+				code: 'setInterval(function() { console.log("test"); }, 1000)',
+			},
+			{
+				code: 'setInterval(() => console.log("test"), 1000)',
+			},
+			{
+				code: 'setInterval(myFunction, 1000)',
+			},
+			// window.open with sanitized input (valid)
+			{
+				code: 'window.open(sanitize(userInput))',
+			},
+			{
+				code: 'window.open(DOMPurify.sanitize(userInput))',
+			},
+			// body.style.cssText with literal string (valid)
+			{
+				code: 'body.style.cssText = "color: red; font-size: 14px;"',
+			},
+			// body.style.cssText with sanitized input (valid)
+			{
+				code: 'body.style.cssText = sanitize(userStyles)',
+			},
+			{
+				code: 'body.style.cssText = DOMPurify.sanitize(userStyles)',
+			},
+		],
+		invalid: [
+			{
+				code: 'const w = "hacking your site"; setTimeout(w, 1000)',
+				errors: [
+					{
+						messageId: 'setTimeoutString',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+			},
+			// setTimeout with string (invalid - no replacement)
+			{
+				code: 'setTimeout("console.log(\'test\')", 1000)',
+				errors: [
+					{
+						messageId: 'setTimeoutString',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+			},
+			{
+				code: 'setTimeout(`console.log("${message}")`, 1000)',
+				errors: [
+					{
+						messageId: 'setTimeoutString',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+			},
+			// setInterval with string (invalid - no replacement)
+			{
+				code: 'setInterval("console.log(\'test\')", 1000)',
+				errors: [
+					{
+						messageId: 'setIntervalString',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+			},
+			{
+				code: 'setInterval(`console.log("${message}")`, 1000)',
+				errors: [
+					{
+						messageId: 'setIntervalString',
+						type: AST_NODE_TYPES.CallExpression,
+					},
+				],
+			},
+			// window.open without sanitization (invalid - needs sanitization)
+			{
+				code: 'window.open(userInput)',
+				errors: [
+					{
+						messageId: 'windowOpenUnsanitized',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'window.open(DOMPurify.sanitize(userInput))',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'window.open(sanitize(userInput))',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'window.open(dynamicUrl)',
+				errors: [
+					{
+						messageId: 'windowOpenUnsanitized',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'window.open(DOMPurify.sanitize(dynamicUrl))',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'window.open(sanitize(dynamicUrl))',
+							},
+						],
+					},
+				],
+			},
+			// body.style.cssText with non-literal, non-sanitized value (invalid)
+			{
+				code: 'body.style.cssText = userStyles',
+				errors: [
+					{
+						messageId: 'cssTextUnsanitized',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'body.style.cssText = DOMPurify.sanitize(userStyles)',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'body.style.cssText = sanitize(userStyles)',
+							},
+						],
+					},
+				],
+			},
+			{
+				code: 'body.style.cssText = dynamicStyles + "; color: blue;"',
+				errors: [
+					{
+						messageId: 'cssTextUnsanitized',
+						type: AST_NODE_TYPES.AssignmentExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: 'body.style.cssText = DOMPurify.sanitize(dynamicStyles + "; color: blue;")',
+							},
+							{
+								messageId: 'sanitize',
+								output: 'body.style.cssText = sanitize(dynamicStyles + "; color: blue;")',
+							},
+						],
+					},
+				],
+			},
 		],
 	} );
 } );

@@ -51,13 +51,17 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × @lipemat/security/window-escaping (mocked ms)
   × @lipemat/security/window-escaping (mocked ms)
   × deprecation/deprecation (mocked ms)
+  × @lipemat/security/html-sinks (mocked ms)
+  × @lipemat/security/html-sinks (mocked ms)
   × no-eval (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
   × deprecation/deprecation (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
+  × @lipemat/security/html-sinks (mocked ms)
   × @typescript-eslint/strict-boolean-expressions (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
+  × @lipemat/security/html-sinks (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
 
 
@@ -111,20 +115,24 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   72:5   error    Data from JS global name may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
   73:5   error    Data from JS global status may contain user-supplied values and should be sanitized before output to prevent XSS         @lipemat/security/window-escaping
   73:12  error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)                        deprecation/deprecation
+  78:1   error    setTimeout should not receive a string. Pass a function instead                                                          @lipemat/security/html-sinks
+  79:1   error    setInterval should not receive a string. Pass a function instead                                                         @lipemat/security/html-sinks
   80:1   error    eval can be harmful                                                                                                      no-eval
   82:1   error    Any HTML used with \`document.write\` gets executed. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
   82:10  error    'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)                        deprecation/deprecation
   83:1   error    Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                                     @lipemat/security/html-executing-function
+  84:1   error    window.open should be sanitized to prevent XSS attacks                                                                   @lipemat/security/html-sinks
   86:6   warning  Unexpected object value in conditional. The condition is always true                                                     @typescript-eslint/strict-boolean-expressions
   87:2   error    Any HTML used with \`insertAdjacentHTML\` gets executed. Make sure it's properly escaped                                   @lipemat/security/html-executing-function
   90:2   error    Any HTML used with \`setAttribute\` can lead to XSS. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
+  91:2   error    body.style.cssText should be sanitized when not a literal string to prevent XSS attacks                                  @lipemat/security/html-sinks
   92:2   error    Any HTML used with \`setAttribute\` can lead to XSS. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
 
-✖ 57 problems (56 errors, 1 warning)
+✖ 61 problems (60 errors, 1 warning)
   2 errors and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
-Tests:       56 failed, 56 total
+Tests:       60 failed, 60 total
 Snapshots:   0 total
 Time:        
 Ran all test suites.

@@ -104,12 +104,8 @@ w = sanitize( window.name );
 w = sanitize( window.status );
 window.w = w;
 
-setTimeout( DOMPurify.sanitize( arbitrary ) );
-setTimeout( sanitize( arbitrary ) );
-setTimeout( () => arbitrary );
 
-setInterval( DOMPurify.sanitize( arbitrary ) );
-setInterval( sanitize( arbitrary ) );
+setTimeout( () => arbitrary );
 setInterval( () => arbitrary );
 
 // eslint-disable-next-line deprecation/deprecation

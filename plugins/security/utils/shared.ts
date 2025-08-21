@@ -1,6 +1,25 @@
 import {AST_NODE_TYPES, ESLintUtils, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {type Type} from 'typescript';
 
+
+export function isStringLike( node: TSESTree.CallExpressionArgument, context: Readonly<TSESLint.RuleContext<string, readonly []>> ): boolean {
+	const type = getType( node, context );
+	const literal = type.isStringLiteral();
+	const intrinsic = 'intrinsicName' in type && 'string' === type.intrinsicName;
+	return ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value ) || ( AST_NODE_TYPES.TemplateLiteral === node.type ) || literal || intrinsic;
+}
+
+
+/**
+ * Get the TypeScript type of node.
+ */
+export function getType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: TSESTree.CallExpressionArgument, context: Context ): Type {
+	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
+	const type = getTypeAtLocation( arg );
+	return type.getNonNullableType();
+}
+
+
 /**
  * Is the type of variable being passed a DOM element?
  *
@@ -10,10 +29,7 @@ import {type Type} from 'typescript';
  * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
  */
 export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: TSESTree.CallExpressionArgument, context: Context ): boolean {
-	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
-
-	const type = getTypeAtLocation( arg );
-	const element: Type = type.getNonNullableType();
+	const element: Type = getType<Context>( arg, context );
 
 	const name = element.getSymbol()?.escapedName ?? '';
 	// Match any type that ends with "Element", e.g., HTMLElement, HTMLDivElement, Element, etc.
