@@ -20,9 +20,6 @@ exports[`index.js Enabled Rules 1`] = `
   "@lipemat/security/jquery-executing": [
     2,
   ],
-  "@lipemat/security/no-unsafe-value": [
-    2,
-  ],
   "@lipemat/security/vulnerable-tag-stripping": [
     2,
   ],

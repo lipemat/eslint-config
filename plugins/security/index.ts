@@ -4,7 +4,6 @@ import htmlExecutingFunction from './rules/html-executing-function.js';
 import htmlSinks from './rules/html-sinks.js';
 import htmlStringConcat from './rules/html-string-concat.js';
 import jqueryExecuting from './rules/jquery-executing.js';
-import noUnsafeValue from './rules/no-unsafe-value.js';
 import vulnerableTagStripping from './rules/vulnerable-tag-stripping.js';
 import windowEscaping from './rules/window-escaping.js';
 import {readFileSync} from 'fs';
@@ -35,7 +34,6 @@ const plugin: Plugin = {
 		'html-sinks': htmlSinks,
 		'html-string-concat': htmlStringConcat,
 		'jquery-executing': jqueryExecuting,
-		'no-unsafe-value': noUnsafeValue,
 		'vulnerable-tag-stripping': vulnerableTagStripping,
 		'window-escaping': windowEscaping,
 	},
@@ -58,7 +56,6 @@ plugin.configs = Object.freeze( {
 				'@lipemat/security/html-sinks': 'error',
 				'@lipemat/security/html-string-concat': 'error',
 				'@lipemat/security/jquery-executing': 'error',
-				'@lipemat/security/no-unsafe-value': 'error',
 				'@lipemat/security/vulnerable-tag-stripping': 'error',
 				'@lipemat/security/window-escaping': 'error',
 			},
