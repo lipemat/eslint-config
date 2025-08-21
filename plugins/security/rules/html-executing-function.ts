@@ -1,5 +1,5 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isDomElementType, isSanitized} from '../utils/shared.js';
+import {isDomElementType, isSafeLiteralString, isSanitized} from '../utils/shared.js';
 import {isJQueryCall} from './jquery-executing.js';
 
 type HtmlExecutingFunctions = 'document.write' | 'document.writeln';
@@ -133,7 +133,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 					arg = node.arguments[ 1 ];
 				}
 
-				if ( ! isSanitized( arg ) && ! isDomElementType<Context>( arg, context ) ) {
+				if ( ! isSafeLiteralString( arg ) && ! isSanitized( arg ) && ! isDomElementType<Context>( arg, context ) ) {
 					context.report( {
 						node,
 						messageId: method,

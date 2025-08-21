@@ -7,8 +7,12 @@ function isStringConcat( node: TSESTree.CallExpressionArgument ): boolean {
 	return AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator && hasHtmlLikeStrings( node );
 }
 
-
-function hasHtmlLikeStrings( node: TSESTree.Expression | TSESTree.PrivateIdentifier ): boolean {
+/**
+ * Check if an expression contains any HTML-like strings.
+ * - Looks for `<` or `>` characters in string literals and template literals.
+ * - Recursively checks binary expressions with the ` + ` operator.
+ */
+export function hasHtmlLikeStrings( node: TSESTree.Expression | TSESTree.PrivateIdentifier ): boolean {
 	if ( AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value ) {
 		return /[<>]/.test( node.value );
 	}

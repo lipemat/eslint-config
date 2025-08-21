@@ -1,5 +1,5 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isSanitized} from '../utils/shared.js';
+import {isLiteralString, isSanitized} from '../utils/shared.js';
 
 
 type Messages =
@@ -19,21 +19,13 @@ const LOCATION_PROPS = new Set( [ 'href', 'src', 'action',
 
 const WINDOW_PROPS = new Set( [ 'name', 'status' ] );
 
-
 export function isSafeUrlString( value: string ): boolean {
 	return ! /^\s*(?:javascript|data|vbscript|about|livescript)\s*:/i.test( decodeURIComponent( value.replace( /[\u0000-\u001F\u007F]+/g, '' ) ) );
 }
 
 
-function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement ): boolean {
-	if ( AST_NODE_TYPES.TemplateElement !== node.type && AST_NODE_TYPES.Literal !== node.type ) {
-		return false;
-	}
-	if ( typeof node.value !== 'string' ) {
-		return false;
-	}
-
-	return isSafeUrlString( node.value );
+function isSafeUrlLiteral( node: TSESTree.Expression ): boolean {
+	return isLiteralString( node ) && isSafeUrlString( node.value );
 }
 
 

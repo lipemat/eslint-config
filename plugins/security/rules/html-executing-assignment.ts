@@ -1,5 +1,5 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isDomElementType, isSanitized} from '../utils/shared.js';
+import {isDomElementType, isSafeLiteralString, isSanitized} from '../utils/shared.js';
 
 type UnsafeProperties = 'innerHTML' | 'outerHTML';
 
@@ -44,7 +44,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 					return;
 				}
 				const value = node.right;
-				if ( ! isSanitized( value ) && isDomElementType<Context>( node.left.object, context ) ) {
+				if ( ! isSafeLiteralString( value ) && ! isSanitized( value ) && isDomElementType<Context>( node.left.object, context ) ) {
 					context.report( {
 						node,
 						messageId: 'executed',

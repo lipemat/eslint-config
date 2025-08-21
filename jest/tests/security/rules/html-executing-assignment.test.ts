@@ -26,6 +26,79 @@ describe( 'Not DOM element', () => {
 } );
 
 
+describe( 'Using literal strings', () => {
+	ruleTester.run( 'html-executing-assignment', htmlExecutingAssignmentRule, {
+		valid: [
+			{
+				code: 'const el = document.querySelector( "foo" );' +
+					'el.innerHTML = "Safe Content"',
+			},
+			{
+				code: 'const el = document.querySelector( "foo" );' +
+					'el.innerHTML = "<div>Safe Content</div>"',
+			},
+			{
+				code: 'const el = document.getElementById( "foo" );' +
+					'el.outerHTML = "<span>Safe Content</span>"',
+			},
+			{
+				code: 'const el = document.createElement( "div" );' +
+					'el.innerHTML = "<p>Safe Content</p>"',
+			},
+			{
+				code: 'const el = document.body;' +
+					'el.outerHTML = "<header>Safe Content</header>"',
+			},
+			{
+				code: 'document.body.innerHTML = "<main>Safe Content</main>"',
+			},
+			{
+				code: 'document.head.outerHTML = "<title>Safe Content</title>"',
+			},
+		],
+		invalid: [],
+	} );
+} );
+
+
+describe( 'Unsafe literal string', () => {
+	ruleTester.run( 'html-executing-assignment', htmlExecutingAssignmentRule, {
+		valid: [],
+		invalid: [
+			'"data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="',
+			'`<div>${userInput}</div>`',
+			'"javascript:alert(1)"',
+			'"<svg><script>alert(1)</script></svg>"',
+			'"vbscript:msgbox(\'XSS\')"',
+		].map( code => {
+			return {
+				code: 'const el = document.querySelector( "foo" );' +
+					`el.innerHTML = ${code}`,
+				errors: [
+					{
+						messageId: 'executed',
+						data: {
+							propertyName: 'innerHTML'
+						},
+						type: AST_NODE_TYPES.AssignmentExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: `const el = document.querySelector( "foo" );el.innerHTML = DOMPurify.sanitize( ${code} )`,
+							},
+							{
+								messageId: 'sanitize',
+								output: `const el = document.querySelector( "foo" );el.innerHTML = sanitize( ${code} )`,
+							},
+						],
+					},
+				],
+			};
+		} ),
+	} );
+} );
+
+
 describe( 'Unescaped DOM element', () => {
 	ruleTester.run( 'html-executing-assignment', htmlExecutingAssignmentRule, {
 		valid: [],

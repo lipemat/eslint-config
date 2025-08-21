@@ -1,5 +1,5 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isSanitized, isStringLike} from '../utils/shared.js';
+import {isLiteralString, isSanitized, isStringLike} from '../utils/shared.js';
 
 type Messages =
 	'setTimeoutString'
@@ -10,13 +10,6 @@ type Messages =
 	| 'domPurify';
 
 type Context = TSESLint.RuleContext<Messages, []>;
-
-/**
- * Check if a node is a literal string
- */
-function isLiteralString( node: TSESTree.CallExpressionArgument ): boolean {
-	return AST_NODE_TYPES.Literal === node.type && 'string' === typeof node.value;
-}
 
 /**
  * Get the callee name from a call expression

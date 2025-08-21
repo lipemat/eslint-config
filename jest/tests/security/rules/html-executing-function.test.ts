@@ -163,3 +163,77 @@ describe( 'Unescaped DOM element', () => {
 		],
 	} );
 } );
+
+
+describe( 'Using literal strings', () => {
+	ruleTester.run( 'html-executing-function', htmlExecutingFunctionRule, {
+		valid: [
+			{
+				code: 'const el = document.getElementsByClassName( "foo" );' +
+					'el.append( "<div>Safe Content</div>" )',
+			},
+			{
+				code: 'const el = document.getElementById( "foo" );' +
+					'el.after( "<span>Another Safe Content</span>" )',
+			},
+			{
+				code: 'const el = document.querySelector( "foo" );' +
+					'el.before( "<p>Paragraph</p>" )',
+			},
+			{
+				code: 'const el = document.querySelectorAll( "foo" );' +
+					'el[0].prepend( "<section>Section</section>" )',
+			},
+			{
+				code: 'document.body.replaceWith( "<main>Main Content</main>" )',
+			},
+			{
+				code: 'const el = document.createElement( "div" );' +
+					'el.setAttribute( "data-info", "Some safe data" )',
+			},
+			{
+				code: 'const el = document.getElementsByTagName( "foo" );' +
+					'el[0].setAttribute( "title", "A safe title" )',
+			},
+			{
+				code: 'const el = document.body;' +
+					'el.setAttribute( "aria-label", "A safe aria label" )',
+			},
+		],
+		invalid: [],
+	} );
+} );
+
+describe( 'Unsafe literal string', () => {
+	ruleTester.run( 'html-executing-function', htmlExecutingFunctionRule, {
+		valid: [],
+		invalid: [
+			'"data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="',
+			'`<div>${userInput}</div>`',
+			'"javascript:alert(1)"',
+			'"<svg><script>alert(1)</script></svg>"',
+			'"vbscript:msgbox(\'XSS\')"',
+		].map( code => {
+			return {
+				code: 'const el = document.getElementsByClassName( "foo" );' +
+					`el[0].append( ${code} )`,
+				errors: [
+					{
+						messageId: 'append',
+						type: AST_NODE_TYPES.CallExpression,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: `const el = document.getElementsByClassName( "foo" );el[0].append( DOMPurify.sanitize( ${code} ) )`,
+							},
+							{
+								messageId: 'sanitize',
+								output: `const el = document.getElementsByClassName( "foo" );el[0].append( sanitize( ${code} ) )`,
+							},
+						],
+					},
+				],
+			};
+		} ),
+	} );
+} );
