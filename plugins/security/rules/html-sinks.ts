@@ -108,11 +108,11 @@ const plugin: TSESLint.RuleModule<Messages> = {
 							suggest: [
 								{
 									messageId: 'domPurify',
-									fix: fixer => fixer.replaceText( firstArg, `DOMPurify.sanitize(${argText})` ),
+									fix: fixer => fixer.replaceText( firstArg, `DOMPurify.sanitize( ${argText} )` ),
 								},
 								{
 									messageId: 'sanitize',
-									fix: fixer => fixer.replaceText( firstArg, `sanitize(${argText})` ),
+									fix: fixer => fixer.replaceText( firstArg, `sanitize( ${argText} )` ),
 								},
 							],
 						} );
@@ -134,11 +134,11 @@ const plugin: TSESLint.RuleModule<Messages> = {
 							suggest: [
 								{
 									messageId: 'domPurify',
-									fix: fixer => fixer.replaceText( node.right, `DOMPurify.sanitize(${rightText})` ),
+									fix: fixer => fixer.replaceText( node.right, `DOMPurify.sanitize( ${rightText} )` ),
 								},
 								{
 									messageId: 'sanitize',
-									fix: fixer => fixer.replaceText( node.right, `sanitize(${rightText})` ),
+									fix: fixer => fixer.replaceText( node.right, `sanitize( ${rightText} )` ),
 								},
 							],
 						} );

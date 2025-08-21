@@ -24,40 +24,40 @@ describe( 'jQuery Executing', () => {
 	ruleTester.run( 'jquery-executing', jqueryExecutingRule, {
 		valid: [
 			{
-				code: '$( \'body\' ).after( sanitize(arbitrary) )',
+				code: '$( \'body\' ).after( sanitize( arbitrary ) )',
 			},
 			{
-				code: '$( \'body\' ).append( DOMPurify.sanitize(arbitrary) )',
+				code: '$( \'body\' ).append( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: '$( \'body\' ).appendTo( sanitize(content) )',
+				code: '$( \'body\' ).appendTo( sanitize( content ) )',
 			},
 			{
-				code: '$( \'body\' ).before( DOMPurify.sanitize(arbitrary) )',
+				code: '$( \'body\' ).before( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: '$( \'body\' ).html( sanitize(content) )',
+				code: '$( \'body\' ).html( sanitize( content ) )',
 			},
 			{
-				code: '$( \'body\' ).insertAfter( sanitize(arbitrary) )',
+				code: '$( \'body\' ).insertAfter( sanitize( arbitrary ) )',
 			},
 			{
-				code: '$( \'body\' ).insertBefore( DOMPurify.sanitize(content) )',
+				code: '$( \'body\' ).insertBefore( DOMPurify.sanitize( content ) )',
 			},
 			{
-				code: '$( \'body\' ).prepend( sanitize(arbitrary) )',
+				code: '$( \'body\' ).prepend( sanitize( arbitrary ) )',
 			},
 			{
-				code: '$( \'body\' ).prependTo( DOMPurify.sanitize(content) )',
+				code: '$( \'body\' ).prependTo( DOMPurify.sanitize( content ) )',
 			},
 			{
-				code: '$( \'body\' ).replaceAll( sanitize(arbitrary) )',
+				code: '$( \'body\' ).replaceAll( sanitize( arbitrary ) )',
 			},
 			{
-				code: '$( \'body\' ).replaceWith( DOMPurify.sanitize(content) )',
+				code: '$( \'body\' ).replaceWith( DOMPurify.sanitize( content ) )',
 			},
 			{
-				code: '$( \'body\' ).html( sanitize(userInput) ).text()',
+				code: '$( \'body\' ).html( sanitize( userInput ) ).text()',
 			},
 			// Passing an element.
 			{
@@ -80,11 +80,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).after( DOMPurify.sanitize(arbitrary) )',
+								output: '$( \'body\' ).after( DOMPurify.sanitize( arbitrary ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).after( sanitize(arbitrary) )',
+								output: '$( \'body\' ).after( sanitize( arbitrary ) )',
 							},
 						],
 					},
@@ -102,11 +102,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).append( DOMPurify.sanitize(content) )',
+								output: '$( \'body\' ).append( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).append( sanitize(content) )',
+								output: '$( \'body\' ).append( sanitize( content ) )',
 							},
 						],
 					},
@@ -124,11 +124,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).appendTo( DOMPurify.sanitize(userInput) )',
+								output: '$( \'body\' ).appendTo( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).appendTo( sanitize(userInput) )',
+								output: '$( \'body\' ).appendTo( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -146,11 +146,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).before( DOMPurify.sanitize(arbitrary) )',
+								output: '$( \'body\' ).before( DOMPurify.sanitize( arbitrary ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).before( sanitize(arbitrary) )',
+								output: '$( \'body\' ).before( sanitize( arbitrary ) )',
 							},
 						],
 					},
@@ -168,11 +168,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) )',
+								output: '$( \'body\' ).html( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).html( sanitize(userInput) )',
+								output: '$( \'body\' ).html( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -190,11 +190,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).insertAfter( DOMPurify.sanitize(content) )',
+								output: '$( \'body\' ).insertAfter( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).insertAfter( sanitize(content) )',
+								output: '$( \'body\' ).insertAfter( sanitize( content ) )',
 							},
 						],
 					},
@@ -212,11 +212,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).insertBefore( DOMPurify.sanitize(userInput) )',
+								output: '$( \'body\' ).insertBefore( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).insertBefore( sanitize(userInput) )',
+								output: '$( \'body\' ).insertBefore( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -234,11 +234,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).prepend( DOMPurify.sanitize(arbitrary) )',
+								output: '$( \'body\' ).prepend( DOMPurify.sanitize( arbitrary ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).prepend( sanitize(arbitrary) )',
+								output: '$( \'body\' ).prepend( sanitize( arbitrary ) )',
 							},
 						],
 					},
@@ -256,11 +256,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).prependTo( DOMPurify.sanitize(content) )',
+								output: '$( \'body\' ).prependTo( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).prependTo( sanitize(content) )',
+								output: '$( \'body\' ).prependTo( sanitize( content ) )',
 							},
 						],
 					},
@@ -278,11 +278,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).replaceAll( DOMPurify.sanitize(userInput) )',
+								output: '$( \'body\' ).replaceAll( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).replaceAll( sanitize(userInput) )',
+								output: '$( \'body\' ).replaceAll( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -300,11 +300,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).replaceWith( DOMPurify.sanitize(arbitrary) )',
+								output: '$( \'body\' ).replaceWith( DOMPurify.sanitize( arbitrary ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).replaceWith( sanitize(arbitrary) )',
+								output: '$( \'body\' ).replaceWith( sanitize( arbitrary ) )',
 							},
 						],
 					},
@@ -322,11 +322,11 @@ describe( 'jQuery Executing', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: '$( \'body\' ).html( DOMPurify.sanitize(userInput) ).text()',
+								output: '$( \'body\' ).html( DOMPurify.sanitize( userInput ) ).text()',
 							},
 							{
 								messageId: 'sanitize',
-								output: '$( \'body\' ).html( sanitize(userInput) ).text()',
+								output: '$( \'body\' ).html( sanitize( userInput ) ).text()',
 							},
 						],
 					},
@@ -340,7 +340,7 @@ describe( 'Dangerously Set Inner HTML', () => {
 	ruleTester.run( 'dangerously-set-inner-html', dangerouslySetInnerHtmlRule, {
 		valid: [
 			{
-				code: '() => <div><div dangerouslySetInnerHTML={{__html: sanitize(arbitrary)}} /></div>',
+				code: '() => <div><div dangerouslySetInnerHTML={{__html: sanitize( arbitrary )}} /></div>',
 			},
 		],
 		invalid: [
@@ -352,7 +352,7 @@ describe( 'Dangerously Set Inner HTML', () => {
 						type: AST_NODE_TYPES.JSXAttribute,
 					},
 				],
-				output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(arbitrary)}} /></div>',
+				output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize( arbitrary )}} /></div>',
 			},
 		],
 	} );
@@ -363,10 +363,10 @@ describe( 'HTML Executing Assignment', () => {
 		valid: [
 			// Property assignments with sanitization
 			{
-				code: 'element.innerHTML = sanitize(content)',
+				code: 'element.innerHTML = sanitize( content )',
 			},
 			{
-				code: 'element.outerHTML = DOMPurify.sanitize(arbitrary)',
+				code: 'element.outerHTML = DOMPurify.sanitize( arbitrary )',
 			},
 		],
 		invalid: [
@@ -383,11 +383,11 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.innerHTML = DOMPurify.sanitize(userInput)',
+								output: 'element.innerHTML = DOMPurify.sanitize( userInput )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.innerHTML = sanitize(userInput)',
+								output: 'element.innerHTML = sanitize( userInput )',
 							},
 						],
 					},
@@ -405,11 +405,11 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.outerHTML = DOMPurify.sanitize(content)',
+								output: 'element.outerHTML = DOMPurify.sanitize( content )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.outerHTML = sanitize(content)',
+								output: 'element.outerHTML = sanitize( content )',
 							},
 						],
 					},
@@ -427,11 +427,11 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: `if (body) {body.innerHTML = DOMPurify.sanitize(arbitrary); body.outerHTML = arbitrary; }`,
+								output: `if (body) {body.innerHTML = DOMPurify.sanitize( arbitrary ); body.outerHTML = arbitrary; }`,
 							},
 							{
 								messageId: 'sanitize',
-								output: `if (body) {body.innerHTML = sanitize(arbitrary); body.outerHTML = arbitrary; }`,
+								output: `if (body) {body.innerHTML = sanitize( arbitrary ); body.outerHTML = arbitrary; }`,
 							},
 						],
 					},
@@ -444,11 +444,11 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = DOMPurify.sanitize(arbitrary); }`,
+								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = DOMPurify.sanitize( arbitrary ); }`,
 							},
 							{
 								messageId: 'sanitize',
-								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = sanitize(arbitrary); }`,
+								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = sanitize( arbitrary ); }`,
 							},
 						],
 					},
@@ -463,32 +463,32 @@ describe( 'HTML Executing Function', () => {
 		valid: [
 			// Document methods with sanitization
 			{
-				code: 'document.write( sanitize(content) )',
+				code: 'document.write( sanitize( content ) )',
 			},
 			{
-				code: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
+				code: 'document.writeln( DOMPurify.sanitize( arbitrary ) )',
 			},
 			// Element methods with sanitization
 			{
-				code: 'element.after( sanitize(content) )',
+				code: 'element.after( sanitize( content ) )',
 			},
 			{
-				code: 'element.append( DOMPurify.sanitize(arbitrary) )',
+				code: 'element.append( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: 'element.before( DOMPurify.sanitize(arbitrary) )',
+				code: 'element.before( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: 'element.prepend( sanitize(content) )',
+				code: 'element.prepend( sanitize( content ) )',
 			},
 			{
-				code: 'element.replaceWith( DOMPurify.sanitize(arbitrary) )',
+				code: 'element.replaceWith( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: 'element.insertAdjacentHTML( \'beforeend\', sanitize(content) )',
+				code: 'element.insertAdjacentHTML( \'beforeend\', sanitize( content ) )',
 			},
 			{
-				code: 'element.insertAdjacentHTML( \'afterend\', DOMPurify.sanitize(content) )',
+				code: 'element.insertAdjacentHTML( \'afterend\', DOMPurify.sanitize( content ) )',
 			},
 			// Passing an element.
 			{
@@ -509,11 +509,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'document.write( DOMPurify.sanitize(userInput) )',
+								output: 'document.write( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'document.write( sanitize(userInput) )',
+								output: 'document.write( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -528,11 +528,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'document.writeln( DOMPurify.sanitize(arbitrary) )',
+								output: 'document.writeln( DOMPurify.sanitize( arbitrary ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'document.writeln( sanitize(arbitrary) )',
+								output: 'document.writeln( sanitize( arbitrary ) )',
 							},
 						],
 					},
@@ -548,11 +548,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.after( DOMPurify.sanitize(userInput) )',
+								output: 'element.after( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.after( sanitize(userInput) )',
+								output: 'element.after( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -567,11 +567,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.append( DOMPurify.sanitize(content) )',
+								output: 'element.append( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.append( sanitize(content) )',
+								output: 'element.append( sanitize( content ) )',
 							},
 						],
 					},
@@ -586,11 +586,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.before( DOMPurify.sanitize(content) )',
+								output: 'element.before( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.before( sanitize(content) )',
+								output: 'element.before( sanitize( content ) )',
 							},
 						],
 					},
@@ -605,11 +605,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.prepend( DOMPurify.sanitize(userInput) )',
+								output: 'element.prepend( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.prepend( sanitize(userInput) )',
+								output: 'element.prepend( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -624,11 +624,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.replaceWith( DOMPurify.sanitize(content) )',
+								output: 'element.replaceWith( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.replaceWith( sanitize(content) )',
+								output: 'element.replaceWith( sanitize( content ) )',
 							},
 						],
 					},
@@ -685,7 +685,7 @@ describe( 'Vulnerable Tag Stripping', () => {
 	ruleTester.run( 'vulnerable-tag-stripping', vulnerableTagStrippingRule, {
 		valid: [
 			{
-				code: '$( \'body\' ).html(  sanitize(userInput) )',
+				code: '$( \'body\' ).html(  sanitize( userInput ) )',
 			},
 			{
 				code: '$( \'body\' ).text()',
@@ -714,7 +714,7 @@ describe( 'Vulnerable Tag Stripping', () => {
 				],
 			},
 			{
-				code: '$( \'body\' ).html( sanitize(userInput) ).text()',
+				code: '$( \'body\' ).html( sanitize( userInput ) ).text()',
 				errors: [
 					{
 						messageId: 'vulnerableTagStripping',
@@ -722,7 +722,7 @@ describe( 'Vulnerable Tag Stripping', () => {
 						suggestions: [
 							{
 								messageId: 'useTextOnly',
-								output: '$( \'body\' ).text( sanitize(userInput) )',
+								output: '$( \'body\' ).text( sanitize( userInput ) )',
 							},
 						],
 					},
@@ -754,13 +754,13 @@ describe( 'Window Escaping', () => {
 	ruleTester.run( 'window-escaping', windowEscapingRule, {
 		valid: [
 			{
-				code: 'window.location.href = sanitize(userInput)',
+				code: 'window.location.href = sanitize( userInput )',
 			},
 			{
-				code: 'window.name = sanitize(userInput)',
+				code: 'window.name = sanitize( userInput )',
 			},
 			{
-				code: 'window.name = DOMPurify.sanitize(userInput)',
+				code: 'window.name = DOMPurify.sanitize( userInput )',
 			},
 			// Safe literal assignments
 			{
@@ -775,10 +775,10 @@ describe( 'Window Escaping', () => {
 			},
 			// Reading
 			{
-				code: 'const w = sanitize( window.location.hostname )',
+				code: 'const w = sanitize(  window.location.hostname  )',
 			},
 			{
-				code: 'const w = DOMPurify.sanitize( window.name )',
+				code: 'const w = DOMPurify.sanitize(  window.name  )',
 			},
 		],
 		invalid: [
@@ -795,11 +795,11 @@ describe( 'Window Escaping', () => {
 						suggestions: [
 							{
 								messageId: 'sanitize',
-								output: 'window.location.href = sanitize(userInput)',
+								output: 'window.location.href = sanitize( userInput )',
 							},
 							{
 								messageId: 'domPurify',
-								output: 'window.location.href = DOMPurify.sanitize(userInput)',
+								output: 'window.location.href = DOMPurify.sanitize( userInput )',
 							},
 						],
 					},
@@ -817,11 +817,11 @@ describe( 'Window Escaping', () => {
 						suggestions: [
 							{
 								messageId: 'sanitize',
-								output: 'window.location.pathname = sanitize(userInput)',
+								output: 'window.location.pathname = sanitize( userInput )',
 							},
 							{
 								messageId: 'domPurify',
-								output: 'window.location.pathname = DOMPurify.sanitize(userInput)',
+								output: 'window.location.pathname = DOMPurify.sanitize( userInput )',
 							},
 						],
 					},
@@ -840,11 +840,11 @@ describe( 'Window Escaping', () => {
 						suggestions: [
 							{
 								messageId: 'sanitize',
-								output: 'window.name = sanitize(userInput)',
+								output: 'window.name = sanitize( userInput )',
 							},
 							{
 								messageId: 'domPurify',
-								output: 'window.name = DOMPurify.sanitize(userInput)',
+								output: 'window.name = DOMPurify.sanitize( userInput )',
 							},
 						],
 					},
@@ -863,11 +863,11 @@ describe( 'Window Escaping', () => {
 						suggestions: [
 							{
 								messageId: 'sanitize',
-								output: 'window.status = sanitize(userInput)',
+								output: 'window.status = sanitize( userInput )',
 							},
 							{
 								messageId: 'domPurify',
-								output: 'window.status = DOMPurify.sanitize(userInput)',
+								output: 'window.status = DOMPurify.sanitize( userInput )',
 							},
 						],
 					},
@@ -886,11 +886,11 @@ describe( 'Window Escaping', () => {
 						suggestions: [
 							{
 								messageId: 'sanitize',
-								output: 'window.name = sanitize(encodeURIComponent( userInput ))',
+								output: 'window.name = sanitize( encodeURIComponent( userInput ) )',
 							},
 							{
 								messageId: 'domPurify',
-								output: 'window.name = DOMPurify.sanitize(encodeURIComponent( userInput ))',
+								output: 'window.name = DOMPurify.sanitize( encodeURIComponent( userInput ) )',
 							},
 						],
 					},
@@ -971,10 +971,10 @@ describe( 'HTML Sinks', () => {
 			},
 			// window.open with sanitized input (valid)
 			{
-				code: 'window.open(sanitize(userInput))',
+				code: 'window.open(sanitize( userInput ))',
 			},
 			{
-				code: 'window.open(DOMPurify.sanitize(userInput))',
+				code: 'window.open(DOMPurify.sanitize( userInput ))',
 			},
 			// body.style.cssText with literal string (valid)
 			{
@@ -982,10 +982,10 @@ describe( 'HTML Sinks', () => {
 			},
 			// body.style.cssText with sanitized input (valid)
 			{
-				code: 'body.style.cssText = sanitize(userStyles)',
+				code: 'body.style.cssText = sanitize( userStyles )',
 			},
 			{
-				code: 'body.style.cssText = DOMPurify.sanitize(userStyles)',
+				code: 'body.style.cssText = DOMPurify.sanitize( userStyles )',
 			},
 		],
 		invalid: [
@@ -1046,11 +1046,11 @@ describe( 'HTML Sinks', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'window.open(DOMPurify.sanitize(userInput))',
+								output: 'window.open(DOMPurify.sanitize( userInput ))',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'window.open(sanitize(userInput))',
+								output: 'window.open(sanitize( userInput ))',
 							},
 						],
 					},
@@ -1065,11 +1065,11 @@ describe( 'HTML Sinks', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'window.open(DOMPurify.sanitize(dynamicUrl))',
+								output: 'window.open(DOMPurify.sanitize( dynamicUrl ))',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'window.open(sanitize(dynamicUrl))',
+								output: 'window.open(sanitize( dynamicUrl ))',
 							},
 						],
 					},
@@ -1085,11 +1085,11 @@ describe( 'HTML Sinks', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'body.style.cssText = DOMPurify.sanitize(userStyles)',
+								output: 'body.style.cssText = DOMPurify.sanitize( userStyles )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'body.style.cssText = sanitize(userStyles)',
+								output: 'body.style.cssText = sanitize( userStyles )',
 							},
 						],
 					},
@@ -1104,11 +1104,11 @@ describe( 'HTML Sinks', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'body.style.cssText = DOMPurify.sanitize(dynamicStyles + "; color: blue;")',
+								output: 'body.style.cssText = DOMPurify.sanitize( dynamicStyles + "; color: blue;" )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'body.style.cssText = sanitize(dynamicStyles + "; color: blue;")',
+								output: 'body.style.cssText = sanitize( dynamicStyles + "; color: blue;" )',
 							},
 						],
 					},

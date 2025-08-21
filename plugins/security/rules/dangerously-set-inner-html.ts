@@ -65,7 +65,7 @@ const plugin: TSESLint.RuleModule<'dangerousInnerHtml'> = {
 					node,
 					messageId: 'dangerousInnerHtml',
 					fix: ( fixer: TSESLint.RuleFixer ) => {
-						return fixer.replaceText( node, `dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(${context.sourceCode.getText( htmlValue )})}}` );
+						return fixer.replaceText( node, `dangerouslySetInnerHTML={{__html: DOMPurify.sanitize( ${context.sourceCode.getText( htmlValue )} )}}` );
 					},
 				} );
 			},

@@ -165,13 +165,13 @@ const plugin: TSESLint.RuleModule<Messages> = {
 								messageId: 'sanitize',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const argText = context.sourceCode.getText( right );
-									return fixer.replaceText( right, `sanitize(${argText})` );
+									return fixer.replaceText( right, `sanitize( ${argText} )` );
 								},
 							}, {
 								messageId: 'domPurify',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const argText = context.sourceCode.getText( right );
-									return fixer.replaceText( right, `DOMPurify.sanitize(${argText})` );
+									return fixer.replaceText( right, `DOMPurify.sanitize( ${argText} )` );
 								},
 							},
 						],
@@ -195,13 +195,13 @@ const plugin: TSESLint.RuleModule<Messages> = {
 								messageId: 'sanitize',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const argText = context.sourceCode.getText( right );
-									return fixer.replaceText( right, `sanitize(${argText})` );
+									return fixer.replaceText( right, `sanitize( ${argText} )` );
 								},
 							}, {
 								messageId: 'domPurify',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const argText = context.sourceCode.getText( right );
-									return fixer.replaceText( right, `DOMPurify.sanitize(${argText})` );
+									return fixer.replaceText( right, `DOMPurify.sanitize( ${argText} )` );
 								},
 							},
 						],

@@ -140,14 +140,14 @@ const plugin: TSESLint.RuleModule<Messages> = {
 								messageId: 'domPurify',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const argText = context.sourceCode.getText( arg );
-									return fixer.replaceText( arg, `DOMPurify.sanitize(${argText})` );
+									return fixer.replaceText( arg, `DOMPurify.sanitize( ${argText} )` );
 								},
 							},
 							{
 								messageId: 'sanitize',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const argText = context.sourceCode.getText( arg );
-									return fixer.replaceText( arg, `sanitize(${argText})` );
+									return fixer.replaceText( arg, `sanitize( ${argText} )` );
 								},
 							},
 						],

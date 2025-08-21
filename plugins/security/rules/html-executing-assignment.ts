@@ -56,14 +56,14 @@ const plugin: TSESLint.RuleModule<Messages> = {
 								messageId: 'domPurify',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const valueText = context.sourceCode.getText( value );
-									return fixer.replaceText( value, `DOMPurify.sanitize(${valueText})` );
+									return fixer.replaceText( value, `DOMPurify.sanitize( ${valueText} )` );
 								},
 							},
 							{
 								messageId: 'sanitize',
 								fix: ( fixer: TSESLint.RuleFixer ) => {
 									const valueText = context.sourceCode.getText( value );
-									return fixer.replaceText( value, `sanitize(${valueText})` );
+									return fixer.replaceText( value, `sanitize( ${valueText} )` );
 								},
 							},
 						],
