@@ -27,6 +27,7 @@ install-state.gz
 /index.js
 helpers/**/*.js
 plugins/**/*.js
+/types
 
 # PHPStorm files
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
@@ -36,9 +37,8 @@ plugins/**/*.js
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-.idea/csv-plugin.xml
-.idea/php.xml
-.idea/sshConfigs.xml
+# AWS User-specific
+.idea/**/aws.xml
 # Generated files
 .idea/**/contentModel.xml
 # Sensitive or high-churn files
@@ -51,5 +51,14 @@ plugins/**/*.js
 .idea/**/dbnavigator.xml
 # JIRA plugin
 atlassian-ide-plugin.xml
-# Editor-based Rest Client
+# Editor-based HTTP Client
 .idea/httpRequests
+http-client.private.env.json
+# Copilot
+.idea/copilot
+.idea/copilotDiffState.xml
+# System configs
+.idea/csv-editor.xml
+.idea/csv-plugin.xml
+.idea/php.xml
+.idea/sshConfigs.xml

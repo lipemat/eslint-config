@@ -8,12 +8,12 @@
   },
   "type": "module",
   "main": "index.js",
-  "source": "index.ts",
+  "types": "types",
   "files": [
     "index.js",
-    "index.ts",
-    "helpers/",
-    "plugins/"
+    "helpers/**/*.js",
+    "plugins/**/*.js",
+    "types"
   ],
   "repository": {
     "type": "git",
@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/lipemat/eslint-config#readme",
   "scripts": {
-    "build": "tsc --project ./plugins",
+    "build": "tsc --project ./plugins --declaration --declarationDir types",
     "prepublishOnly": "yarn run build",
     "test": "lipemat-js-boilerplate test",
-    "watch": "tsc --project ./plugins --watch"
+    "watch": "tsc --project ./plugins --watch --inlineSourceMap"
   },
   "dependencies": {
     "@eslint/compat": "^1.2.4",
