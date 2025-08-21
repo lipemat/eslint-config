@@ -6,7 +6,7 @@ import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executi
 import htmlExecutingAssignmentRule from '../../plugins/security/rules/html-executing-assignment';
 import htmlStringConcatRule from '../../plugins/security/rules/html-string-concat';
 import vulnerableTagStrippingRule from '../../plugins/security/rules/vulnerable-tag-stripping';
-import windowEscapingRule from '../../plugins/security/rules/window-escaping';
+import windowEscapingRule, {isSafeUrlString} from '../../plugins/security/rules/window-escaping';
 import htmlSinksRule from '../../plugins/security/rules/html-sinks';
 import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
@@ -754,6 +754,24 @@ describe( 'Vulnerable Tag Stripping', () => {
 } );
 
 describe( 'Window Escaping', () => {
+	test( 'isSafeUrlString', () => {
+		expect( isSafeUrlString( 'about:blank' ) ).toBe( false );
+		expect( isSafeUrlString( 'javascript:alert(1)' ) ).toBe( false );
+		expect( isSafeUrlString( 'data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==' ) ).toBe( false );
+		expect( isSafeUrlString( 'vbscript:msgbox("XSS")' ) ).toBe( false );
+		expect( isSafeUrlString( 'livescript:alert(1)' ) ).toBe( false );
+		expect( isSafeUrlString( 'javascript%3Aalert(1)' ) ).toBe( false );
+
+		expect( isSafeUrlString( 'https://example.com' ) ).toBe( true );
+		expect( isSafeUrlString( 'http://localhost' ) ).toBe( true );
+		expect( isSafeUrlString( '/relative/path' ) ).toBe( true );
+		expect( isSafeUrlString( './relative/path' ) ).toBe( true );
+		expect( isSafeUrlString( '../relative/path' ) ).toBe( true );
+		expect( isSafeUrlString( '?query=string' ) ).toBe( true );
+		expect( isSafeUrlString( '#hash-fragment' ) ).toBe( true );
+	} );
+
+
 	ruleTester.run( 'window-escaping', windowEscapingRule, {
 		valid: [
 			{

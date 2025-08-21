@@ -20,6 +20,11 @@ const LOCATION_PROPS = new Set( [ 'href', 'src', 'action',
 const WINDOW_PROPS = new Set( [ 'name', 'status' ] );
 
 
+export function isSafeUrlString( value: string ): boolean {
+	return ! /^\s*(?:javascript|data|vbscript|about|livescript)\s*:/i.test( decodeURIComponent( value.replace( /[\u0000-\u001F\u007F]+/g, '' ) ) );
+}
+
+
 function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement ): boolean {
 	if ( AST_NODE_TYPES.TemplateElement !== node.type && AST_NODE_TYPES.Literal !== node.type ) {
 		return false;
@@ -28,7 +33,7 @@ function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement 
 		return false;
 	}
 
-	return ! /^\s*(?:javascript|data|vbscript)\s*:/i.test( decodeURIComponent( node.value.replace( /[\u0000-\u001F\u007F]+/g, '' ) ) );
+	return isSafeUrlString( node.value );
 }
 
 
@@ -99,8 +104,8 @@ function isWindowOrLocationMemberExpression( memberExpr: TSESTree.MemberExpressi
 	}
 	if ( AST_NODE_TYPES.MemberExpression === memberExpr.object.type ) {
 		const memberObject = memberExpr.object;
-		const isObjectWindow = AST_NODE_TYPES.Identifier === memberObject.object.type && memberObject.object.name === 'window';
-		const isPropertyLocation = AST_NODE_TYPES.Identifier === memberObject.property.type && memberObject.property.name === 'location';
+		const isObjectWindow = AST_NODE_TYPES.Identifier === memberObject.object.type && 'window' === memberObject.object.name;
+		const isPropertyLocation = AST_NODE_TYPES.Identifier === memberObject.property.type && 'location' === memberObject.property.name;
 
 		return isObjectWindow && isPropertyLocation;
 	}
@@ -169,7 +174,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 									return fixer.replaceText( right, `DOMPurify.sanitize(${argText})` );
 								},
 							},
-						]
+						],
 					} );
 					return;
 				}
