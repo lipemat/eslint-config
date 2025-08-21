@@ -37,36 +37,6 @@ function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement 
 }
 
 
-function isSafeUrlTemplate( node: TSESTree.Expression ): boolean {
-	if ( AST_NODE_TYPES.TemplateLiteral !== node.type || 0 === node.quasis.length ) {
-		return false;
-	}
-	// Basic scheme safety on the first static chunk
-	const firstChunk = node.quasis[ 0 ];
-	if ( isSafeUrlLiteral( firstChunk ) ) {
-		return true;
-	}
-	return isUrlEncoded( node );
-}
-
-
-function isUrlEncoded( node: TSESTree.Expression ): boolean {
-	if ( AST_NODE_TYPES.TemplateLiteral !== node.type ) {
-		return false;
-	}
-	return Array.isArray( node.expressions ) && node.expressions.length > 0 && node.expressions.every( isEncoded );
-}
-
-
-function isEncoded( node: TSESTree.Expression ): boolean {
-	if ( AST_NODE_TYPES.CallExpression !== node.type ) {
-		return false;
-	}
-	return AST_NODE_TYPES.Identifier === node.callee.type &&
-		( 'encodeURIComponent' === node.callee.name || 'encodeURI' === node.callee.name );
-}
-
-
 function isWindowLocationAssignment( node: TSESTree.AssignmentExpression ): boolean {
 	// window.location.<prop> = ...
 	return (
@@ -94,16 +64,16 @@ function isWindowAssignment( node: TSESTree.AssignmentExpression ): boolean {
 }
 
 
-function isWindowOrLocationMemberExpression( memberExpr: TSESTree.MemberExpression ): boolean {
+function isWindowOrLocation( expression: TSESTree.MemberExpression ): boolean {
 	// Helper to detect a window.* or window.location.*
-	if ( AST_NODE_TYPES.MemberExpression !== memberExpr.type ) {
+	if ( AST_NODE_TYPES.MemberExpression !== expression.type ) {
 		return false;
 	}
-	if ( AST_NODE_TYPES.Identifier === memberExpr.object.type && 'window' === memberExpr.object.name ) {
+	if ( AST_NODE_TYPES.Identifier === expression.object.type && 'window' === expression.object.name ) {
 		return true;
 	}
-	if ( AST_NODE_TYPES.MemberExpression === memberExpr.object.type ) {
-		const memberObject = memberExpr.object;
+	if ( AST_NODE_TYPES.MemberExpression === expression.object.type ) {
+		const memberObject = expression.object;
 		const isObjectWindow = AST_NODE_TYPES.Identifier === memberObject.object.type && 'window' === memberObject.object.name;
 		const isPropertyLocation = AST_NODE_TYPES.Identifier === memberObject.property.type && 'location' === memberObject.property.name;
 
@@ -148,10 +118,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 					if ( ! LOCATION_PROPS.has( propName ) ) {
 						return;
 					}
-					if ( isSafeUrlLiteral( rhsResolved ) || isSafeUrlTemplate( rhsResolved ) ) {
-						return;
-					}
-					if ( isSanitized( rhsResolved ) ) {
+					if ( isSafeUrlLiteral( rhsResolved ) || isSanitized( rhsResolved ) ) {
 						return;
 					}
 					context.report( {
@@ -217,7 +184,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 					return;
 				}
 
-				if ( ! isWindowOrLocationMemberExpression( node ) || ! ( 'name' in node.property ) ) {
+				if ( ! isWindowOrLocation( node ) || ! ( 'name' in node.property ) ) {
 					return;
 				}
 				const propName = node.property.name;

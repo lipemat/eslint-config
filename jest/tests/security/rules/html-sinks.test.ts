@@ -2,6 +2,13 @@ import ruleTester from '../../../helpers/rule-tester';
 import htmlSinksRule from '../../../../plugins/security/rules/html-sinks';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
 
+/**
+ * Test isolation for the html-sinks rule
+ *
+ * Most of the cases are covered by the @lipemat-rules.test.ts tests.
+ * - Add new tests here for specific html-sinks rule cases.
+ */
+
 describe( 'window.open', () => {
 	ruleTester.run( 'html-sinks', htmlSinksRule, {
 		valid: [
@@ -46,62 +53,6 @@ describe( 'window.open', () => {
 							{
 								messageId: 'sanitize',
 								output: 'window.open(sanitize( dynamicUrl ))',
-							},
-						],
-					},
-				],
-			},
-		],
-	} );
-} );
-
-describe( 'body.style.cssText', () => {
-	ruleTester.run( 'html-sinks', htmlSinksRule, {
-		valid: [
-			{
-				code: 'body.style.cssText = "color: red;"',
-			},
-			{
-				code: 'body.style.cssText = DOMPurify.sanitize( userStyles )',
-			},
-			{
-				code: 'body.style.cssText = sanitize( userStyles )',
-			},
-		],
-		invalid: [
-			{
-				code: 'body.style.cssText = userStyles',
-				errors: [
-					{
-						messageId: 'cssTextUnsanitized',
-						type: AST_NODE_TYPES.AssignmentExpression,
-						suggestions: [
-							{
-								messageId: 'domPurify',
-								output: 'body.style.cssText = DOMPurify.sanitize( userStyles )',
-							},
-							{
-								messageId: 'sanitize',
-								output: 'body.style.cssText = sanitize( userStyles )',
-							},
-						],
-					},
-				],
-			},
-			{
-				code: 'body.style.cssText = dynamicStyles + "; color: blue;"',
-				errors: [
-					{
-						messageId: 'cssTextUnsanitized',
-						type: AST_NODE_TYPES.AssignmentExpression,
-						suggestions: [
-							{
-								messageId: 'domPurify',
-								output: 'body.style.cssText = DOMPurify.sanitize( dynamicStyles + "; color: blue;" )',
-							},
-							{
-								messageId: 'sanitize',
-								output: 'body.style.cssText = sanitize( dynamicStyles + "; color: blue;" )',
 							},
 						],
 					},

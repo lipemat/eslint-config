@@ -769,10 +769,6 @@ describe( 'Window Escaping', () => {
 			{
 				code: 'window.location.href = "/path/to/page"',
 			},
-			// Template literals with encoded expressions
-			{
-				code: 'window.location.pathname = `#${encodeURIComponent(userInput)}`',
-			},
 			// Reading
 			{
 				code: 'const w = sanitize(  window.location.hostname  )',
