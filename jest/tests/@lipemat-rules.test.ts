@@ -1,5 +1,4 @@
 import jestRunnerEslint from '../helpers/jest-runner-eslint';
-import {RuleTester} from '@typescript-eslint/rule-tester';
 import dangerouslySetInnerHtmlRule from '../../plugins/security/rules/dangerously-set-inner-html';
 import jqueryExecutingRule from '../../plugins/security/rules/jquery-executing';
 import htmlExecutingFunctionRule from '../../plugins/security/rules/html-executing-function';
@@ -8,28 +7,8 @@ import htmlStringConcatRule from '../../plugins/security/rules/html-string-conca
 import vulnerableTagStrippingRule from '../../plugins/security/rules/vulnerable-tag-stripping';
 import windowEscapingRule, {isSafeUrlString} from '../../plugins/security/rules/window-escaping';
 import htmlSinksRule from '../../plugins/security/rules/html-sinks';
-import parser from '@typescript-eslint/parser';
 import {AST_NODE_TYPES} from '@typescript-eslint/types';
-
-/**
- * @link https://typescript-eslint.io/packages/rule-tester
- */
-const ruleTester = new RuleTester( {
-	languageOptions: {
-		parser,
-		parserOptions: {
-			allowDefaultProject: true,
-			project: '../../tsconfig.json',
-			projectService: {
-				allowDefaultProject: [ '*.ts*', '*.tsx' ],
-			},
-			ecmaFeatures: {
-				jsx: true,
-			},
-		},
-	},
-} );
-
+import ruleTester from '../helpers/rule-tester';
 
 describe( '@lipemat rules are enabled', () => {
 	test( '@lipemat/no-unsafe-value failing', async () => {
