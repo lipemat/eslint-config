@@ -25,7 +25,12 @@ function isSafeUrlLiteral( node: TSESTree.Expression | TSESTree.TemplateElement 
 		return false;
 	}
 
-	return 'string' === typeof node.value && ! /^(javascript:)/i.test( node.value );
+	return (
+		typeof node.value === 'string' &&
+		!/^\s*(?:javascript|data|vbscript)\s*:/i.test(
+			decodeURIComponent(node.value.replace(/[\u0000-\u001F\u007F]+/g, ''))
+		)
+	);
 }
 
 
