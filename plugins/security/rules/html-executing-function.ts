@@ -67,19 +67,21 @@ function getDocumentCall( node: TSESTree.CallExpression ): HtmlExecutingFunction
 }
 
 
-function getElementMethodCall( node: TSESTree.CallExpression ): UnsafeCalls | null {
-	// Detect element.method(userInput) calls
-	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || ! ( 'name' in node.callee.property ) ) {
+function getElementMethodCall( node: TSESTree.CallExpression, context: Context ): UnsafeCalls | null {
+	if ( AST_NODE_TYPES.MemberExpression !== node.callee.type || AST_NODE_TYPES.Identifier !== node.callee.property.type ) {
 		return null;
 	}
 	const methodName = node.callee.property.name;
+	if ( ! isDomElementType( node.callee.object, context ) ) {
+		return null; // We only care about DOM element method calls.
+	}
+
 	if ( ! isUnsafeMethod( methodName ) ) {
 		return null;
 	}
 	if ( isJQueryCall( node ) ) {
 		return null; // Handled in jquery-executing rule
 	}
-	// This is a generic element method call, not jQuery specific
 	return methodName;
 }
 
@@ -120,7 +122,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 				if ( null !== documentMethod ) {
 					method = documentMethod;
 				} else {
-					method = getElementMethodCall( node );
+					method = getElementMethodCall( node, context );
 					if ( null === method ) {
 						return;
 					}

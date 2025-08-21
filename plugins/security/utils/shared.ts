@@ -13,9 +13,9 @@ export function isStringLike( node: TSESTree.CallExpressionArgument, context: Re
 /**
  * Get the TypeScript type of node.
  */
-export function getType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: TSESTree.CallExpressionArgument, context: Context ): Type {
+export function getType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( expression: TSESTree.CallExpressionArgument, context: Context ): Type {
 	const {getTypeAtLocation} = ESLintUtils.getParserServices( context );
-	const type = getTypeAtLocation( arg );
+	const type = getTypeAtLocation( expression );
 	return type.getNonNullableType();
 }
 
@@ -28,11 +28,14 @@ export function getType<Context extends Readonly<TSESLint.RuleContext<string, re
  *
  * @link https://typescript-eslint.io/developers/custom-rules/#typed-rules
  */
-export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( arg: TSESTree.CallExpressionArgument, context: Context ): boolean {
-	const element: Type = getType<Context>( arg, context );
+export function isDomElementType<Context extends Readonly<TSESLint.RuleContext<string, readonly []>>>( expression: TSESTree.CallExpressionArgument, context: Context ): boolean {
+	const type: Type = getType<Context>( expression, context );
 
-	const name = element.getSymbol()?.escapedName ?? '';
+	const name = type.getSymbol()?.escapedName ?? '';
 	// Match any type that ends with "Element", e.g., HTMLElement, HTMLDivElement, Element, etc.
+	if ( 'Element' === name ) {
+		return true;
+	}
 	return name.startsWith( 'HTML' ) && name.endsWith( 'Element' );
 }
 

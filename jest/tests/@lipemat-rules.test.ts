@@ -372,7 +372,7 @@ describe( 'HTML Executing Assignment', () => {
 		invalid: [
 			// Property assignments without sanitization
 			{
-				code: 'element.innerHTML = userInput',
+				code: 'const el = document.querySelector( "foo" );el.innerHTML = userInput',
 				errors: [
 					{
 						messageId: 'executed',
@@ -383,18 +383,18 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.innerHTML = DOMPurify.sanitize( userInput )',
+								output: 'const el = document.querySelector( "foo" );el.innerHTML = DOMPurify.sanitize( userInput )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.innerHTML = sanitize( userInput )',
+								output: 'const el = document.querySelector( "foo" );el.innerHTML = sanitize( userInput )',
 							},
 						],
 					},
 				],
 			},
 			{
-				code: 'element.outerHTML = content',
+				code: 'const el = document.getElementById( "foo" );el.outerHTML = content',
 				errors: [
 					{
 						messageId: 'executed',
@@ -405,18 +405,18 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.outerHTML = DOMPurify.sanitize( content )',
+								output: 'const el = document.getElementById( "foo" );el.outerHTML = DOMPurify.sanitize( content )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.outerHTML = sanitize( content )',
+								output: 'const el = document.getElementById( "foo" );el.outerHTML = sanitize( content )',
 							},
 						],
 					},
 				],
 			},
 			{
-				code: `if (body) {body.innerHTML = arbitrary; body.outerHTML = arbitrary; }`,
+				code: `document.body.innerHTML = arbitrary; document.body.outerHTML = arbitrary;`,
 				errors: [
 					{
 						messageId: 'executed',
@@ -427,11 +427,11 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: `if (body) {body.innerHTML = DOMPurify.sanitize( arbitrary ); body.outerHTML = arbitrary; }`,
+								output: `document.body.innerHTML = DOMPurify.sanitize( arbitrary ); document.body.outerHTML = arbitrary;`,
 							},
 							{
 								messageId: 'sanitize',
-								output: `if (body) {body.innerHTML = sanitize( arbitrary ); body.outerHTML = arbitrary; }`,
+								output: `document.body.innerHTML = sanitize( arbitrary ); document.body.outerHTML = arbitrary;`,
 							},
 						],
 					},
@@ -444,11 +444,11 @@ describe( 'HTML Executing Assignment', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = DOMPurify.sanitize( arbitrary ); }`,
+								output: `document.body.innerHTML = arbitrary; document.body.outerHTML = DOMPurify.sanitize( arbitrary );`,
 							},
 							{
 								messageId: 'sanitize',
-								output: `if (body) {body.innerHTML = arbitrary; body.outerHTML = sanitize( arbitrary ); }`,
+								output: `document.body.innerHTML = arbitrary; document.body.outerHTML = sanitize( arbitrary );`,
 							},
 						],
 					},
@@ -470,32 +470,32 @@ describe( 'HTML Executing Function', () => {
 			},
 			// Element methods with sanitization
 			{
-				code: 'element.after( sanitize( content ) )',
+				code: 'const el = document.querySelector( "foo" ); el.after( sanitize( content ) )',
 			},
 			{
-				code: 'element.append( DOMPurify.sanitize( arbitrary ) )',
+				code: 'const el = document.getElementById( "foo" ); el.append( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: 'element.before( DOMPurify.sanitize( arbitrary ) )',
+				code: 'const el = document.getElementsByClassName( "foo" )[0]; el.before( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: 'element.prepend( sanitize( content ) )',
+				code: 'const el = document.getElementsByTagName( "div" )[0]; el.prepend( sanitize( content ) )',
 			},
 			{
-				code: 'element.replaceWith( DOMPurify.sanitize( arbitrary ) )',
+				code: 'const el = document.querySelector( ".foo" ); el.replaceWith( DOMPurify.sanitize( arbitrary ) )',
 			},
 			{
-				code: 'element.insertAdjacentHTML( \'beforeend\', sanitize( content ) )',
+				code: 'const el = document.getElementById( "foo" ); el.insertAdjacentHTML( \'beforeend\', sanitize( content ) )',
 			},
 			{
-				code: 'element.insertAdjacentHTML( \'afterend\', DOMPurify.sanitize( content ) )',
+				code: 'const el = document.querySelector( "#bar" ); el.insertAdjacentHTML( \'afterend\', DOMPurify.sanitize( content ) )',
 			},
 			// Passing an element.
 			{
-				code: 'const foo = document.getElementById( "foo" ); element.after( foo )',
+				code: 'const foo = document.getElementById( "foo" ); const el = document.querySelector( "bar" ); el.after( foo )',
 			},
 			{
-				code: 'const passElement: HTMLBodyElement = document.getElementById( "body" ) as HTMLBodyElement; element.before( passElement )',
+				code: 'const passElement: HTMLBodyElement = document.getElementById( "body" ); const el = document.querySelector( "div" ); el.before( passElement )',
 			},
 		],
 		invalid: [
@@ -540,7 +540,7 @@ describe( 'HTML Executing Function', () => {
 			},
 			// Element methods without sanitization
 			{
-				code: 'element.after( userInput )',
+				code: 'const el = document.querySelector( "foo" ); el.after( userInput )',
 				errors: [
 					{
 						messageId: 'after',
@@ -548,18 +548,18 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.after( DOMPurify.sanitize( userInput ) )',
+								output: 'const el = document.querySelector( "foo" ); el.after( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.after( sanitize( userInput ) )',
+								output: 'const el = document.querySelector( "foo" ); el.after( sanitize( userInput ) )',
 							},
 						],
 					},
 				],
 			},
 			{
-				code: 'element.append( content )',
+				code: 'const el = document.getElementById( "foo" ); el.append( content )',
 				errors: [
 					{
 						messageId: 'append',
@@ -567,18 +567,18 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.append( DOMPurify.sanitize( content ) )',
+								output: 'const el = document.getElementById( "foo" ); el.append( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.append( sanitize( content ) )',
+								output: 'const el = document.getElementById( "foo" ); el.append( sanitize( content ) )',
 							},
 						],
 					},
 				],
 			},
 			{
-				code: 'element.before( content )',
+				code: 'const el = document.getElementsByClassName( "foo" )[0]; el.before( content )',
 				errors: [
 					{
 						messageId: 'before',
@@ -586,18 +586,18 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.before( DOMPurify.sanitize( content ) )',
+								output: 'const el = document.getElementsByClassName( "foo" )[0]; el.before( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.before( sanitize( content ) )',
+								output: 'const el = document.getElementsByClassName( "foo" )[0]; el.before( sanitize( content ) )',
 							},
 						],
 					},
 				],
 			},
 			{
-				code: 'element.prepend( userInput )',
+				code: 'const el = document.getElementsByTagName( "div" )[0]; el.prepend( userInput )',
 				errors: [
 					{
 						messageId: 'prepend',
@@ -605,18 +605,18 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.prepend( DOMPurify.sanitize( userInput ) )',
+								output: 'const el = document.getElementsByTagName( "div" )[0]; el.prepend( DOMPurify.sanitize( userInput ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.prepend( sanitize( userInput ) )',
+								output: 'const el = document.getElementsByTagName( "div" )[0]; el.prepend( sanitize( userInput ) )',
 							},
 						],
 					},
 				],
 			},
 			{
-				code: 'element.replaceWith( content )',
+				code: 'const el = document.querySelector( ".foo" ); el.replaceWith( content )',
 				errors: [
 					{
 						messageId: 'replaceWith',
@@ -624,11 +624,11 @@ describe( 'HTML Executing Function', () => {
 						suggestions: [
 							{
 								messageId: 'domPurify',
-								output: 'element.replaceWith( DOMPurify.sanitize( content ) )',
+								output: 'const el = document.querySelector( ".foo" ); el.replaceWith( DOMPurify.sanitize( content ) )',
 							},
 							{
 								messageId: 'sanitize',
-								output: 'element.replaceWith( sanitize( content ) )',
+								output: 'const el = document.querySelector( ".foo" ); el.replaceWith( sanitize( content ) )',
 							},
 						],
 					},

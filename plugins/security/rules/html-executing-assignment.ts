@@ -1,5 +1,5 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isSanitized} from '../utils/shared.js';
+import {isDomElementType, isSanitized} from '../utils/shared.js';
 
 type UnsafeProperties = 'innerHTML' | 'outerHTML';
 
@@ -7,7 +7,8 @@ type Messages = 'executed' | 'sanitize' | 'domPurify';
 type Context = TSESLint.RuleContext<Messages, []>;
 
 const UNSAFE_PROPERTIES: UnsafeProperties[] = [
-	'innerHTML', 'outerHTML',
+	'innerHTML',
+	'outerHTML',
 ];
 
 function isUnsafeProperty( propertyName: string ): propertyName is UnsafeProperties {
@@ -35,8 +36,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 	create( context: Context ): TSESLint.RuleListener {
 		return {
 			AssignmentExpression( node: TSESTree.AssignmentExpression ) {
-				// Handle element.innerHTML = value and element.outerHTML = value
-				if ( AST_NODE_TYPES.MemberExpression !== node.left.type || ! ( 'name' in node.left.property ) ) {
+				if ( AST_NODE_TYPES.MemberExpression !== node.left.type || AST_NODE_TYPES.Identifier !== node.left.property.type ) {
 					return;
 				}
 				const propertyName = node.left.property.name;
@@ -44,7 +44,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 					return;
 				}
 				const value = node.right;
-				if ( ! isSanitized( value ) ) {
+				if ( ! isSanitized( value ) && isDomElementType<Context>( node.left.object, context ) ) {
 					context.report( {
 						node,
 						messageId: 'executed',
