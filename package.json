@@ -27,6 +27,7 @@
     "build": "tsc --project ./plugins --declaration --declarationDir types",
     "prepublishOnly": "yarn run build",
     "test": "lipemat-js-boilerplate test",
+    "validate-ts": "tsc --project ./plugins --noEmit",
     "watch": "tsc --project ./plugins --watch --inlineSourceMap"
   },
   "dependencies": {
