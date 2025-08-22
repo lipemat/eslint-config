@@ -130,3 +130,7 @@ if ( null !== body ) {
 	body.setAttribute( 'style', DOMPurify.sanitize( arbitrary ) );
 	body.setAttribute( 'style', sanitize( arbitrary ) );
 }
+
+const index = 1;
+const el = document.body;
+el.setAttribute( 'aria-label', index < 3 ? 'high' : 'auto' );

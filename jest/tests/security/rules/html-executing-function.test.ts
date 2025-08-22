@@ -169,6 +169,10 @@ describe( 'Using literal strings', () => {
 	ruleTester.run( 'html-executing-function', htmlExecutingFunctionRule, {
 		valid: [
 			{
+				code: 'const el = document.body;' +
+					'el.setAttribute( "aria-label", ( isMobile() && index < 3 ) ? "high" : "auto" )',
+			},
+			{
 				code: 'const el = document.getElementsByClassName( "foo" );' +
 					'el.append( "<div>Safe Content</div>" )',
 			},
@@ -199,6 +203,7 @@ describe( 'Using literal strings', () => {
 				code: 'const el = document.body;' +
 					'el.setAttribute( "aria-label", "A safe aria label" )',
 			},
+
 		],
 		invalid: [],
 	} );

@@ -76,11 +76,15 @@ export function isLiteralString( node: TSESTree.Property['value'] | TSESTree.Cal
 
 /**
  * Check if a node is a literal string that is safe to use in an HTML context.
- * - Must be a literal string.
+ * - Must be a literal string. Or a conditional expression where both branches are safe literal strings.
  * - Must not contain `<script`.
  * - Must not start with a dangerous protocol (javascript:, data:, vbscript:, about:, livescript:).
  */
 export function isSafeLiteralString( node: TSESTree.Property['value'] | TSESTree.CallExpressionArgument ): boolean {
+	if ( AST_NODE_TYPES.ConditionalExpression === node.type ) {
+		return isSafeLiteralString( node.consequent ) && isSafeLiteralString( node.alternate );
+	}
+
 	if ( ! isLiteralString( node ) ) {
 		return false;
 	}
