@@ -21,7 +21,6 @@ const plugin: TSESLint.RuleModule<Messages> = {
 		docs: {
 			description: 'Disallow using unsanitized values in HTML executing property assignments',
 		},
-		fixable: 'code',
 		hasSuggestions: true,
 		messages: {
 			executed: 'Any HTML used with `{{propertyName}}` gets executed. Make sure it\'s properly escaped.',

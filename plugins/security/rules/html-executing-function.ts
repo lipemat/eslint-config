@@ -92,7 +92,6 @@ const plugin: TSESLint.RuleModule<Messages> = {
 		docs: {
 			description: 'Disallow using unsanitized values in functions that execute HTML',
 		},
-		fixable: 'code',
 		hasSuggestions: true,
 		messages: {
 			'document.write': 'Any HTML used with `document.write` gets executed. Make sure it\'s properly escaped.',

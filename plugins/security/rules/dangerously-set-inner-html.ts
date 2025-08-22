@@ -42,7 +42,6 @@ const plugin: TSESLint.RuleModule<Messages> = {
 	defaultOptions: [],
 	meta: {
 		type: 'problem',
-		fixable: 'code',
 		hasSuggestions: true,
 		docs: {
 			description: 'Disallow using unsanitized values in dangerouslySetInnerHTML',

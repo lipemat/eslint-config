@@ -82,7 +82,6 @@ const plugin: TSESLint.RuleModule<Messages> = {
 		docs: {
 			description: 'Disallow using unsanitized values in jQuery methods that execute HTML',
 		},
-		fixable: 'code',
 		hasSuggestions: true,
 		messages: {
 			needsEscaping: 'Any HTML used with `{{methodName}}` gets executed. Make sure it\'s properly escaped.',

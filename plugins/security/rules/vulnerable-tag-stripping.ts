@@ -45,7 +45,6 @@ const plugin: TSESLint.RuleModule<Messages> = {
 		docs: {
 			description: 'Disallow jQuery .html().text() chaining which can lead to XSS through tag stripping',
 		},
-		fixable: 'code',
 		hasSuggestions: true,
 		messages: {
 			vulnerableTagStripping: 'Using .html().text() can lead to XSS vulnerabilities through tag stripping. Use only .text()',
