@@ -1,7 +1,8 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
 import {isSanitized} from '../utils/shared.js';
 
-type Context = TSESLint.RuleContext<'dangerousInnerHtml', []>;
+type Messages = 'dangerousInnerHtml' | 'sanitize' | 'domPurify';
+type Context = TSESLint.RuleContext<Messages, []>;
 
 function isDangerouslySetInnerHTML( node: TSESTree.JSXAttribute ): boolean {
 	return (
@@ -37,16 +38,21 @@ function getDangerouslySetInnerHTMLValue( node: TSESTree.JSXAttribute ): null | 
 }
 
 
-const plugin: TSESLint.RuleModule<'dangerousInnerHtml'> = {
+const plugin: TSESLint.RuleModule<Messages> = {
 	defaultOptions: [],
 	meta: {
 		type: 'problem',
 		fixable: 'code',
+		hasSuggestions: true,
 		docs: {
 			description: 'Disallow using unsanitized values in dangerouslySetInnerHTML',
 		},
 		messages: {
 			dangerousInnerHtml: 'Any HTML passed to `dangerouslySetInnerHTML` gets executed. Please make sure it\'s properly escaped.',
+
+			// Suggestions
+			domPurify: 'Wrap the content with a `DOMPurify.sanitize()` call.',
+			sanitize: 'Wrap the content with a `sanitize()` call.',
 		},
 		schema: [],
 	},
@@ -64,9 +70,20 @@ const plugin: TSESLint.RuleModule<'dangerousInnerHtml'> = {
 				context.report( {
 					node,
 					messageId: 'dangerousInnerHtml',
-					fix: ( fixer: TSESLint.RuleFixer ) => {
-						return fixer.replaceText( node, `dangerouslySetInnerHTML={{__html: DOMPurify.sanitize( ${context.sourceCode.getText( htmlValue )} )}}` );
-					},
+					suggest: [
+						{
+							messageId: 'domPurify',
+							fix: ( fixer: TSESLint.RuleFixer ) => {
+								return fixer.replaceText( node, `dangerouslySetInnerHTML={{__html: DOMPurify.sanitize( ${context.sourceCode.getText( htmlValue )} )}}` );
+							},
+						},
+						{
+							messageId: 'sanitize',
+							fix: ( fixer: TSESLint.RuleFixer ) => {
+								return fixer.replaceText( node, `dangerouslySetInnerHTML={{__html: sanitize( ${context.sourceCode.getText( htmlValue )} )}}` );
+							},
+						},
+					],
 				} );
 			},
 		};

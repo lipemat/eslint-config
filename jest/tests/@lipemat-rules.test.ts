@@ -350,9 +350,18 @@ describe( 'Dangerously Set Inner HTML', () => {
 					{
 						messageId: 'dangerousInnerHtml',
 						type: AST_NODE_TYPES.JSXAttribute,
+						suggestions: [
+							{
+								messageId: 'domPurify',
+								output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize( arbitrary )}} /></div>',
+							},
+							{
+								messageId: 'sanitize',
+								output: '() => <div><div dangerouslySetInnerHTML={{__html: sanitize( arbitrary )}} /></div>',
+							},
+						],
 					},
 				],
-				output: '() => <div><div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize( arbitrary )}} /></div>',
 			},
 		],
 	} );

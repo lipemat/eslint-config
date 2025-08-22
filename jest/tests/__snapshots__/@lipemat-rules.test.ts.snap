@@ -129,7 +129,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   92:2   error    Any HTML used with \`setAttribute\` can lead to XSS. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
 
 ✖ 61 problems (60 errors, 1 warning)
-  2 errors and 0 warnings potentially fixable with the \`--fix\` option.
+  1 error and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
 Tests:       60 failed, 60 total
