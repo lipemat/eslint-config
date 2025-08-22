@@ -38,7 +38,7 @@ afterEach( () => {
 describe( 'index.js', () => {
 	test( 'Parser Options', () => {
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 6 ];
+		const original = config.default[ config.default.length - 7 ];
 		const svelte = config.default[ config.default.length - 1 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
@@ -83,7 +83,7 @@ describe( 'index.js', () => {
 	test( 'Original Config', () => {
 		mockUseGetConfig = false;
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 2 ];
+		const original = config.default[ config.default.length - 3 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
 		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );

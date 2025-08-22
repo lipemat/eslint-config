@@ -18,7 +18,7 @@ const pkg = JSON.parse(
 
 type Plugin = FlatConfig.Plugin & {
 	configs: {
-		recommended: FlatConfig.ConfigArray;
+		recommended: FlatConfig.Config;
 	}
 }
 
@@ -38,29 +38,27 @@ const plugin: Plugin = {
 		'window-escaping': windowEscaping,
 	},
 	configs: {
-		recommended: [],
+		recommended: {},
 	},
 };
 
 // Freeze the plugin to prevent modifications and use the plugin within.
 plugin.configs = Object.freeze( {
-	recommended: [
-		{
-			plugins: {
-				'@lipemat/security': plugin,
-			},
-			rules: {
-				'@lipemat/security/dangerously-set-inner-html': 'error',
-				'@lipemat/security/html-executing-assignment': 'error',
-				'@lipemat/security/html-executing-function': 'error',
-				'@lipemat/security/html-sinks': 'error',
-				'@lipemat/security/html-string-concat': 'error',
-				'@lipemat/security/jquery-executing': 'error',
-				'@lipemat/security/vulnerable-tag-stripping': 'error',
-				'@lipemat/security/window-escaping': 'error',
-			},
+	recommended: {
+		plugins: {
+			'@lipemat/security': plugin,
 		},
-	],
+		rules: {
+			'@lipemat/security/dangerously-set-inner-html': 'error',
+			'@lipemat/security/html-executing-assignment': 'error',
+			'@lipemat/security/html-executing-function': 'error',
+			'@lipemat/security/html-sinks': 'error',
+			'@lipemat/security/html-string-concat': 'error',
+			'@lipemat/security/jquery-executing': 'error',
+			'@lipemat/security/vulnerable-tag-stripping': 'error',
+			'@lipemat/security/window-escaping': 'error',
+		},
+	},
 } );
 
 export default plugin;

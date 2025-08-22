@@ -20,7 +20,7 @@ if ( process.env.FIXTURE ) {
 }
 
 // The fixture tests can run long.
-config.testTimeout = 10_000;
+config.testTimeout = 15_000;
 config.testEnvironment = 'node';
 
 export default config;

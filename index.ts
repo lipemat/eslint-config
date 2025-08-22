@@ -11,10 +11,6 @@ import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
 const flatCompat = new FlatCompat();
 
-/**
- * Default config if no extensions override it.
- *
- */
 const BASE_CONFIG: FlatConfig.Config = {
 	languageOptions: {
 		ecmaVersion: 7,
@@ -122,16 +118,21 @@ const TS_CONFIG: FlatConfig.Config = {
 /**
  * Merge in any extensions' config.
  */
-let mergedConfig: FlatConfig.Config[] = [ BASE_CONFIG, TS_CONFIG ];
+const defaultConfig: FlatConfig.Config[] = [
+	BASE_CONFIG,
+	TS_CONFIG,
+	securityPlugin.configs.recommended,
+];
+
+let mergedConfig: FlatConfig.Config[] = [];
 try {
-	mergedConfig = getConfig( mergedConfig );
+	mergedConfig = getConfig( defaultConfig );
 } catch ( e ) {
+	// JS Boilerplate is likely not installed.
 	console.debug( e );
-	// JS Boilerplate is not installed.
 }
 
 export default [
-	...securityPlugin.configs.recommended,
 	...fixupConfigRules( flatCompat.extends( 'plugin:@wordpress/eslint-plugin/recommended-with-formatting' ) ),
 	...fixupConfigRules( flatCompat.extends( 'plugin:deprecation/recommended' ) ),
 	...mergedConfig,
