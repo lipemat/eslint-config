@@ -1,6 +1,7 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {getType, isSanitized} from '../utils/shared.js';
 import type {Type} from 'typescript';
+import {isSanitized} from '../helpers/dom-purify.js';
+import {getType} from '../helpers/ts-types.js';
 
 type UnsafeCalls =
 	'after'

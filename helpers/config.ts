@@ -26,11 +26,11 @@ type ExtensionConfig = { configs: FlatConfig.Config[] };
  */
 export function getConfig( configs: FlatConfig.Config[] ): FlatConfig.Config[] {
 	const BASE = {
-		configs: configs
+		configs,
 	};
 	const mergedConfig: ExtensionConfig = {
 		...BASE,
-		...getExtensionsConfig<ExtensionConfig>( 'eslint.config', BASE )
+		...getExtensionsConfig<ExtensionConfig>( 'eslint.config', BASE ),
 	};
 	return mergedConfig.configs;
 }

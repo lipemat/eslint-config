@@ -1,5 +1,6 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isLiteralString, isSanitized} from '../utils/shared.js';
+import {isLiteralString} from '../helpers/string.js';
+import {isSanitized} from '../helpers/dom-purify.js';
 
 
 type Messages =

@@ -1,5 +1,7 @@
 import {AST_NODE_TYPES, type TSESLint, type TSESTree} from '@typescript-eslint/utils';
-import {isDomElementType, isSafeLiteralString, isSanitized} from '../utils/shared.js';
+import {isSafeLiteralString} from '../helpers/string.js';
+import {isSanitized} from '../helpers/dom-purify.js';
+import {isDomElementType} from '../helpers/element.js';
 
 type UnsafeProperties = 'innerHTML' | 'outerHTML';
 
