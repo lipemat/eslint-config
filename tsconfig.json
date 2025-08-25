@@ -1,8 +1,10 @@
 {
   "extends": "@lipemat/js-boilerplate/config/tsconfig.json",
   "compilerOptions": {
-    "moduleResolution": "Bundler",
+    "declaration": false,
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
+    "sourceMap": false,
     "strict": true,
     "target": "ES2024",
     "verbatimModuleSyntax": true

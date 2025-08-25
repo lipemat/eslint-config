@@ -1,17 +1,8 @@
 {
-  "extends": "@lipemat/js-boilerplate/config/tsconfig.json",
+  "extends": "../tsconfig.json",
   "include": [
     "./**/*.ts",
     "../helpers/**/*.ts",
     "../index.ts"
-  ],
-  "compilerOptions": {
-    "declaration": false,
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "sourceMap": false,
-    "strict": true,
-    "target": "ES2024",
-    "verbatimModuleSyntax": true
-  }
+  ]
 }
