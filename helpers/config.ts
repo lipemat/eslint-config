@@ -2,7 +2,7 @@ import {getExtensionsConfig} from '@lipemat/js-boilerplate/helpers/config.js';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
 
-type ExtensionConfig = { configs: FlatConfig.Config[] };
+export type ExtensionConfigs = { configs: FlatConfig.Config[] };
 
 /**
  * Get a config from our /index.js merged with any
@@ -28,9 +28,9 @@ export function getConfig( configs: FlatConfig.Config[] ): FlatConfig.Config[] {
 	const BASE = {
 		configs,
 	};
-	const mergedConfig: ExtensionConfig = {
+	const mergedConfig: ExtensionConfigs = {
 		...BASE,
-		...getExtensionsConfig<ExtensionConfig>( 'eslint.config', BASE ),
+		...getExtensionsConfig<ExtensionConfigs>( 'eslint.config', BASE ),
 	};
 	return mergedConfig.configs;
 }
