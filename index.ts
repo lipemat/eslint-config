@@ -115,12 +115,21 @@ const TS_CONFIG: FlatConfig.Config = {
 	},
 };
 
+const TESTS_CONFIG: FlatConfig.Config = {
+	files: [ '**/*.test.ts', '**/*.test.tsx' ],
+	rules: {
+		// Allow test mocking to use `var`.
+		'no-var': 'off',
+	},
+};
+
 /**
  * Merge in any extensions' config.
  */
 const defaultConfig: FlatConfig.Config[] = [
 	BASE_CONFIG,
 	TS_CONFIG,
+	TESTS_CONFIG,
 	securityPlugin.configs.recommended,
 ];
 

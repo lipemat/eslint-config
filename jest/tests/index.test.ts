@@ -7,7 +7,7 @@ let mockIncludeExtensions = true;
 // Change the result of the getConfig function, so we can change the result during the test.
 jest.mock( '../../helpers/config.js', () => ( {
 	...jest.requireActual( '../../helpers/config.js' ),
-	getConfig: originalConfig => {
+	getConfig: ( originalConfig: object ) => {
 		if ( mockUseGetConfig ) {
 			return jest.requireActual( '../../helpers/config.js' ).getConfig( originalConfig );
 		}
@@ -18,7 +18,7 @@ jest.mock( '../../helpers/config.js', () => ( {
 
 jest.mock( '@lipemat/js-boilerplate/helpers/config.js', () => ( {
 	...jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ),
-	getExtensionsConfig: ( fileName, originalConfig ) => {
+	getExtensionsConfig: ( fileName: string, originalConfig: object ) => {
 		if ( mockIncludeExtensions ) {
 			return jest.requireActual( '@lipemat/js-boilerplate/helpers/config.js' ).getExtensionsConfig( fileName, originalConfig );
 		}
@@ -38,7 +38,7 @@ afterEach( () => {
 describe( 'index.js', () => {
 	test( 'Parser Options', () => {
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 7 ];
+		const original = config.default[ config.default.length - 8 ];
 		const svelte = config.default[ config.default.length - 1 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
@@ -83,7 +83,7 @@ describe( 'index.js', () => {
 	test( 'Original Config', () => {
 		mockUseGetConfig = false;
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 3 ];
+		const original = config.default[ config.default.length - 4 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
 		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
@@ -97,7 +97,7 @@ describe( 'index.js', () => {
 	test( 'No extensions loaded', () => {
 		mockIncludeExtensions = false;
 		const config = require( '../../index.js' );
-		expect( config.default.length ).toEqual( 19 );
+		expect( config.default.length ).toEqual( 20 );
 	} );
 
 
