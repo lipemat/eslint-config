@@ -87,7 +87,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 		messages: {
 			unsafeWindow: 'Assignment to "{{propName}}" must be sanitized.',
 			unsafeWindowLocation: 'Assignment to window.location.{{propName}} must be sanitized.',
-			unsafeRead: 'Data from JS global {{propName}} may contain user-supplied values and should be sanitized before output to prevent XSS.',
+			unsafeRead: 'Data from JS global {{propName}} may contain user-supplied values and should be sanitized before using to prevent XSS.',
 
 			// Suggestions
 			domPurify: 'Wrap the argument with a `DOMPurify.sanitize()` call.',

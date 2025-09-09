@@ -103,17 +103,17 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   59:1   error    Assignment to "name" must be sanitized                                                                                   @lipemat/security/window-escaping
   60:1   error    Assignment to "status" must be sanitized                                                                                 @lipemat/security/window-escaping
   60:8   error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)                        deprecation/deprecation
-  63:5   error    Data from JS global href may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
-  64:5   error    Data from JS global href may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
-  65:5   error    Data from JS global protocol may contain user-supplied values and should be sanitized before output to prevent XSS       @lipemat/security/window-escaping
-  66:5   error    Data from JS global host may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
-  67:5   error    Data from JS global hostname may contain user-supplied values and should be sanitized before output to prevent XSS       @lipemat/security/window-escaping
-  68:5   error    Data from JS global pathname may contain user-supplied values and should be sanitized before output to prevent XSS       @lipemat/security/window-escaping
-  69:5   error    Data from JS global search may contain user-supplied values and should be sanitized before output to prevent XSS         @lipemat/security/window-escaping
-  70:5   error    Data from JS global hash may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
-  71:5   error    Data from JS global port may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
-  72:5   error    Data from JS global name may contain user-supplied values and should be sanitized before output to prevent XSS           @lipemat/security/window-escaping
-  73:5   error    Data from JS global status may contain user-supplied values and should be sanitized before output to prevent XSS         @lipemat/security/window-escaping
+  63:5   error    Data from JS global href may contain user-supplied values and should be sanitized before using to prevent XSS            @lipemat/security/window-escaping
+  64:5   error    Data from JS global href may contain user-supplied values and should be sanitized before using to prevent XSS            @lipemat/security/window-escaping
+  65:5   error    Data from JS global protocol may contain user-supplied values and should be sanitized before using to prevent XSS        @lipemat/security/window-escaping
+  66:5   error    Data from JS global host may contain user-supplied values and should be sanitized before using to prevent XSS            @lipemat/security/window-escaping
+  67:5   error    Data from JS global hostname may contain user-supplied values and should be sanitized before using to prevent XSS        @lipemat/security/window-escaping
+  68:5   error    Data from JS global pathname may contain user-supplied values and should be sanitized before using to prevent XSS        @lipemat/security/window-escaping
+  69:5   error    Data from JS global search may contain user-supplied values and should be sanitized before using to prevent XSS          @lipemat/security/window-escaping
+  70:5   error    Data from JS global hash may contain user-supplied values and should be sanitized before using to prevent XSS            @lipemat/security/window-escaping
+  71:5   error    Data from JS global port may contain user-supplied values and should be sanitized before using to prevent XSS            @lipemat/security/window-escaping
+  72:5   error    Data from JS global name may contain user-supplied values and should be sanitized before using to prevent XSS            @lipemat/security/window-escaping
+  73:5   error    Data from JS global status may contain user-supplied values and should be sanitized before using to prevent XSS          @lipemat/security/window-escaping
   73:12  error    'status' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)                        deprecation/deprecation
   78:1   error    setTimeout should not receive a string. Pass a function instead                                                          @lipemat/security/html-sinks
   79:1   error    setInterval should not receive a string. Pass a function instead                                                         @lipemat/security/html-sinks
