@@ -1,33 +1,67 @@
-# system/hidden files
-*~
-.DS_Store
-.DS_Store?
-.svn
-.cvs
-*.bak
-*.swp
-.ready
-.sass-cache
-.project
-*.sublime-project
-*.sublime-workspace
-*.map
-.Trashes
-ehthumbs.db
-Thumbs.db
+################################
+#
+# @version 6.4.1
+#
+################################
 
-# log files
-*.log
-
-# Yarn berry files
-install-state.gz
-/node_modules
-
+# Project specific
+#### Put project specific exclusions here so they may be easily transferred when updating gitignore.
 # Dist files
 /index.js
 helpers/**/*.js
 plugins/**/*.js
 /types
+
+
+
+# system/hidden files
+*.bak
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~
+.DS_Store
+.DS_Store?
+.Trashes
+.cvs
+.eslintcache
+.phpcs.cache
+.phpunit.cache
+.phpunit.result.cache
+.project
+.ready
+.running
+.sass-cache
+.stylelintcache
+.svn
+.vscode
+Thumbs.db
+apple-developer-merchantid-domain-association
+ehthumbs.db
+tsconfig.tsbuildinfo
+
+# log files
+*.log
+
+# local configs
+local-config.php
+local-config.json
+phpcs.xml
+phpstan.neon
+phpunit.xml
+
+# Yarn Berry files
+install-state.gz
+build-state.yml
+node_modules
+
+.revision
+deploy
+
+# keep files (must be last).
+!.gitkeep
+!.keep
 
 # PHPStorm files
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
@@ -57,6 +91,7 @@ http-client.private.env.json
 # Copilot
 .idea/copilot
 .idea/copilotDiffState.xml
+.idea/copilot.data.migration.*
 # System configs
 .idea/csv-editor.xml
 .idea/csv-plugin.xml
