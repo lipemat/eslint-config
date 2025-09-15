@@ -6,6 +6,7 @@ import htmlStringConcat from './rules/html-string-concat.js';
 import jqueryExecuting from './rules/jquery-executing.js';
 import vulnerableTagStripping from './rules/vulnerable-tag-stripping.js';
 import windowEscaping from './rules/window-escaping.js';
+import noAtHtmlTags from './rules/no-at-html-tags.js';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
@@ -19,6 +20,7 @@ const pkg = JSON.parse(
 type Plugin = FlatConfig.Plugin & {
 	configs: {
 		recommended: FlatConfig.Config;
+		svelte: FlatConfig.Config;
 	}
 }
 
@@ -34,11 +36,13 @@ const plugin: Plugin = {
 		'html-sinks': htmlSinks,
 		'html-string-concat': htmlStringConcat,
 		'jquery-executing': jqueryExecuting,
+		'no-at-html-tags': noAtHtmlTags,
 		'vulnerable-tag-stripping': vulnerableTagStripping,
 		'window-escaping': windowEscaping,
 	},
 	configs: {
 		recommended: {},
+		svelte: {},
 	},
 };
 
@@ -57,6 +61,12 @@ plugin.configs = Object.freeze( {
 			'@lipemat/security/jquery-executing': 'error',
 			'@lipemat/security/vulnerable-tag-stripping': 'error',
 			'@lipemat/security/window-escaping': 'error',
+		},
+	},
+	svelte: {
+		files: [ '**/*.svelte', '*.svelte' ],
+		rules: {
+			'@lipemat/security/no-at-html-tags': 'error',
 		},
 	},
 } );

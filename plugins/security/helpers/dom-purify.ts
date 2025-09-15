@@ -1,10 +1,11 @@
 import {AST_NODE_TYPES, type TSESTree} from '@typescript-eslint/utils';
+import type ESTree from 'estree';
 
 /**
  * Check if a node is a call to a known sanitization function.
  * - Currently recognizes `sanitize(...)` and `DOMPurify.sanitize(...)`.
  */
-export function isSanitized( node: TSESTree.Property['value'] | TSESTree.CallExpressionArgument ): boolean {
+export function isSanitized( node: ESTree.Expression | TSESTree.Property['value'] | TSESTree.CallExpressionArgument ): boolean {
 	if ( AST_NODE_TYPES.CallExpression !== node.type ) {
 		return false;
 	}
