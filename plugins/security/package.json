@@ -1,7 +1,7 @@
 {
   "name": "@lipemat/eslint-plugin-security",
   "description": "ESLint rules to replace PHPCS security scanning",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "type": "module",
