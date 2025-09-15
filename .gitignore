@@ -11,6 +11,7 @@
 helpers/**/*.js
 plugins/**/*.js
 /types
+*.map
 
 
 
