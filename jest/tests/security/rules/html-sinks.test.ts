@@ -18,6 +18,9 @@ describe( 'window.open', () => {
 			{
 				code: 'window.open(DOMPurify.sanitize( userInput ))',
 			},
+			{
+				code: 'window.open( \'https://onpointplugins.com/how-to-retrieve-console-logs-from-your-browser/\', \'_blank\', \'noopener,noreferrer\' );',
+			},
 		],
 		invalid: [
 			{

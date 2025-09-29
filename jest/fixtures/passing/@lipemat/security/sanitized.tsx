@@ -116,6 +116,7 @@ document.writeln( DOMPurify.sanitize( arbitrary ) );
 document.writeln( sanitize( arbitrary ) );
 window.open( DOMPurify.sanitize( arbitrary ) );
 window.open( sanitize( arbitrary ) );
+window.open( 'https://onpointplugins.com/how-to-retrieve-console-logs-from-your-browser/', '_blank', 'noopener,noreferrer' );
 
 if ( null !== body ) {
 	body.insertAdjacentHTML( 'beforeend', DOMPurify.sanitize( arbitrary ) );

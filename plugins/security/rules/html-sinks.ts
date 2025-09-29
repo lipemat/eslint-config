@@ -92,7 +92,7 @@ const plugin: TSESLint.RuleModule<Messages> = {
 				// Handle window.open with string arguments (must be sanitized)
 				if ( 'window.open' === calleeName ) {
 					const firstArg = node.arguments[ 0 ];
-					if ( ! isSanitized( firstArg ) ) {
+					if ( ! isLiteralString( firstArg ) && ! isSanitized( firstArg ) ) {
 						const sourceCode = context.sourceCode;
 						const argText = sourceCode.getText( firstArg );
 
