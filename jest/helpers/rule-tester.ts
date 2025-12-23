@@ -9,7 +9,6 @@ const ruleTester = new RuleTester( {
 		parser,
 		parserOptions: {
 			allowDefaultProject: true,
-			project: '../../tsconfig.json',
 			projectService: {
 				allowDefaultProject: [ '*.ts*', '*.tsx' ],
 			},
