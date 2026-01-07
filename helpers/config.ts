@@ -1,4 +1,4 @@
-import {getExtensionsConfig} from '@lipemat/js-boilerplate/helpers/config.js';
+import {getExtensionsConfig} from '@lipemat/js-boilerplate-shared';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
 
