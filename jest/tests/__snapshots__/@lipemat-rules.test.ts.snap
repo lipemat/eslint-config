@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
 "FAIL jest/fixtures/failing/@lipemat/security/not-sanitized.tsx

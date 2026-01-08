@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Svelte rules are enabled svelte/no-dupe-style-properties 1`] = `
 "FAIL jest/fixtures/failing/svelte/no-dupe-style-properties/CircleProgress.svelte

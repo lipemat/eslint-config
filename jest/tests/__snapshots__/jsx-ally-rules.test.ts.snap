@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`JSX A11Y rules are enabled jsx-a11y/label-has-associated-control 1`] = `
 "PASS jest/fixtures/passing/jsx-ally/label-has-associated-control/custom-component.tsx

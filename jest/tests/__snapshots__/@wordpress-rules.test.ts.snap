@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`WordPress rules are enabled @wordpress/invalid-text-domain failing 1`] = `
 "FAIL jest/fixtures/failing/@wordpress/i18n-text-domain/invalid-text-domain.ts

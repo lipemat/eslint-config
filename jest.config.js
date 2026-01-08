@@ -3,11 +3,20 @@
  *
  * @see jest/helpers/jest-runner-eslint.ts
  */
-import config from '@lipemat/js-boilerplate/config/jest.config.js';
-
-config.transformIgnorePatterns = [
-	'node_modules'
-];
+/** @type {import('@jest/types').Config.InitialOptions} */
+const config = {
+	transform: {
+		'^.+\\.[tj]sx?$': [ 'babel-jest', {
+			presets: [
+				[ '@babel/preset-env', {targets: {node: 'current'}} ],
+				'@babel/preset-typescript',
+			]
+		} ],
+	},
+	transformIgnorePatterns: [
+		'node_modules/(?!@lipemat)',
+	],
+};
 
 // Passed down from `jestRunnerEslint` to allow for a single linting test.
 if ( process.env.FIXTURE ) {
