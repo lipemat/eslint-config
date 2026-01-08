@@ -3,20 +3,7 @@
  *
  * @see jest/helpers/jest-runner-eslint.ts
  */
-/** @type {import('@jest/types').Config.InitialOptions} */
-const config = {
-	transform: {
-		'^.+\\.[tj]sx?$': [ 'babel-jest', {
-			presets: [
-				[ '@babel/preset-env', {targets: {node: 'current'}} ],
-				'@babel/preset-typescript',
-			]
-		} ],
-	},
-	transformIgnorePatterns: [
-		'node_modules/(?!@lipemat)',
-	],
-};
+import config from '@lipemat/js-boilerplate-shared/config/jest.config.mjs';
 
 // Passed down from `jestRunnerEslint` to allow for a single linting test.
 if ( process.env.FIXTURE ) {
