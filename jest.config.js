@@ -3,7 +3,7 @@
  *
  * @see jest/helpers/jest-runner-eslint.ts
  */
-import config from '@lipemat/js-boilerplate-shared/config/jest.config.mjs';
+import config from '@lipemat/js-boilerplate-shared/config/jest.config.js';
 
 // Passed down from `jestRunnerEslint` to allow for a single linting test.
 if ( process.env.FIXTURE ) {
