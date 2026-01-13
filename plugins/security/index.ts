@@ -8,12 +8,13 @@ import vulnerableTagStripping from './rules/vulnerable-tag-stripping.js';
 import windowEscaping from './rules/window-escaping.js';
 import noAtHtmlTags from './rules/no-at-html-tags.js';
 import {readFileSync} from 'fs';
-import {resolve} from 'path';
+import {dirname, resolve} from 'path';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
+import {fileURLToPath} from 'url';
 
-
+const __dirname = dirname( fileURLToPath( import.meta.url ) );
 const pkg = JSON.parse(
-	readFileSync( resolve( './package.json' ), 'utf8' ),
+	readFileSync( resolve( __dirname, 'package.json' ), 'utf8' )
 );
 
 
