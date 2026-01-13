@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Core Files" pattern="file[eslint-config]:helpers//*||file:index.ts||file[eslint-config]:plugins//*" />
+</component>
