@@ -16,11 +16,11 @@ jest.mock( '../../helpers/config.js', () => ( {
 } ) );
 
 
-jest.mock( '@lipemat/js-boilerplate-shared', () => ( {
-	...jest.requireActual( '@lipemat/js-boilerplate-shared' ),
+jest.mock( '@lipemat/js-boilerplate-shared/helpers/config.js', () => ( {
+	...jest.requireActual( '@lipemat/js-boilerplate-shared/helpers/config.js' ),
 	getExtensionsConfig: ( fileName: string, originalConfig: object ) => {
 		if ( mockIncludeExtensions ) {
-			return jest.requireActual( '@lipemat/js-boilerplate-shared' ).getExtensionsConfig( fileName, originalConfig );
+			return jest.requireActual( '@lipemat/js-boilerplate-shared/helpers/config.js' ).getExtensionsConfig( fileName, originalConfig );
 		}
 		// Default result if no extensions are included.
 		return {};
