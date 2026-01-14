@@ -15,6 +15,10 @@ if ( process.env.FIXTURE ) {
 	config.roots = [ './jest/tests' ];
 }
 
+config.transformIgnorePatterns = [
+	'node_modules/(?!@lipemat|svelte-eslint-parser|eslint-plugin-svelte)',
+];
+
 // The fixture tests can run long.
 config.testTimeout = 15_000;
 config.testEnvironment = 'node';
