@@ -1,4 +1,4 @@
-import * as tsParser from '@typescript-eslint/parser';
+import ts from 'typescript-eslint';
 import getEslintConfig from '../helpers/eslint-config';
 
 let mockUseGetConfig = true;
@@ -38,8 +38,8 @@ afterEach( () => {
 describe( 'index.js', () => {
 	test( 'Parser Options', () => {
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 8 ];
-		const svelte = config.default[ config.default.length - 1 ];
+		const original = config.default[ config.default.length - 10 ];
+		const svelte = config.default[ config.default.length - 2 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
 		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
@@ -61,21 +61,20 @@ describe( 'index.js', () => {
 
 	test( 'Svelte config added as override', () => {
 		const config = require( '../../index.js' );
-		const svelteConfig = config.default[ config.default.length - 1 ];
+		const svelteConfig = config.default[ config.default.length - 2 ];
 
 		expect( svelteConfig.files ).toEqual( [
 			'**/*.svelte',
 			'*.svelte',
 		] );
 
-		expect( JSON.stringify( svelteConfig.languageOptions.parserOptions.parser ) ).toEqual( JSON.stringify( tsParser ) );
+		expect( JSON.stringify( svelteConfig.languageOptions.parserOptions.parser ) ).toEqual( JSON.stringify( ts.parser ) );
+
 		expect( svelteConfig.rules ).toEqual( {
-			'no-unused-vars': [
-				0,
-			],
-			'prefer-const': [
-				0,
-			],
+			'no-unused-vars': 'off',
+			'prefer-const': 'off',
+			'svelte/no-at-html-tags': 'off',
+			'svelte/no-useless-mustaches': 'off',
 		} );
 	} );
 
