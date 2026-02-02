@@ -3011,7 +3011,7 @@ __metadata:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.3.3"
     "@lipemat/js-boilerplate-shared": "npm:>=0.0.4 <1.0.0"
-    "@lipemat/js-boilerplate-svelte": "npm:^3.1.0-beta.1"
+    "@lipemat/js-boilerplate-svelte": "npm:^3.1.0-beta.4"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
     "@types/eslint": "npm:^9"
     "@types/jest": "npm:^30"
@@ -3037,7 +3037,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lipemat/js-boilerplate-shared@npm:>=0.0.0 <1.0.0":
+"@lipemat/js-boilerplate-shared@npm:>=0.0.4 <1.0.0":
   version: 0.0.4
   resolution: "@lipemat/js-boilerplate-shared@npm:0.0.4"
   dependencies:
@@ -3068,9 +3068,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lipemat/js-boilerplate-svelte@npm:^3.1.0-beta.1":
-  version: 3.1.0-beta.1
-  resolution: "@lipemat/js-boilerplate-svelte@npm:3.1.0-beta.1"
+"@lipemat/js-boilerplate-shared@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@lipemat/js-boilerplate-shared@npm:0.0.1"
+  dependencies:
+    "@babel/preset-env": "npm:^7.28.5"
+    "@babel/preset-typescript": "npm:^7.28.5"
+    "@csstools/postcss-global-data": "npm:2.0.0"
+    "@types/clean-css": "npm:^4.2.11"
+    "@types/postcss-load-config": "npm:^3.0.1"
+    "@types/postcss-preset-env": "npm:^7.7.0"
+    "@types/webpack": "npm:^5.28.5"
+    babel-plugin-transform-import-meta: "npm:^2.3.3"
+    browserslist: "npm:^4.28.1"
+    clean-css: "npm:^5.3.3"
+    core-js: "npm:^3.33.1"
+    glob: "npm:^13.0.0"
+    postcss: "npm:^8.4.47"
+    postcss-color-mod-function: "npm:^4.1.1"
+    postcss-custom-media: "npm:^8.0.1"
+    postcss-import: "npm:^15.1.0"
+    postcss-loader: "npm:^8.1.1"
+    postcss-nested: "npm:^5.0.6"
+    postcss-preset-env: "npm:^7.8.3"
+    postcss-scss: "npm:^4.0.4"
+    postcss-sort-media-queries: "npm:^5.2.0"
+  peerDependencies:
+    typescript: ^5.9.3
+  checksum: 10c0/34266f2fc13d57cef21ed390f3adc866074a6574f7997ca1ce1482afd80c3d260b75e57287b14f4e0157da996e14a4453f12b0bb03c5cb7d7a67e85e879fe530
+  languageName: node
+  linkType: hard
+
+"@lipemat/js-boilerplate-svelte@npm:^3.1.0-beta.4":
+  version: 3.1.0-beta.4
+  resolution: "@lipemat/js-boilerplate-svelte@npm:3.1.0-beta.4"
   dependencies:
     "@lipemat/eslint-config": "npm:^5.2.0-beta.1"
     "@lipemat/js-boilerplate-shared": "npm:^0.0.1"
@@ -3108,7 +3139,7 @@ __metadata:
     svelte: ^5.38.6
   bin:
     lipemat-js-boilerplate-svelte: bin/lipemat-js-boilerplate-svelte.js
-  checksum: 10c0/a03aa91b1e47a2b9c560de904d34906f16817e7b939d9abfb05ba01afb70c455d2ba49bf2042c291ce0d15542846619f9de43d7f6708c61b1434d1443a513f83
+  checksum: 10c0/20d74d32de58d01a78c08e1ee160ce3d96cf90397628d559242f06d510a37234bb5178635deed8bc3bc5e4c6b21f38cec93417c377cdbfd24022f78eed1db869
   languageName: node
   linkType: hard
 
