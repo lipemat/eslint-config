@@ -18,7 +18,7 @@ export function hasHtmlLikeStrings( node: TSESTree.Expression | TSESTree.Private
 	}
 	if ( AST_NODE_TYPES.TemplateLiteral === node.type ) {
 		// Check any static part of the template for HTML-like content.
-		return node.quasis.some( q => /[<>]/.test( q.value.cooked ) );
+		return node.quasis.some( q => /[<>]/.test( q.value.cooked ?? '' ) );
 	}
 	if ( AST_NODE_TYPES.BinaryExpression === node.type && '+' === node.operator ) {
 		return hasHtmlLikeStrings( node.left ) || hasHtmlLikeStrings( node.right );
