@@ -2987,7 +2987,7 @@ __metadata:
   dependencies:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.3.3"
-    "@lipemat/js-boilerplate-shared": "npm:>=0.2.1"
+    "@lipemat/js-boilerplate-shared": "npm:^1.0.0"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
     "@types/eslint": "npm:^9"
     "@typescript-eslint/eslint-plugin": "npm:^8.40.0"
@@ -3010,7 +3010,7 @@ __metadata:
   dependencies:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.3.3"
-    "@lipemat/js-boilerplate-shared": "npm:>=0.2.1"
+    "@lipemat/js-boilerplate-shared": "npm:^1.0.0"
     "@lipemat/js-boilerplate-svelte": "npm:^3.1.0-beta.4"
     "@stylistic/eslint-plugin-ts": "npm:^2.12.1"
     "@types/eslint": "npm:^9"
@@ -3022,7 +3022,7 @@ __metadata:
     "@typescript-eslint/rule-tester": "npm:^8.40.0"
     "@typescript-eslint/utils": "npm:^8.40.0"
     "@wordpress/eslint-plugin": "npm:22.20.0"
-    dompurify: "npm:^3.2.6"
+    dompurify: "npm:3.3.2"
     eslint: "npm:^9"
     eslint-plugin-deprecation: "npm:^3"
     eslint-plugin-import: "npm:^2.31.0"
@@ -3036,39 +3036,6 @@ __metadata:
     typescript: ^5.9.3
   languageName: unknown
   linkType: soft
-
-"@lipemat/js-boilerplate-shared@npm:>=0.2.1":
-  version: 0.2.1
-  resolution: "@lipemat/js-boilerplate-shared@npm:0.2.1"
-  dependencies:
-    "@babel/preset-env": "npm:^7.28.5"
-    "@babel/preset-typescript": "npm:^7.28.5"
-    "@csstools/postcss-global-data": "npm:2.0.0"
-    "@types/clean-css": "npm:^4.2.11"
-    "@types/postcss-load-config": "npm:^3.0.1"
-    "@types/postcss-preset-env": "npm:^7.7.0"
-    "@types/webpack": "npm:^5.28.5"
-    babel-plugin-transform-import-meta: "npm:^2.3.3"
-    browserslist: "npm:^4.28.1"
-    clean-css: "npm:^5.3.3"
-    core-js: "npm:^3.33.1"
-    glob: "npm:^13.0.0"
-    postcss: "npm:^8.4.47"
-    postcss-color-mod-function: "npm:^4.1.1"
-    postcss-custom-media: "npm:^8.0.1"
-    postcss-import: "npm:^15.1.0"
-    postcss-loader: "npm:^8.1.1"
-    postcss-nested: "npm:^5.0.6"
-    postcss-preset-env: "npm:^7.8.3"
-    postcss-scss: "npm:^4.0.4"
-    postcss-sort-media-queries: "npm:^5.2.0"
-  peerDependencies:
-    typescript: ^5.9.3
-  bin:
-    js-boilerplate-shared__fix-pnp: bin/fix-pnp.js
-  checksum: 10c0/fba6e4d8d47762b8daf6f4479959292e204da03057ef9c94e34e49d24514cb3ed5625ca8411af41b10151992b8c330d8822d3ac0aa857c974c744ccf41386750
-  languageName: node
-  linkType: hard
 
 "@lipemat/js-boilerplate-shared@npm:^0.0.1":
   version: 0.0.1
@@ -3098,6 +3065,39 @@ __metadata:
   peerDependencies:
     typescript: ^5.9.3
   checksum: 10c0/34266f2fc13d57cef21ed390f3adc866074a6574f7997ca1ce1482afd80c3d260b75e57287b14f4e0157da996e14a4453f12b0bb03c5cb7d7a67e85e879fe530
+  languageName: node
+  linkType: hard
+
+"@lipemat/js-boilerplate-shared@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@lipemat/js-boilerplate-shared@npm:1.0.0"
+  dependencies:
+    "@babel/preset-env": "npm:^7.28.5"
+    "@babel/preset-typescript": "npm:^7.28.5"
+    "@csstools/postcss-global-data": "npm:2.0.0"
+    "@types/clean-css": "npm:^4.2.11"
+    "@types/postcss-load-config": "npm:^3.0.1"
+    "@types/postcss-preset-env": "npm:^7.7.0"
+    "@types/webpack": "npm:^5.28.5"
+    babel-plugin-transform-import-meta: "npm:^2.3.3"
+    browserslist: "npm:^4.28.1"
+    clean-css: "npm:^5.3.3"
+    core-js: "npm:^3.33.1"
+    glob: "npm:^13.0.0"
+    postcss: "npm:^8.4.47"
+    postcss-color-mod-function: "npm:^4.1.1"
+    postcss-custom-media: "npm:^8.0.1"
+    postcss-import: "npm:^15.1.0"
+    postcss-loader: "npm:^8.1.1"
+    postcss-nested: "npm:^5.0.6"
+    postcss-preset-env: "npm:^7.8.3"
+    postcss-scss: "npm:^4.0.4"
+    postcss-sort-media-queries: "npm:^5.2.0"
+  peerDependencies:
+    typescript: ^5.9.3
+  bin:
+    js-boilerplate-shared__fix-pnp: bin/fix-pnp.js
+  checksum: 10c0/de8f35b2b8613f057e5c303382748d0294e7ae4c62aa4eb2dbebf970f52040c062d5cb5715f6dc699c06c93fd638298504c217f1bbbad16ceab6736623ae7bcb
   languageName: node
   linkType: hard
 
@@ -5791,15 +5791,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.2.6":
-  version: 3.3.1
-  resolution: "dompurify@npm:3.3.1"
+"dompurify@npm:3.3.2":
+  version: 3.3.2
+  resolution: "dompurify@npm:3.3.2"
   dependencies:
     "@types/trusted-types": "npm:^2.0.7"
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10c0/fa0a8c55a436ba0d54389195e3d2337e311f56de709a2fc9efc98dbbc7746fa53bb4b74b6ac043b77a279a8f2ebd8685f0ebaa6e58c9e32e92051d529bc0baf8
+  checksum: 10c0/8989525f003dd062e829137982b5412143421342991b2732bd621a1efd98b2c3cdc4f37547601d0727d3bc20f1d0eb2a0ecca287d3688f168cdb54ced867ca8f
   languageName: node
   linkType: hard
 
