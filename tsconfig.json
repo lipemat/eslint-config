@@ -8,6 +8,11 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES2024",
+    "types": [
+      "jest",
+      "jquery",
+      "node"
+    ],
     "verbatimModuleSyntax": false
   },
   "include": [

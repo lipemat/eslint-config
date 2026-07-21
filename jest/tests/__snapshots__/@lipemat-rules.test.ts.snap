@@ -57,6 +57,7 @@ exports[`@lipemat rules are enabled @lipemat/no-unsafe-value failing 1`] = `
   × @lipemat/security/html-executing-function (mocked ms)
   × deprecation/deprecation (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
+  × deprecation/deprecation (mocked ms)
   × @lipemat/security/html-sinks (mocked ms)
   × @typescript-eslint/strict-boolean-expressions (mocked ms)
   × @lipemat/security/html-executing-function (mocked ms)
@@ -121,6 +122,7 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   82:1   error    Any HTML used with \`document.write\` gets executed. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
   82:10  error    'write' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/write)                        deprecation/deprecation
   83:1   error    Any HTML used with \`document.writeln\` gets executed. Make sure it's properly escaped                                     @lipemat/security/html-executing-function
+  83:10  error    'writeln' is deprecated. [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/writeln)                    deprecation/deprecation
   84:1   error    window.open should be sanitized to prevent XSS attacks                                                                   @lipemat/security/html-sinks
   86:6   warning  Unexpected object value in conditional. The condition is always true                                                     @typescript-eslint/strict-boolean-expressions
   87:2   error    Any HTML used with \`insertAdjacentHTML\` gets executed. Make sure it's properly escaped                                   @lipemat/security/html-executing-function
@@ -128,11 +130,11 @@ E:\\SVN\\the-boilerplate\\packages\\eslint-config\\jest\\fixtures\\failing\\@lip
   91:2   error    body.style.cssText should be sanitized when not a literal string to prevent XSS attacks                                  @lipemat/security/html-sinks
   92:2   error    Any HTML used with \`setAttribute\` can lead to XSS. Make sure it's properly escaped                                       @lipemat/security/html-executing-function
 
-✖ 61 problems (60 errors, 1 warning)
+✖ 62 problems (61 errors, 1 warning)
   1 error and 0 warnings potentially fixable with the \`--fix\` option.
 
 Test Suites: 1 failed, 1 total
-Tests:       60 failed, 60 total
+Tests:       61 failed, 61 total
 Snapshots:   0 total
 Time:        
 Ran all test suites.

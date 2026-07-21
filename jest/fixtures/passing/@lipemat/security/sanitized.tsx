@@ -112,7 +112,9 @@ setInterval( () => arbitrary );
 document.write( DOMPurify.sanitize( arbitrary ) );
 // eslint-disable-next-line deprecation/deprecation
 document.write( sanitize( arbitrary ) );
+// eslint-disable-next-line deprecation/deprecation
 document.writeln( DOMPurify.sanitize( arbitrary ) );
+// eslint-disable-next-line deprecation/deprecation
 document.writeln( sanitize( arbitrary ) );
 window.open( DOMPurify.sanitize( arbitrary ) );
 window.open( sanitize( arbitrary ) );
