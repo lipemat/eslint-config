@@ -21,7 +21,7 @@ Ran all test suites.
 "
 `;
 
-exports[`WordPress rules are enabled @wordpress/invalid-text-domain failing 2`] = `
+exports[`WordPress rules are enabled @wordpress/invalid-text-domain passing 1`] = `
 "PASS jest/fixtures/passing/@wordpress/i18n-text-domain/correct-usage.ts
   √ ESLint (mocked ms)
 

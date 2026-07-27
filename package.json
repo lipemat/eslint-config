@@ -50,6 +50,7 @@
     "@types/jquery": "^3.5.16",
     "@types/node": "^20",
     "@typescript-eslint/rule-tester": "^8.40.0",
+    "@wordpress/i18n": "^6.24.0",
     "dompurify": "3.4.11",
     "execa": "^5.1.1",
     "jest": "^30.2.0",
