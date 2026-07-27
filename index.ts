@@ -44,6 +44,7 @@ const BASE_CONFIG: FlatConfig.Config = {
 		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
 		'object-curly-spacing': [ 1, 'never' ],
+		'prettier/prettier': 'off',
 		'react/no-unescaped-entities': [ 2, {forbid: [ '>', '}' ]} ],
 		'react/display-name': 'off',
 		'react-hooks/rules-of-hooks': 'error',

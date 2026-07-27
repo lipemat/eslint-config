@@ -1842,6 +1842,9 @@ exports[`index.js Enabled Rules 1`] = `
       "ignoreReadBeforeAssign": false,
     },
   ],
+  "prettier/prettier": [
+    0,
+  ],
   "quote-props": [
     2,
     "as-needed",
