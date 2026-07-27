@@ -1,6 +1,6 @@
 {
   "name": "@lipemat/eslint-config",
-  "version": "5.4.1",
+  "version": "[\n  \"**/*.ts\",\n  \"**/*.tsx\",\n  \"**/*.mts\",\n  \"**/*.cts\"\n]",
   "license": "MIT",
   "description": "Eslint configuration for all @lipemat packages",
   "engines": {
