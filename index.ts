@@ -7,7 +7,8 @@ import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 import {getConfig} from './helpers/config.js';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
-
+// @ts-expect-error TS7016: Could not find a declaration file
+import wordpress from '@wordpress/eslint-plugin';
 
 const flatCompat = new FlatCompat();
 
@@ -142,7 +143,7 @@ try {
 }
 
 export default [
-	...fixupConfigRules( flatCompat.extends( 'plugin:@wordpress/eslint-plugin/recommended-with-formatting' ) ),
+	...wordpress.configs.recommended,
 	...fixupConfigRules( flatCompat.extends( 'plugin:deprecation/recommended' ) ),
 	...mergedConfig,
 ];

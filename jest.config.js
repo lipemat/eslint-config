@@ -16,7 +16,7 @@ if ( process.env.FIXTURE ) {
 }
 
 config.transformIgnorePatterns = [
-	'node_modules/(?!@lipemat|svelte-eslint-parser|eslint-plugin-svelte)',
+	'node_modules/(?!@lipemat|@wordpress|svelte-eslint-parser|eslint-plugin-svelte)',
 ];
 
 // The fixture tests can run long.
