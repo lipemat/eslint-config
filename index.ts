@@ -2,15 +2,15 @@ import {fixupConfigRules} from '@eslint/compat';
 import {FlatCompat} from '@eslint/eslintrc';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import securityPlugin from './plugins/security/index.js';
 import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
-import {getConfig} from './helpers/config.js';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
-// @ts-expect-error TS7016: Could not find a declaration file
-import wordpress from '@wordpress/eslint-plugin';
 
-const flatCompat = new FlatCompat();
+import securityPlugin from './plugins/security/index.js';
+import {getConfig} from './helpers/config.js';
+import {getWordPressConfig} from './helpers/wordpress.js';
+
+const flatCompat = new FlatCompat( {baseDirectory: import.meta.dirname} );
 
 const BASE_CONFIG: FlatConfig.Config = {
 	languageOptions: {
@@ -143,7 +143,7 @@ try {
 }
 
 export default [
-	...wordpress.configs.recommended,
+	...getWordPressConfig(),
 	...fixupConfigRules( flatCompat.extends( 'plugin:deprecation/recommended' ) ),
 	...mergedConfig,
 ];
