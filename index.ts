@@ -74,7 +74,7 @@ const BASE_CONFIG: FlatConfig.Config = {
 
 
 const TS_CONFIG: FlatConfig.Config = {
-	files: [ '**/*.ts', '**/*.tsx' ],
+	files: [ '**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts' ],
 	plugins: {
 		'@typescript-eslint': tsPlugin,
 		'@stylistic/ts': stylisticTs,
@@ -118,7 +118,7 @@ const TS_CONFIG: FlatConfig.Config = {
 };
 
 const TESTS_CONFIG: FlatConfig.Config = {
-	files: [ '**/*.test.ts', '**/*.test.tsx' ],
+	files: [ '**/*.test.ts', '**/*.test.tsx', '**/*.test.mts', '**/*.test.cts' ],
 	rules: {
 		// Allow test mocking to use `var`.
 		'no-var': 'off',

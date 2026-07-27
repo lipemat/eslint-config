@@ -94,6 +94,19 @@ describe( 'index.js', () => {
 	} );
 
 
+	test( 'TypeScript Extensions', () => {
+		mockIncludeExtensions = false;
+		const config = require( '../../index.js' );
+		const original = config.default[ config.default.length - 3 ];
+		expect( original.files ).toEqual( [
+			'**/*.ts',
+			'**/*.tsx',
+			'**/*.mts',
+			'**/*.cts',
+		] );
+	} );
+
+
 	test( 'No extensions loaded', () => {
 		mockIncludeExtensions = false;
 		const config = require( '../../index.js' );
