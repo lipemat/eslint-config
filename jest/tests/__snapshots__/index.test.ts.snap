@@ -242,6 +242,7 @@ exports[`index.js Enabled Rules 1`] = `
         "ticket",
         "note",
       ],
+      "typed": true,
     },
   ],
   "jsdoc/check-template-names": [

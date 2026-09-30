@@ -39,6 +39,7 @@ const BASE_CONFIG: FlatConfig.Config = {
 		'jsdoc/require-returns-description': 'off',
 		'jsdoc/check-tag-names': [ 1, {
 			definedTags: [ 'notice', 'link', 'task', 'ticket', 'note' ],
+			typed: true,
 		} ],
 		// Parse error with Svelte v4 due to `as` operator.
 		'import/named': 'off',
@@ -87,6 +88,7 @@ const TS_CONFIG: FlatConfig.Config = {
 	rules: {
 		'jsdoc/check-tag-names': [ 1, {
 			definedTags: [ 'notice', 'link', 'task', 'ticket', 'note', 'jest-environment' ],
+			typed: true,
 		} ],
 		'jsdoc/no-undefined-types': 'off',
 		'no-magic-numbers': 'off',
