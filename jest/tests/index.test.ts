@@ -38,7 +38,7 @@ afterEach( () => {
 describe( 'index.js', () => {
 	test( 'Parser Options', () => {
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 10 ];
+		const original = config.default[ config.default.length - 11 ];
 		const svelte = config.default[ config.default.length - 2 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
@@ -83,7 +83,7 @@ describe( 'index.js', () => {
 	test( 'Original Config', () => {
 		mockUseGetConfig = false;
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 4 ];
+		const original = config.default[ config.default.length - 5 ];
 
 		expect( original.languageOptions.sourceType ).toEqual( 'module' );
 		expect( original.languageOptions.ecmaVersion ).toEqual( 7 );
@@ -97,7 +97,7 @@ describe( 'index.js', () => {
 	test( 'TypeScript Extensions', () => {
 		mockIncludeExtensions = false;
 		const config = require( '../../index.js' );
-		const original = config.default[ config.default.length - 3 ];
+		const original = config.default[ config.default.length - 4 ];
 		expect( original.files ).toEqual( [
 			'**/*.ts',
 			'**/*.tsx',
@@ -110,7 +110,7 @@ describe( 'index.js', () => {
 	test( 'No extensions loaded', () => {
 		mockIncludeExtensions = false;
 		const config = require( '../../index.js' );
-		expect( config.default.length ).toEqual( 20 );
+		expect( config.default.length ).toEqual( 21 );
 	} );
 
 

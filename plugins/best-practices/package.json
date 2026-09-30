@@ -1,0 +1,24 @@
+{
+  "name": "@lipemat/eslint-plugin-best-practices",
+  "description": "ESLint rules for general best practices",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "source": "index.ts",
+  "files": [
+    "index.ts",
+    "index.js",
+    "rules/"
+  ],
+  "dependencies": {
+    "eslint": "^9",
+    "@typescript-eslint/utils": "^8.40.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9",
+    "@typescript-eslint/parser": "^8.40.0",
+    "typescript": "^5.9.3"
+  }
+}

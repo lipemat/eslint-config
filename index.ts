@@ -6,6 +6,7 @@ import globals from 'globals';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 import type {FlatConfig} from '@typescript-eslint/utils/ts-eslint';
 
+import bestPracticesPlugin from './plugins/best-practices/index.js';
 import securityPlugin from './plugins/security/index.js';
 import {getConfig} from './helpers/config.js';
 import {getWordPressConfig} from './helpers/wordpress.js';
@@ -132,6 +133,7 @@ const defaultConfig: FlatConfig.Config[] = [
 	BASE_CONFIG,
 	TS_CONFIG,
 	TESTS_CONFIG,
+	bestPracticesPlugin.configs.recommended,
 	securityPlugin.configs.recommended,
 ];
 
