@@ -37,7 +37,9 @@ const BASE_CONFIG: FlatConfig.Config = {
 		'jsdoc/require-param': 'off',
 		'jsdoc/require-param-type': 'off',
 		'jsdoc/require-returns-description': 'off',
-		'jsdoc/check-tag-names': [ 1, {definedTags: [ 'notice', 'link', 'task', 'ticket', 'note' ]} ],
+		'jsdoc/check-tag-names': [ 1, {
+			definedTags: [ 'notice', 'link', 'task', 'ticket', 'note' ],
+		} ],
 		// Parse error with Svelte v4 due to `as` operator.
 		'import/named': 'off',
 		'import/no-unresolved': 'off',
@@ -83,6 +85,9 @@ const TS_CONFIG: FlatConfig.Config = {
 	//Rules to override the standard JS ones when we get undesired results for TypeScript may be found here
 	//@link https://typescript-eslint.io/rules/
 	rules: {
+		'jsdoc/check-tag-names': [ 1, {
+			definedTags: [ 'notice', 'link', 'task', 'ticket', 'note', 'jest-environment' ],
+		} ],
 		'jsdoc/no-undefined-types': 'off',
 		'no-magic-numbers': 'off',
 		'no-redeclare': 'off',
