@@ -1,6 +1,6 @@
 {
   "name": "@lipemat/eslint-config",
-  "version": "5.4.3",
+  "version": "5.5.0",
   "license": "MIT",
   "description": "Eslint configuration for all @lipemat packages",
   "engines": {
