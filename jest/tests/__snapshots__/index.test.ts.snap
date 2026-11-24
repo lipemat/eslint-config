@@ -1659,6 +1659,7 @@ exports[`index.js Enabled Rules 1`] = `
         "warn",
         "error",
         "debug",
+        "table",
       ],
     },
   ],

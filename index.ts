@@ -44,7 +44,7 @@ const BASE_CONFIG: FlatConfig.Config = {
 		// Parse error with Svelte v4 due to `as` operator.
 		'import/named': 'off',
 		'import/no-unresolved': 'off',
-		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug' ]} ],
+		'no-console': [ 'warn', {allow: [ 'warn', 'error', 'debug', 'table' ]} ],
 		'no-constant-binary-expression': [ 'warn' ],
 		'no-multiple-empty-lines': [ 'error', {max: 2} ],
 		'object-curly-spacing': [ 1, 'never' ],
